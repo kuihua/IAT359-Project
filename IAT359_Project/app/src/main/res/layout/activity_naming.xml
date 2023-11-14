@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
-        android:textSize="32dp"
+        android:textSize="20dp"
         android:padding="8dp"
         android:background="#ADD8E6"
         android:text="What is the name of your pet?" />
@@ -31,12 +31,19 @@
         android:textSize="16dp"
         android:hint="Yumi" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/petNameEdit"
+        android:src="@drawable/starterCreature" />
+
     <Button
         android:id="@+id/registerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Name"
-        android:layout_below="@id/petNameEdit"
+        android:layout_below="@id/imageView"
         android:layout_marginTop="30dp"
         android:onClick="name" />
 
