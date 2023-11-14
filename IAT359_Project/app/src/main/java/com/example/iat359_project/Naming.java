@@ -15,20 +15,21 @@ public class Naming extends AppCompatActivity {
 
     EditText petNameEdit;
     boolean rename=false;
-    public static final String DEFAULT = "";
+    public static final boolean DEFAULT = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_naming);
 
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-        String username = sharedPrefs.getString("username", DEFAULT);
-        if (!username.equals(DEFAULT) && rename==false) {
+        boolean first = sharedPrefs.getBoolean("firstTime", DEFAULT);
+        if (!first && !rename) {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
         }
 
         petNameEdit = (EditText)findViewById(R.id.petNameEdit);
+
     }//end of onCreate
 
     public void name (View view){
