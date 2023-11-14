@@ -1,9 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Shop">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        app:layout_constraintWidth_percent="1"
+        app:layout_constraintHeight_percent="1"
+        android:adjustViewBounds="true"
+        android:id="@+id/main_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/iat359_shopbg"/>
+
+    <TableLayout
+        android:id="@+id/navLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_weight="4"
+        android:padding="35dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/button1"
+                style="@android:style/ButtonBar"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="Shop"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/button2"
+                style="@android:style/ButtonBar"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="34dp"
+                android:text="Home"
+                android:layout_weight="1"
+                android:onClick="goHome"/>
+
+            <Button
+                android:id="@+id/button3"
+                style="@android:style/ButtonBar"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="34dp"
+                android:text="Feed"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/button4"
+                style="@android:style/ButtonBar"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="34dp"
+                android:text="Play"
+                android:layout_weight="1" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>
