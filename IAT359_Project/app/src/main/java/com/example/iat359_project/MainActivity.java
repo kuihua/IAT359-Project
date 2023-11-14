@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
 
     //buttons
     Button shop, home, feed, play, quest, custom;
+    ImageView toy, food, plate;
+    boolean feeding = false;
+    boolean playing = false;
 
 
     @Override
@@ -28,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
         play = (Button)findViewById(R.id.button4);
         quest = (Button)findViewById(R.id.button5);
         custom = (Button)findViewById(R.id.button6);
+
+        //Images
+        toy = (ImageView) findViewById(R.id.toyView);
+        food = (ImageView) findViewById(R.id.foodView);
+        plate = (ImageView) findViewById(R.id.plateView);
     }
 
     //for shop button
@@ -40,5 +49,27 @@ public class MainActivity extends AppCompatActivity {
     public void custom(View view) {
         Intent i = new Intent(this,Customization.class);
         startActivity(i);
+    }
+
+    public void play(View v) {
+        if(!playing) {
+            toy.setVisibility(v.VISIBLE);
+            playing=true;
+        }else{
+            toy.setVisibility(v.GONE);
+            playing=false;
+        }
+    }
+
+    public void feed(View v) {
+        if(!feeding) {
+            plate.setVisibility(v.VISIBLE);
+            food.setVisibility(v.VISIBLE);
+            feeding=true;
+        }else{
+            plate.setVisibility(v.GONE);
+            food.setVisibility(v.GONE);
+            feeding=false;
+        }
     }
 }
