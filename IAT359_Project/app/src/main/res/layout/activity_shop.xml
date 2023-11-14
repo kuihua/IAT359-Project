@@ -16,6 +16,15 @@
         android:scaleType="fitXY"
         android:src="@drawable/iat359_shopbg"/>
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/navLayout"
+        android:layout_margin="120dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/starter_creature" />
+
     <TableLayout
         android:id="@+id/navLayout"
         android:layout_width="match_parent"
