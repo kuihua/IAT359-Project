@@ -4,25 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_bg"
 
     tools:context=".MainActivity">
 
-    <!--   window-->
     <ImageView
-        android:id="@+id/windowDay"
+        app:layout_constraintWidth_percent="1"
+        app:layout_constraintHeight_percent="1"
+        android:adjustViewBounds="true"
+        android:id="@+id/main_bg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/window_day"/>
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/iat359_bg"/>
 
-    <!--   rug -->
-    <ImageView
-        android:id="@+id/mainRug"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/main_rug"/>
-
-    <!--creature-->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -32,14 +26,6 @@
         android:scaleY=".7"
         android:adjustViewBounds="true"
         />
-
-    <!--   navbar -->
-    <ImageView
-        android:id="@+id/navBar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/navbar"/>
 
     <ImageView
         android:id="@+id/plateView"

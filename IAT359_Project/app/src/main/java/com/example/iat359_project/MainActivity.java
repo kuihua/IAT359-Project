@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         if(!playing) {
             toy.setVisibility(v.VISIBLE);
             playing=true;
+            feeding=false;
+            plate.setVisibility(v.GONE);
+            food.setVisibility(v.GONE);
         }else{
             toy.setVisibility(v.GONE);
             playing=false;
@@ -56,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
             plate.setVisibility(v.VISIBLE);
             food.setVisibility(v.VISIBLE);
             feeding=true;
+            playing=false;
+            toy.setVisibility(v.GONE);
         }else{
             plate.setVisibility(v.GONE);
             food.setVisibility(v.GONE);
