@@ -41,10 +41,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    //for playing using toys
     public void play(View v) {
         if(!playing) {
             toy.setVisibility(v.VISIBLE);
             playing=true;
+            //if the pet is playing, set food items to gone
             feeding=false;
             plate.setVisibility(v.GONE);
             food.setVisibility(v.GONE);
@@ -54,11 +56,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //feeding the pet
     public void feed(View v) {
         if(!feeding) {
             plate.setVisibility(v.VISIBLE);
             food.setVisibility(v.VISIBLE);
             feeding=true;
+            //if the pet is being fed, set all toys to gone
             playing=false;
             toy.setVisibility(v.GONE);
         }else{
