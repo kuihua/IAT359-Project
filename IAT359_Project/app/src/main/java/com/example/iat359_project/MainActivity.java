@@ -13,8 +13,6 @@ public class MainActivity extends AppCompatActivity {
     int affection=0;
     int currency=100;
 
-    //buttons
-    Button shop, home, feed, play, quest, custom;
     ImageView toy, food, plate;
     boolean feeding = false;
     boolean playing = false;
@@ -24,14 +22,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //Buttons
-        shop = (Button)findViewById(R.id.button1);
-        home = (Button)findViewById(R.id.button2);
-        feed = (Button)findViewById(R.id.button3);
-        play = (Button)findViewById(R.id.button4);
-        quest = (Button)findViewById(R.id.button5);
-        custom = (Button)findViewById(R.id.button6);
 
         //Images
         toy = (ImageView) findViewById(R.id.toyView);
