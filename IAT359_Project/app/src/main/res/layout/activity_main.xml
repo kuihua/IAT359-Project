@@ -1,31 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@drawable/main_bg"
     tools:context=".MainActivity">
 
+<!--    day window-->
     <ImageView
-        app:layout_constraintWidth_percent="1"
-        app:layout_constraintHeight_percent="1"
-        android:adjustViewBounds="true"
-        android:id="@+id/main_bg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/dayWindow"
+        android:src="@drawable/window_day" />
+
+<!--    rug-->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mainRug"
+        android:src="@drawable/main_rug"/>
+
+    <!--   navbar -->
+    <ImageView
+        android:id="@+id/navBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/iat359_bg"/>
+        android:src="@drawable/navbar"/>
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/starter_creature"
+        android:layout_height="500dp"
+        android:layout_centerVertical="true"
+        android:adjustViewBounds="true"
         android:scaleX=".7"
         android:scaleY=".7"
-        android:adjustViewBounds="true"
-        />
+        android:src="@drawable/starter_creature" />
 
     <ImageView
         android:id="@+id/plateView"

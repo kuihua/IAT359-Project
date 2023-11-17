@@ -4,29 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
     tools:context=".Customization">
-
+    
+    <!--    overlay-->
     <ImageView
-        app:layout_constraintWidth_percent="1"
-        app:layout_constraintHeight_percent="1"
-        android:adjustViewBounds="true"
-        android:id="@+id/main_bg"
+        android:id="@+id/shopOverlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:src="@drawable/iat359_custombg"/>
+        android:adjustViewBounds="true"
+        android:src="@drawable/overlay" />
 
+    <!--    rug-->
+    <ImageView
+        android:id="@+id/smallRug"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/small_rug"/>
+
+    <!--    creature-->
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/navLayout"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="120dp"
-        android:layout_marginBottom="120dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/starter_creature" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/small_creature" />
+
+    <!--   navbar -->
+    <ImageView
+        android:id="@+id/navBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/navbar"/>
 
     <TableLayout
         android:id="@+id/navLayout"
