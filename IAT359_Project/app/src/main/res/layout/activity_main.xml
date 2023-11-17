@@ -28,6 +28,7 @@
         android:scaleType="fitXY"
         android:src="@drawable/navbar"/>
 
+<!--    creature-->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -38,6 +39,7 @@
         android:scaleY=".7"
         android:src="@drawable/starter_creature" />
 
+<!--    plate-->
     <ImageView
         android:id="@+id/plateView"
         android:layout_width="match_parent"
@@ -49,6 +51,7 @@
         android:visibility="gone"
         />
 
+<!--    toy-->
     <ImageView
         android:id="@+id/toyView"
         android:layout_width="match_parent"
@@ -60,6 +63,7 @@
         android:visibility="gone"
         />
 
+<!--    food-->
     <ImageView
         android:id="@+id/foodView"
         android:layout_width="match_parent"
@@ -71,6 +75,7 @@
         android:visibility="gone"
         />
 
+    <!--    nav buttons -->
     <TableLayout
         android:id="@+id/navLayout"
         android:layout_width="match_parent"
