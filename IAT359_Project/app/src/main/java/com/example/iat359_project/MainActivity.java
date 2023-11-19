@@ -2,20 +2,34 @@ package com.example.iat359_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     int affection=0;
     int currency=100;
 
-    ImageView toy, food, plate;
+    ImageView toy, food, plate, night;
     boolean feeding = false;
     boolean playing = false;
+
+    //light sensor values
+    private SensorManager mySensorManager = null;
+    private Sensor lightSensor = null;
+    float[] light_vals = new float[1];
 
 
     @Override
@@ -27,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
         toy = (ImageView) findViewById(R.id.toyView);
         food = (ImageView) findViewById(R.id.foodView);
         plate = (ImageView) findViewById(R.id.plateView);
+        night = (ImageView) findViewById(R.id.nightWindow);
+
+        //Sensor
+        mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        lightSensor = mySensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
     }
 
     //for shop button
@@ -71,4 +90,43 @@ public class MainActivity extends AppCompatActivity {
             feeding=false;
         }
     }
+
+    //for light sensor
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mySensorManager.registerListener(this, lightSensor,SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    protected void onPause() {
+        //unregister listener - release the sensor
+        mySensorManager.unregisterListener(this);
+        super.onPause();
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        int type = event.sensor.getType();
+
+        if (type == Sensor.TYPE_LIGHT) {
+            light_vals = event.values;
+
+            //if there's no light, change window to night time
+            if(Sensor.TYPE_LIGHT >= light_vals[0]) {
+//              Toast.makeText(this, "night time", Toast.LENGTH_LONG).show();
+                night.setVisibility(View.VISIBLE);
+            } else {
+//              Toast.makeText(this, "good morning", Toast.LENGTH_LONG).show();
+                night.setVisibility(View.GONE);
+            }
+
+        }
+    }
+
 }
