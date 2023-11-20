@@ -21,8 +21,8 @@ public class MyPlayerHelper extends SQLiteOpenHelper {
 
     private static final String DROP_PLAYER_TABLE = "DROP TABLE IF EXISTS " + Constants.PLAYER_TABLE_NAME;
 
-    public MyPlayerHelper(Context context, String dbName, int dbVersion){
-        super (context, dbName, null, dbVersion);
+    public MyPlayerHelper(Context context){
+        super (context, Constants.PLAYER_TABLE_NAME, null, Constants.PLAYER_DATABASE_VERSION);
         this.context = context;
     }
 

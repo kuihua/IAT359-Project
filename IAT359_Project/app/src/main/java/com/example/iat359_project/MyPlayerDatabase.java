@@ -12,7 +12,7 @@ public class MyPlayerDatabase {
 
     public MyPlayerDatabase(Context c){
         context = c;
-        helper = new MyPlayerHelper(context, Constants.PLAYER_DATABASE_NAME, Constants.PLAYER_DATABASE_VERSION);
+        helper = new MyPlayerHelper(context);
     }
 
     public long insertData (String name, String type, String location, String latinName)

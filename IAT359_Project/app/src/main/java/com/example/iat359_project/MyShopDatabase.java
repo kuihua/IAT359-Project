@@ -12,7 +12,7 @@ public class MyShopDatabase {
 
     public MyShopDatabase(Context c){
         context = c;
-        shophelper = new MyShopHelper(context, Constants.SHOP_DATABASE_NAME, Constants.SHOP_DATABASE_VERSION);
+        shophelper = new MyShopHelper(context);
     }
 
     public long insertData (String name, String type, String image, String price)

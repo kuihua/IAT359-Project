@@ -21,8 +21,8 @@ public class MyShopHelper extends SQLiteOpenHelper {
 
     private static final String DROP_SHOP_TABLE = "DROP TABLE IF EXISTS " + Constants.SHOP_TABLE_NAME;
 
-    public MyShopHelper(Context context, String dbName, int dbVersion){
-        super (context, dbName, null, dbVersion);
+    public MyShopHelper(Context context){
+        super (context, Constants.SHOP_TABLE_NAME, null, Constants.SHOP_DATABASE_VERSION);
         this.context = context;
     }
 
