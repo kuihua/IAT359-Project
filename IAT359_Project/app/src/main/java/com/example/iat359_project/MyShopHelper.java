@@ -10,7 +10,7 @@ public class MyShopHelper extends SQLiteOpenHelper {
 
     private Context context;
 
-    private static final String CREATE_PLAYER_TABLE =
+    private static final String CREATE_SHOP_TABLE =
             "CREATE TABLE "+
                     Constants.SHOP_TABLE_NAME + " (" +
                     Constants.UID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -19,7 +19,7 @@ public class MyShopHelper extends SQLiteOpenHelper {
                     Constants.IMAGE + " TEXT, " +
                     Constants.PRICE + " TEXT);" ;
 
-    private static final String DROP_PLAYER_TABLE = "DROP TABLE IF EXISTS " + Constants.PLAYER_TABLE_NAME;
+    private static final String DROP_SHOP_TABLE = "DROP TABLE IF EXISTS " + Constants.SHOP_TABLE_NAME;
 
     public MyShopHelper(Context context, String dbName, int dbVersion){
         super (context, dbName, null, dbVersion);
@@ -29,7 +29,7 @@ public class MyShopHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
-            db.execSQL(CREATE_PLAYER_TABLE);
+            db.execSQL(CREATE_SHOP_TABLE);
             Toast.makeText(context, "onCreate() called", Toast.LENGTH_LONG).show();
         } catch (SQLException e) {
             Toast.makeText(context, "exception onCreate() db", Toast.LENGTH_LONG).show();
@@ -39,7 +39,7 @@ public class MyShopHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         try {
-            db.execSQL(DROP_PLAYER_TABLE);
+            db.execSQL(DROP_SHOP_TABLE);
             onCreate(db);
             Toast.makeText(context, "onUpgrade called", Toast.LENGTH_LONG).show();
         } catch (SQLException e) {

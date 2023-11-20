@@ -53,11 +53,11 @@ public class MyPlayerDatabase {
             int index2 = cursor.getColumnIndex(Constants.TYPE);
             int index3 = cursor.getColumnIndex(Constants.IMAGE);
             int index4 = cursor.getColumnIndex(Constants.WEARING);
-            String plantName = cursor.getString(index1);
-            String plantType = cursor.getString(index2);
-            String plantLocation = cursor.getString(index3);
-            String plantLatinName = cursor.getString(index4);
-            buffer.append(plantName + " " + plantType + " " + plantLocation + " " + plantLatinName + "\n");
+            String itemName = cursor.getString(index1);
+            String itemType = cursor.getString(index2);
+            String itemImage = cursor.getString(index3);
+            String itemWearing = cursor.getString(index4);
+            buffer.append(itemName + " " + itemType + " " + itemImage + " " + itemWearing + "\n");
         }
         return buffer.toString();
     }
