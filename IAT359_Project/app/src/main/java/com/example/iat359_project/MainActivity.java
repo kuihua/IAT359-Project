@@ -30,12 +30,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager mySensorManager = null;
     private Sensor lightSensor = null;
     float[] light_vals = new float[1];
+    private MyPlayerDatabase playerdb;
+    private MyShopDatabase shopdb;
+    private MyPlayerHelper playerHelper;
+    private MyShopHelper shopHelper;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //using the player database to ensure they are wearing clothes from last session
+        playerdb = new MyPlayerDatabase(this);
+        playerHelper = new MyPlayerHelper(this);
 
         //Images
         toy = (ImageView) findViewById(R.id.toyView);
@@ -63,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //for playing using toys
     public void play(View v) {
         if(!playing) {
+            //if the pet is not playing, start playing
             toy.setVisibility(v.VISIBLE);
             playing=true;
             //if the pet is playing, set food items to gone
@@ -70,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             plate.setVisibility(v.GONE);
             food.setVisibility(v.GONE);
         }else{
+            //if the pet is playing and the button is clicked, pet stops playing
             toy.setVisibility(v.GONE);
             playing=false;
         }
@@ -78,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //feeding the pet
     public void feed(View v) {
         if(!feeding) {
+            //if the pet is not eating, start feeding
             plate.setVisibility(v.VISIBLE);
             food.setVisibility(v.VISIBLE);
             feeding=true;
@@ -85,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             playing=false;
             toy.setVisibility(v.GONE);
         }else{
+            //if the pet is being fed and the button is clicked, stop feeding
             plate.setVisibility(v.GONE);
             food.setVisibility(v.GONE);
             feeding=false;
