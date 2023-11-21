@@ -21,6 +21,22 @@
         android:src="@drawable/window_night"
         android:visibility="gone"/>
 
+<!--    rain window-->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rainWindow"
+        android:src="@drawable/window_rain"
+        android:visibility="gone"/>
+
+<!--    snow window-->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/snowWindow"
+        android:src="@drawable/window_snow"
+        android:visibility="gone"/>
+
 <!--    rug-->
     <ImageView
         android:layout_width="match_parent"
