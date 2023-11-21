@@ -43,7 +43,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         itemData = list.get(position).toString();
         holder.nameTextView.setText(results[0]);
-        holder.typeTextView.setText(results[1]);
+        holder.typeTextView.setText("");
         holder.itemVarText.setText(results[2]);
 
         //for item icon

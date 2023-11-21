@@ -25,7 +25,7 @@
 
         <Button
             android:id="@+id/filterHeadButton"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:textSize="10sp"
             android:onClick="filterHead"
@@ -33,7 +33,7 @@
 
         <Button
             android:id="@+id/filterNeckButton"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:textSize="10sp"
             android:onClick="filterNeck"
@@ -41,7 +41,7 @@
 
         <Button
             android:id="@+id/filterBodyButton"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:textSize="10sp"
             android:onClick="filterBody"
@@ -54,10 +54,10 @@
         android:orientation="vertical"
         android:layout_alignBottom="@id/shopOverlay"
         android:layout_alignTop="@id/shopOverlay"
-        android:paddingTop="15dp"
-        android:paddingLeft="170dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="150dp"
+        android:paddingRight="65dp"
         android:paddingBottom="20dp"
-        android:paddingRight="90dp"
         >
 
         <TextView

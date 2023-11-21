@@ -15,7 +15,7 @@ public class Naming extends AppCompatActivity {
 
     EditText petNameEdit;
     boolean rename=false;
-    boolean firstTime;
+    boolean firstTime=false;
     private MyDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
