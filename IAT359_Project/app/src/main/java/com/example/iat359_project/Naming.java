@@ -17,7 +17,6 @@ public class Naming extends AppCompatActivity {
     boolean rename=false;
     boolean firstTime;
     private MyDatabase db;
-//    public static final boolean DEFAULT = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +52,7 @@ public class Naming extends AppCompatActivity {
         editor.putString("petName", petNameEdit.getText().toString());
         editor.putBoolean("rename", rename);
         editor.putBoolean("firstTime", firstTime);
-        Toast.makeText(this, "Your pet's name was saved to Preferences", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Welcome home!", Toast.LENGTH_LONG).show();
         editor.commit();
         Intent intent= new Intent(this, MainActivity.class);
         startActivity(intent);
