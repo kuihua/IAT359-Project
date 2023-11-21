@@ -1,7 +1,5 @@
 package com.example.iat359_project;
 
-//import static com.example.iat359_project.Naming.DEFAULT;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -39,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     int affection=0;
     int currency=100;
-
     ImageView toy, food, plate, night;
     TextView petNameView;
     String lat, lng, result, url;
@@ -58,8 +55,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //getting the pet's name from the user's shared preferences
         SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         String petName = sharedPref.getString("petName", DEFAULT);
+
+        //checking user's network connection
         checkConnection();
 
 //        //using the player database to ensure they are wearing clothes from last session
@@ -76,10 +77,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         petNameView = (TextView) findViewById(R.id.namingTextView);
         petNameView.setText(petName);
 
-        //Sensor
+        //Sensor, initializing the light sensor
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lightSensor = mySensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-    }
+
+        //weather
+        Thread thread = new Thread(new GetWeatherThread());
+        thread.start();
+
+    } //end of onCreate
 
     //for shop button
     public void gotoShop(View view) {
@@ -87,15 +93,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         startActivity(i);
     }
 
-    //for custom button
+    //for customization button
     public void custom(View view) {
         Intent i = new Intent(this,Customization.class);
         startActivity(i);
     }
 
-    public void Weather(View v){
-        getWeather(v);
-    }
+//    //getting the weather button
+//    public void Weather(View v){
+//        Thread thread = new Thread(new GetWeatherThread());
+//        thread.start();
+//    }
 
     //for playing using toys
     public void play(View v) {
@@ -132,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
-    //for light sensor
+    //adding a listener to the light sensor
     @Override
     protected void onResume() {
         super.onResume();
@@ -164,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 night.setVisibility(View.VISIBLE);
             } else {
 //              Toast.makeText(this, "good morning", Toast.LENGTH_LONG).show();
+                //else, change window to day time
                 night.setVisibility(View.GONE);
             }
 
@@ -174,8 +183,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void getWeather(View v) {
         url = "http://api.geonames.org/findNearByWeatherJSON?lat=" + lat + "&lng=" + lng + "&username=demo";
 
-        Thread myThread = new Thread(new GetWeatherThread());
-        myThread.start();
+//        Thread myThread = new Thread(new GetWeatherThread());
+//        myThread.start();
 
         try {
             JSONObject jsonObject = new JSONObject(result);
@@ -207,7 +216,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         NetworkInfo networkInfo = connectMgr.getActiveNetworkInfo();
         if(networkInfo != null && networkInfo.isConnected()){
             //fetch data
-
             String networkType = networkInfo.getTypeName().toString();
             Toast.makeText(this, "connected to " + networkType, Toast.LENGTH_LONG).show();
         }
@@ -219,8 +227,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private String readJSONData(String myurl) throws IOException {
         InputStream is = null;
-        // Only display the first 500 characters of the retrieved
-        // web page content.
+        // Only display the first 500 characters of the retrieved web page content.
         int len = 2500;
 
         URL url = new URL(myurl);
@@ -241,8 +248,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             String contentAsString = readIt(is, len);
             return contentAsString;
 
-            // Makes sure that the InputStream is closed after the app is
-            // finished using it.
+            // Makes sure that the InputStream is closed after the app is finished using it.
         } finally {
             if (is != null) {
                 is.close();

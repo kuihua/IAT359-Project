@@ -47,6 +47,14 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/allButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:onClick="filterAll"
+            android:text="All" />
+
+        <Button
             android:id="@+id/filterHeadButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

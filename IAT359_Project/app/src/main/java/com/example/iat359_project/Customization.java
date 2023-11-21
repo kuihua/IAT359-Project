@@ -22,13 +22,8 @@ public class Customization extends AppCompatActivity{
         private MyDatabase db;
         private TextView itemNameText, itemTypeText, itemWearingText;
         private ImageView itemImageView;
-        Button filterHead, filterNeck, filterBody;
-
+        Button filterHead, filterNeck, filterBody, allButton;
         private CustomAdapter customAdapter;
-//        Button prevButton, nextButton;
-//        Paginator paginator = new Paginator();
-//        private long totalPages = Paginator.totalNumItems / Paginator.ITEMS_PER_PAGE;
-//        private int currentPage = 0;
 
         private MyHelper helper;
         private LinearLayoutManager mLayoutManager;
@@ -39,28 +34,31 @@ public class Customization extends AppCompatActivity{
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_customization);
             myRecycler = (RecyclerView) findViewById(R.id.recyclerView);
-//            prevButton = (Button) findViewById(R.id.backButton);
-//            nextButton = (Button) findViewById(R.id.nextButton);
-//            //previous button won't work if its on first page
-//            prevButton.setEnabled(false);
 
             myRecycler.setLayoutManager(new LinearLayoutManager(this));
             db = new MyDatabase(this);
             helper = new MyHelper(this);
 
+            //initializing buttons
+            allButton = (Button) findViewById(R.id.allButton);
             filterHead = (Button) findViewById(R.id.filterHeadButton);
             filterNeck = (Button) findViewById(R.id.filterNeckButton);
             filterBody = (Button) findViewById(R.id.filterBodyButton);
 
-//            filterHead.setOnClickListener(this);
-//            filterNeck.setOnClickListener(this);
-//            filterBody.setOnClickListener(this);
-
+            //filtering data
             Intent intent = getIntent();
             if(intent.hasExtra("Item")){
+                //filtering the data by the filter
                 String item = intent.getExtras().getString("Item");
                 cursor = db.getPlayerQueryData(item);
+            }else if(intent.hasExtra("Item")){
+                String item = intent.getExtras().getString("Item");
+                //if the player chooses to filter by all, display everything
+                if(item.equals("All")){
+                    cursor = db.getPlayerData();
+                }
             }else{
+                //else display everything
                 cursor = db.getPlayerData();
             }
 
@@ -71,6 +69,7 @@ public class Customization extends AppCompatActivity{
 
             ArrayList<String> mArrayList = new ArrayList<String>();
 
+            //get item information to the cursor
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 String itemName = cursor.getString(index1);
@@ -91,6 +90,12 @@ public class Customization extends AppCompatActivity{
             ;
         }//end of onCreate
 
+    //buttons for filtering data, creates a new instance of this activity
+    public void filterAll(View view){
+        Intent i = new Intent(this, Customization.class);
+        i.putExtra("Item", "All");
+        startActivity(i);
+    }
     public void filterHead(View view){
         Intent i = new Intent(this, Customization.class);
         i.putExtra("Item", "Head");
