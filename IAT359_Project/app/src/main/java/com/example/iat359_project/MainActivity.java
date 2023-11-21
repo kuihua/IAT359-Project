@@ -1,9 +1,12 @@
 package com.example.iat359_project;
 
+import static com.example.iat359_project.Naming.DEFAULT;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -15,6 +18,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
@@ -23,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     int currency=100;
 
     ImageView toy, food, plate, night;
+    TextView petNameView;
+    String petName;
     boolean feeding = false;
     boolean playing = false;
 
@@ -34,12 +40,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private MyShopDatabase shopdb;
     private MyPlayerHelper playerHelper;
     private MyShopHelper shopHelper;
+    public static final String DEFAULT = "no name";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        String petName = sharedPref.getString("petName", DEFAULT);
 
         //using the player database to ensure they are wearing clothes from last session
         playerdb = new MyPlayerDatabase(this);
@@ -50,6 +59,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         food = (ImageView) findViewById(R.id.foodView);
         plate = (ImageView) findViewById(R.id.plateView);
         night = (ImageView) findViewById(R.id.nightWindow);
+
+        //Pet name displayed in main
+        petNameView = (TextView) findViewById(R.id.namingTextView);
+        petNameView.setText(petName);
 
         //Sensor
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
