@@ -100,12 +100,6 @@
         />
 
     <!--    nav buttons -->
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="wrap_content"
-        android:onClick="Weather"
-        android:layout_height="wrap_content"
-        android:text="Button" />
 
     <TableLayout
         android:id="@+id/navLayout"
@@ -169,6 +163,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_weight="1"
+        android:onClick="questButton"
         android:text="q"/>
 
 <!--    custom button-->

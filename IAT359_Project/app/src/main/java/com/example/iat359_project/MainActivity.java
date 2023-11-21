@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Sensor lightSensor = null;
     float[] light_vals = new float[1];
     public static final String DEFAULT = "no name";
-    public Button weatherButton;
 
 
     @Override
@@ -93,8 +92,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         startActivity(i);
     }
 
-    public void Weather(View v){
-        getWeather(v);
+    public void questButton(View view) {
+        Intent i = new Intent(this,Quest.class);
+        startActivity(i);
     }
 
     //for playing using toys
