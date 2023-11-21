@@ -54,7 +54,7 @@
 
 <!--    creature-->
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/creatureImageView"
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:layout_centerVertical="true"
@@ -64,6 +64,27 @@
         android:src="@drawable/starter_creature" />
 
 <!--    plate-->
+
+    <TextView
+        android:id="@+id/currency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:paddingRight="10dp"
+        android:paddingTop = "20dp"
+        android:text="Currency: " />
+
+    <TextView
+        android:id="@+id/affection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignLeft="@+id/currency"
+        android:layout_alignTop="@+id/currency"
+        android:paddingTop="40dp"
+        android:paddingRight="10dp"
+        android:text="Affection: " />
+
     <ImageView
         android:id="@+id/plateView"
         android:layout_width="match_parent"
@@ -181,7 +202,7 @@
         android:id="@+id/namingTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignBottom="@+id/creatureImageView"
         android:layout_marginBottom="50dp"
         android:gravity="center"
         android:text="pet name"
