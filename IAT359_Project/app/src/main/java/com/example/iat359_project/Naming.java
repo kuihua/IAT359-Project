@@ -22,6 +22,8 @@ public class Naming extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_naming);
 
+        //checking if the user if a first time user or not, if they are continue on this page
+        //else will get brought to the main activity
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         firstTime = sharedPrefs.getBoolean("firstTime", true);
         if (!firstTime && !rename) {
@@ -29,7 +31,7 @@ public class Naming extends AppCompatActivity {
             startActivity(i);
         }
 
-        //add all data to the db
+        //when user is a first time user, add all data to the db shop table
         if(firstTime){
             db = new MyDatabase(this);
             db.insertShopData("Red Bow Tie", "Neck", "10", "bowtie_red.png");
@@ -47,6 +49,7 @@ public class Naming extends AppCompatActivity {
     public void name (View view){
         rename=false;
         firstTime=false;
+        //save pet's name to shared preferences, player is not a first time user anymore
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putString("petName", petNameEdit.getText().toString());

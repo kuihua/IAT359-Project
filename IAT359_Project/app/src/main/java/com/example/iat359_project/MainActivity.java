@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         startActivity(i);
     }
 
-    //for custom button
+    //for customization button
     public void custom(View view) {
         Intent i = new Intent(this,Customization.class);
         startActivity(i);
@@ -164,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 night.setVisibility(View.VISIBLE);
             } else {
 //              Toast.makeText(this, "good morning", Toast.LENGTH_LONG).show();
+                //if there's light, change the window to day time
                 night.setVisibility(View.GONE);
             }
 

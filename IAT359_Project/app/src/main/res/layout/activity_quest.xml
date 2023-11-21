@@ -16,6 +16,7 @@
         android:paddingTop="30dp"
         android:src="@drawable/quest_overlay_cropped" />
 
+<!--    quest text title-->
     <TextView
         android:id="@+id/questTextView"
         android:layout_width="wrap_content"
@@ -34,7 +35,7 @@
 
     <!--    creature-->
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/creatureImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/small_creature" />
@@ -63,7 +64,7 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/shopButton"
                 style="@android:style/ButtonBar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -71,7 +72,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/homeButton"
                 style="@android:style/ButtonBar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -81,7 +82,7 @@
                 android:onClick="goHome"/>
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/feedButton"
                 style="@android:style/ButtonBar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -90,7 +91,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/playButton"
                 style="@android:style/ButtonBar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
