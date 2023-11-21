@@ -50,10 +50,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager mySensorManager = null;
     private Sensor lightSensor = null;
     float[] light_vals = new float[1];
-    private MyPlayerDatabase playerdb;
-    private MyShopDatabase shopdb;
-    private MyPlayerHelper playerHelper;
-    private MyShopHelper shopHelper;
     public static final String DEFAULT = "no name";
     public Button weatherButton;
 
@@ -66,9 +62,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         String petName = sharedPref.getString("petName", DEFAULT);
         checkConnection();
 
-        //using the player database to ensure they are wearing clothes from last session
-        playerdb = new MyPlayerDatabase(this);
-        playerHelper = new MyPlayerHelper(this);
+//        //using the player database to ensure they are wearing clothes from last session
+//        playerdb = new MyPlayerDatabase(this);
+//        playerHelper = new MyPlayerHelper(this);
 
         //Images
         toy = (ImageView) findViewById(R.id.toyView);
