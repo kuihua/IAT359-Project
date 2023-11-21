@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/listLayout">
+
+    <TextView
+        android:id="@+id/itemNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_weight="2"
+        android:text="Item Name"
+        android:padding="5dp"
+        android:textSize="10sp"
+        />
+
+    <TextView
+        android:id="@+id/itemTypeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_weight="2"
+        android:text="Item Type"
+        android:padding="5dp"
+        android:textSize="10sp"
+        />
+
+    <TextView
+        android:id="@+id/itemVarText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_weight="2"
+        android:text="Worn?/Price"
+        android:padding="5dp"
+        android:textSize="10sp"
+        />
+
+    <Button
+        android:id="@+id/buyWearButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="BuyWear"
+        android:text="Buy" />
+
+    <!--    <ImageView-->
+<!--        android:id="@+id/itemImageView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_weight="100"-->
+<!--        android:adjustViewBounds="true"-->
+<!--        android:src="@drawable/red_cloak_icon" />-->
+
+
+</LinearLayout>

@@ -15,18 +15,30 @@ public class Naming extends AppCompatActivity {
 
     EditText petNameEdit;
     boolean rename=false;
-    boolean first;
-    public static final boolean DEFAULT = true;
+    boolean firstTime;
+    private MyDatabase db;
+//    public static final boolean DEFAULT = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_naming);
 
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-        first = sharedPrefs.getBoolean("firstTime", DEFAULT);
-        if (!first && !rename) {
+        firstTime = sharedPrefs.getBoolean("firstTime", true);
+        if (!firstTime && !rename) {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
+        }
+
+        //add all data to the db
+        if(firstTime){
+            db = new MyDatabase(this);
+            db.insertShopData("Red Bow Tie", "Neck", "10", "bowtie_red.png");
+            db.insertShopData("Crown Red Jewels", "Head", "10", "crown_red_jewels.png");
+            db.insertShopData("Loose Tie","Neck","10","loose_tie_red.png");
+            db.insertShopData("Red Cloak", "Body", "10", "red_cloak.png");
+            db.insertShopData("Top Hat","Head","10","tophat.png");
+            db.insertShopData("Tuxedo", "Body", "10", "tuxedo.png");
         }
 
         petNameEdit = (EditText)findViewById(R.id.petNameEdit);
@@ -35,9 +47,12 @@ public class Naming extends AppCompatActivity {
 
     public void name (View view){
         rename=false;
+        firstTime=false;
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putString("petName", petNameEdit.getText().toString());
+        editor.putBoolean("rename", rename);
+        editor.putBoolean("firstTime", firstTime);
         Toast.makeText(this, "Your pet's name was saved to Preferences", Toast.LENGTH_LONG).show();
         editor.commit();
         Intent intent= new Intent(this, MainActivity.class);

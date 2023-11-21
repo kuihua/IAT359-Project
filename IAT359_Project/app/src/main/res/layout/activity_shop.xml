@@ -10,9 +10,37 @@
     <ImageView
         android:id="@+id/shopOverlay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="334dp"
+        android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/overlay" />
+        android:src="@drawable/overlay_cropped" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignBottom="@id/shopOverlay"
+        android:layout_alignTop="@id/shopOverlay"
+        android:paddingTop="15dp"
+        android:paddingLeft="170dp"
+        android:paddingBottom="20dp"
+        android:paddingRight="90dp"
+        >
+
+        <TextView
+            android:id="@+id/shopTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="Shop" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            ></androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
 
 <!--    rug-->
     <ImageView

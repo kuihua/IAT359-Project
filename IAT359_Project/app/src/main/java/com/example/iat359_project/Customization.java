@@ -10,73 +10,104 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class Customization extends AppCompatActivity{
 
         private RecyclerView myRecycler;
-        private MyPlayerDatabase db;
+        private MyDatabase db;
+        private TextView itemNameText, itemTypeText, itemWearingText;
+        private ImageView itemImageView;
+        Button filterHead, filterNeck, filterBody;
 
-        private MyAdapter adapter;
-        Button prevButton, nextButton;
-        Paginator paginator = new Paginator();
-        private long totalPages = Paginator.totalNumItems / Paginator.ITEMS_PER_PAGE;
-        private int currentPage = 0;
+        private CustomAdapter customAdapter;
+//        Button prevButton, nextButton;
+//        Paginator paginator = new Paginator();
+//        private long totalPages = Paginator.totalNumItems / Paginator.ITEMS_PER_PAGE;
+//        private int currentPage = 0;
 
-        private MyPlayerHelper helper;
+        private MyHelper helper;
+        private LinearLayoutManager mLayoutManager;
+        Cursor cursor;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_customization);
             myRecycler = (RecyclerView) findViewById(R.id.recyclerView);
-            prevButton = (Button) findViewById(R.id.backButton);
-            nextButton = (Button) findViewById(R.id.nextButton);
-            //previous button won't work if its on first page
-            prevButton.setEnabled(false);
+//            prevButton = (Button) findViewById(R.id.backButton);
+//            nextButton = (Button) findViewById(R.id.nextButton);
+//            //previous button won't work if its on first page
+//            prevButton.setEnabled(false);
 
             myRecycler.setLayoutManager(new LinearLayoutManager(this));
-            myRecycler.setAdapter(new MyAdapter(Customization.this, paginator.generatePage(currentPage)));
+            db = new MyDatabase(this);
+            helper = new MyHelper(this);
 
-            db = new MyPlayerDatabase(this);
-            helper = new MyPlayerHelper(this);
+            filterHead = (Button) findViewById(R.id.filterHeadButton);
+            filterNeck = (Button) findViewById(R.id.filterNeckButton);
+            filterBody = (Button) findViewById(R.id.filterBodyButton);
 
-            nextButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    currentPage += 1;
-                    myRecycler.setAdapter(new MyAdapter(Customization.this, paginator.generatePage(currentPage)));
-                    toggleButtons();
-                }
-            });
+//            filterHead.setOnClickListener(this);
+//            filterNeck.setOnClickListener(this);
+//            filterBody.setOnClickListener(this);
 
-            prevButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    currentPage -= 1;
-                    myRecycler.setAdapter(new MyAdapter(Customization.this, paginator.generatePage(currentPage)));
-                    toggleButtons();
-
-                }
-            });
-
-;
-        }
-
-        //buttons toggled based on the page you are on
-        private void toggleButtons(){
-            if(currentPage == totalPages){
-                nextButton.setEnabled(false);
-                prevButton.setEnabled(true);
-            }else if(currentPage == 0){
-                nextButton.setEnabled(true);
-                prevButton.setEnabled(false);
-            }else if(currentPage >=1 && currentPage <= totalPages){
-                nextButton.setEnabled(true);
-                prevButton.setEnabled(true);
+            Intent intent = getIntent();
+            if(intent.hasExtra("Item")){
+                String item = intent.getExtras().getString("Item");
+                cursor = db.getPlayerQueryData(item);
+            }else{
+                cursor = db.getPlayerData();
             }
-        }
+
+            int index1 = cursor.getColumnIndex(Constants.NAME);
+            int index2 = cursor.getColumnIndex(Constants.TYPE);
+            int index3 = cursor.getColumnIndex(Constants.WEARING);
+            int index4 = cursor.getColumnIndex(Constants.IMAGE);
+
+            ArrayList<String> mArrayList = new ArrayList<String>();
+
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                String itemName = cursor.getString(index1);
+                String itemType = cursor.getString(index2);
+                String itemWearing= cursor.getString(index3);
+                String itemImage = cursor.getString(index4);
+                String s = itemName +"," + itemType + "," + itemWearing + "," + itemImage;
+                mArrayList.add(s);
+                cursor.moveToNext();
+            }
+
+            customAdapter = new CustomAdapter(mArrayList);
+            myRecycler.setAdapter(customAdapter);
+
+            // use a linear layout manager
+            mLayoutManager = new LinearLayoutManager(this);
+            myRecycler.setLayoutManager(mLayoutManager);
+            ;
+        }//end of onCreate
+
+    public void filterHead(View view){
+        Intent i = new Intent(this, Customization.class);
+        i.putExtra("Item", "Head");
+        startActivity(i);
+    }
+
+    public void filterNeck(View view){
+        Intent i = new Intent(this, Customization.class);
+        i.putExtra("Item", "Neck");
+        startActivity(i);
+    }
+
+    public void filterBody(View view){
+        Intent i = new Intent(this, Customization.class);
+        i.putExtra("Item", "Body");
+        startActivity(i);
+    }
 
     //for shop button
     public void gotoShop(View view) {
@@ -89,4 +120,6 @@ public class Customization extends AppCompatActivity{
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
-}
+
+
+}//end of class

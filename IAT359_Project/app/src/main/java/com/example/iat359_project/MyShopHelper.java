@@ -16,8 +16,8 @@ public class MyShopHelper extends SQLiteOpenHelper {
                     Constants.UID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     Constants.NAME + " TEXT, " +
                     Constants.TYPE + " TEXT, " +
-                    Constants.IMAGE + " TEXT, " +
-                    Constants.PRICE + " TEXT);" ;
+                    Constants.PRICE + " TEXT, " +
+                    Constants.IMAGE + " TEXT);" ;
 
     private static final String DROP_SHOP_TABLE = "DROP TABLE IF EXISTS " + Constants.SHOP_TABLE_NAME;
 

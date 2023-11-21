@@ -1,6 +1,6 @@
 package com.example.iat359_project;
 
-import static com.example.iat359_project.Naming.DEFAULT;
+//import static com.example.iat359_project.Naming.DEFAULT;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +20,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private MyPlayerHelper playerHelper;
     private MyShopHelper shopHelper;
     public static final String DEFAULT = "no name";
+    public Button weatherButton;
 
 
     @Override
@@ -93,6 +95,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void custom(View view) {
         Intent i = new Intent(this,Customization.class);
         startActivity(i);
+    }
+
+    public void Weather(View v){
+        getWeather(v);
     }
 
     //for playing using toys
@@ -170,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //GPS + weather
     public void getWeather(View v) {
-        url = "http://api.geonames.org/findNearByWeatherJSON?lat=";
+        url = "http://api.geonames.org/findNearByWeatherJSON?lat=" + lat + "&lng=" + lng + "&username=demo";
 
         Thread myThread = new Thread(new GetWeatherThread());
         myThread.start();
@@ -258,4 +264,4 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         return new String(buffer);
     }
 
-}
+} // end of class

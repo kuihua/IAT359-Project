@@ -13,7 +13,11 @@ public class Constants {
     public static final String WEARING = "Wearing";
     public static final String OWNED = "Owned";
     public static final String PRICE = "Price";
-    public static final int PLAYER_DATABASE_VERSION = 1;
-    public static final int SHOP_DATABASE_VERSION = 1;
+    public static final int PLAYER_DATABASE_VERSION = 3;
+    public static final int SHOP_DATABASE_VERSION = 3;
+
+    //
+    public static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "database";
 
 }
