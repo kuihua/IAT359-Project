@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.io.File;
+
 public class MyPlayerDatabase {
     private SQLiteDatabase db;
     private Context context;
@@ -13,6 +15,14 @@ public class MyPlayerDatabase {
     public MyPlayerDatabase(Context c){
         context = c;
         helper = new MyPlayerHelper(context);
+    }
+
+    //getting the size of the player database
+    public long getCount(){
+        File f = context.getDatabasePath(Constants.PLAYER_TABLE_NAME);
+        long dbSize = f.length();
+
+        return dbSize;
     }
 
     public long insertData (String name, String type, String location, String latinName)

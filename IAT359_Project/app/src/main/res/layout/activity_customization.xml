@@ -37,7 +37,40 @@
         android:scaleType="fitXY"
         android:src="@drawable/navbar"/>
 
-<!--    nav buttons -->
+<!--    recycler view for the items -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </androidx.recyclerview.widget.RecyclerView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/backButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Back" />
+
+                <Button
+                    android:id="@+id/nextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Next" />
+            </LinearLayout>
+
+
+    </LinearLayout>
+
+    <!--    nav buttons -->
     <TableLayout
         android:id="@+id/navLayout"
         android:layout_width="match_parent"
