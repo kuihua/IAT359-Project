@@ -52,13 +52,13 @@
         android:onClick="BuyWear"
         android:text="Buy" />
 
-        <ImageView
-        android:id="@+id/itemImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="100"
-        android:adjustViewBounds="true"
-        android:src="@drawable/red_cloak_icon" />
+    <!--    <ImageView-->
+<!--        android:id="@+id/itemImageView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_weight="100"-->
+<!--        android:adjustViewBounds="true"-->
+<!--        android:src="@drawable/red_cloak_icon" />-->
 
 
 </LinearLayout>

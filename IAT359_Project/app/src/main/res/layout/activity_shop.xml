@@ -42,46 +42,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:paddingLeft="60dp"
-        android:paddingTop="100dp"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/allButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:onClick="filterAll"
-            android:text="All" />
-
-        <Button
-            android:id="@+id/filterHeadButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:onClick="filterHead"
-            android:text="Head" />
-
-        <Button
-            android:id="@+id/filterNeckButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:onClick="filterNeck"
-            android:text="Neck" />
-
-        <Button
-            android:id="@+id/filterBodyButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:onClick="filterBody"
-            android:text="Body" />
-    </LinearLayout>
-
 <!--    rug-->
     <ImageView
         android:id="@+id/smallRug"

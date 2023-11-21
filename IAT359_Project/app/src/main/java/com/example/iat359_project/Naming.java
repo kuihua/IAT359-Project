@@ -23,44 +23,37 @@ public class Naming extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_naming);
 
-        //checking if the user is using the app for the first time
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         firstTime = sharedPrefs.getBoolean("firstTime", true);
-        //if the user is not a first time user or in the midst of renaming their pet, send them to main activity
         if (!firstTime && !rename) {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
         }
 
-        //initializing editText
-        petNameEdit = (EditText)findViewById(R.id.petNameEdit);
-
-        //if it's a first time user, add all items to the database (for the shop items)
+        //add all data to the db
         if(firstTime){
             db = new MyDatabase(this);
-            db.insertShopData("Red Bow Tie", "Neck", "10", "R.drawable.bowtie_red");
-            db.insertShopData("Crown Red Jewels", "Head", "10", "R.drawable.crown_red_jewels");
-            db.insertShopData("Loose Tie","Neck","10","R.drawable.loose_tie_red");
-            db.insertShopData("Red Cloak", "Body", "10", "R.drawable.red_cloak");
-            db.insertShopData("Top Hat","Head","10","R.drawable.tophat");
-            db.insertShopData("Tuxedo", "Body", "10", "R.drawable.tuxedo");
+            db.insertShopData("Red Bow Tie", "Neck", "10", "bowtie_red.png");
+            db.insertShopData("Crown Red Jewels", "Head", "10", "crown_red_jewels.png");
+            db.insertShopData("Loose Tie","Neck","10","loose_tie_red.png");
+            db.insertShopData("Red Cloak", "Body", "10", "red_cloak.png");
+            db.insertShopData("Top Hat","Head","10","tophat.png");
+            db.insertShopData("Tuxedo", "Body", "10", "tuxedo.png");
         }
+
+        petNameEdit = (EditText)findViewById(R.id.petNameEdit);
 
     }//end of onCreate
 
-    //name button to name the pet
     public void name (View view){
-        //once you name your pet, it is no longer the user's first time accessing this app
         rename=false;
         firstTime=false;
-
-        //placing the pet's name into shared preferences
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putString("petName", petNameEdit.getText().toString());
         editor.putBoolean("rename", rename);
         editor.putBoolean("firstTime", firstTime);
-//        Toast.makeText(this, "Welcome!", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Your pet's name was saved to Preferences", Toast.LENGTH_LONG).show();
         editor.commit();
         Intent intent= new Intent(this, MainActivity.class);
         startActivity(intent);

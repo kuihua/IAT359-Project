@@ -21,6 +21,7 @@ public class Shop extends AppCompatActivity {
     private MyDatabase db;
     private MyHelper helper;
     private CustomAdapter customAdapter;
+    private TextView itemNameText, itemTypeText, itemVarText;
     private ImageView itemImageView;
     private LinearLayoutManager mLayoutManager;
 
@@ -35,7 +36,6 @@ public class Shop extends AppCompatActivity {
         db = new MyDatabase(this);
         helper = new MyHelper(this);
 
-        //getting information from the shop table
         Cursor cursor = db.getShopData();
 
         int index1 = cursor.getColumnIndex(Constants.NAME);
@@ -45,7 +45,6 @@ public class Shop extends AppCompatActivity {
 
         ArrayList<String> mArrayList = new ArrayList<String>();
 
-        //passing info to the cursor
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             String itemName = cursor.getString(index1);
@@ -66,13 +65,17 @@ public class Shop extends AppCompatActivity {
 
     }
 
+    public void buyWear(){
+//        db.insertData("Red Bow Tie", "Neck", "10", "bowtie_red.png");
+    }
+
     //for home button
     public void goHome(View view) {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
 
-    //for customization button
+    //for custom button
     public void custom(View view) {
         Intent i = new Intent(this,Customization.class);
         startActivity(i);
