@@ -80,6 +80,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             context = itemView.getContext();
             db = new MyDatabase(context);
 
+            //changing button text based on the activity the user is in
             if(context instanceof Customization){
                 buyWearButton.setText("Wear");
             }
@@ -95,9 +96,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                     db.deleteShopData(nameTextView.getText().toString());
                 }
 
-
-                Toast.makeText(context,
-                        "You have clicked " + nameTextView.getText(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context,"You have clicked " + nameTextView.getText(), Toast.LENGTH_SHORT).show();
             }
         }
     }

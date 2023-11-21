@@ -10,6 +10,7 @@ public class MyHelper extends SQLiteOpenHelper {
 
     private Context context;
 
+    //sql for creating the 2 tables
     private static final String CREATE_SHOP_TABLE =
             "CREATE TABLE "+
                     Constants.SHOP_TABLE_NAME + " (" +
@@ -28,16 +29,17 @@ public class MyHelper extends SQLiteOpenHelper {
                     Constants.WEARING + " TEXT, " +
                     Constants.IMAGE + " TEXT);" ;
 
+    //sql for checking if the tables exist or not already
     private static final String DROP_SHOP_TABLE = "DROP TABLE IF EXISTS " + Constants.SHOP_TABLE_NAME;
     private static final String DROP_PLAYER_TABLE = "DROP TABLE IF EXISTS " + Constants.PLAYER_TABLE_NAME;
 
 
-    //issue
     public MyHelper(Context context){
         super (context, Constants.DATABASE_NAME, null, Constants.DATABASE_VERSION);
         this.context = context;
     }
 
+    //executing sql
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {

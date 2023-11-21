@@ -91,6 +91,7 @@ public class Customization extends AppCompatActivity{
             ;
         }//end of onCreate
 
+    //filter buttons
     public void filterHead(View view){
         Intent i = new Intent(this, Customization.class);
         i.putExtra("Item", "Head");
