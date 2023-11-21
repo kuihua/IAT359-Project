@@ -29,6 +29,7 @@ public class MyDatabase {
         return id;
     }
 
+//not being used
 //    public long insertPlayerData (String name, String type, String wearing, String image)
 //    {
 //        db = helper.getWritableDatabase();

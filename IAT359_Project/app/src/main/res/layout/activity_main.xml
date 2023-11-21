@@ -99,12 +99,12 @@
         android:visibility="gone"
         />
 
-    <!--    nav buttons -->
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/weatherButton"
         android:layout_width="wrap_content"
         android:onClick="Weather"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:text="Button" />
 
     <TableLayout
@@ -116,13 +116,14 @@
         android:layout_weight="4"
         android:padding="35dp">
 
+<!--        navigation bar-->
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/shopButton"
                 style="@android:style/ButtonBar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -131,7 +132,7 @@
                 android:onClick="gotoShop"/>
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/homeButton"
                 style="@android:style/ButtonBar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -140,7 +141,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/feedButton"
                 style="@android:style/ButtonBar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -150,7 +151,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/playButton"
                 style="@android:style/ButtonBar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -165,18 +166,19 @@
 
 <!--    quest button-->
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/questButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_weight="1"
+        android:onClick="questButton"
         android:text="q"/>
 
-<!--    custom button-->
+<!--    customization button-->
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/customizationButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_below="@+id/button5"
+        android:layout_below="@+id/questButton"
         android:layout_weight="1"
         android:text="c"
         android:onClick="custom"/>

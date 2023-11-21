@@ -99,6 +99,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         startActivity(i);
     }
 
+    //for quest button
+    public void questButton(View view){
+        Intent i = new Intent(this,Quest.class);
+        startActivity(i);
+    }
+
 //    //getting the weather button
 //    public void Weather(View v){
 //        Thread thread = new Thread(new GetWeatherThread());
