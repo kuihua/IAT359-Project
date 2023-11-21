@@ -34,7 +34,7 @@ public class MyHelper extends SQLiteOpenHelper {
 
     //issue
     public MyHelper(Context context){
-        super (context, Constants.DATABASE_NAME, null, Constants.SHOP_DATABASE_VERSION);
+        super (context, Constants.DATABASE_NAME, null, Constants.DATABASE_VERSION);
         this.context = context;
     }
 
