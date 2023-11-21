@@ -24,6 +24,7 @@ public class Shop extends AppCompatActivity {
     private TextView itemNameText, itemTypeText, itemVarText;
     private ImageView itemImageView;
     private LinearLayoutManager mLayoutManager;
+    Cursor cursor;
 
 
     @Override
@@ -36,7 +37,13 @@ public class Shop extends AppCompatActivity {
         db = new MyDatabase(this);
         helper = new MyHelper(this);
 
-        Cursor cursor = db.getShopData();
+        Intent intent = getIntent();
+        if(intent.hasExtra("Item")){
+            String item = intent.getExtras().getString("Item");
+            cursor = db.getShopQueryData(item);
+        }else{
+            cursor = db.getShopData();
+        }
 
         int index1 = cursor.getColumnIndex(Constants.NAME);
         int index2 = cursor.getColumnIndex(Constants.TYPE);
@@ -65,8 +72,22 @@ public class Shop extends AppCompatActivity {
 
     }
 
-    public void buyWear(){
-//        db.insertData("Red Bow Tie", "Neck", "10", "bowtie_red.png");
+    public void filterHead(View view){
+        Intent i = new Intent(this, Shop.class);
+        i.putExtra("Item", "Head");
+        startActivity(i);
+    }
+
+    public void filterNeck(View view){
+        Intent i = new Intent(this, Shop.class);
+        i.putExtra("Item", "Neck");
+        startActivity(i);
+    }
+
+    public void filterBody(View view){
+        Intent i = new Intent(this, Shop.class);
+        i.putExtra("Item", "Body");
+        startActivity(i);
     }
 
     //for home button
