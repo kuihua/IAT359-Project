@@ -105,7 +105,7 @@
         android:scaleType="fitXY"
         android:src="@drawable/navbar"/>
 
-    <!--    navigation buttons -->
+    <!--    nav buttons -->
     <TableLayout
         android:id="@+id/navLayout"
         android:layout_width="match_parent"
@@ -121,7 +121,7 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/shopButton"
+                android:id="@+id/button1"
                 style="@android:style/ButtonBar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -129,7 +129,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/homeButton"
+                android:id="@+id/button2"
                 style="@android:style/ButtonBar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -139,7 +139,7 @@
                 android:onClick="goHome"/>
 
             <Button
-                android:id="@+id/feedButton"
+                android:id="@+id/button3"
                 style="@android:style/ButtonBar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -148,7 +148,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/playButton"
+                android:id="@+id/button4"
                 style="@android:style/ButtonBar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
