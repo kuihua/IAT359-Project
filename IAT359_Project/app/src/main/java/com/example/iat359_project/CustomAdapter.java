@@ -47,8 +47,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         holder.itemVarText.setText(results[2]);
 
         //for item icon
-//        int id = getResources().getIdentifier("com.example.iat359:drawable/" + results[3], null, null);
+//        int id = this.getResources().getIdentifier("com.example.iat359:drawable/" + results[3], null, null);
 //        holder.itemImageView.setImageResource(id);
+        holder.setImage(results[0]);
     }
 
 
@@ -73,17 +74,27 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             nameTextView = (TextView) itemView.findViewById(R.id.itemNameText);
             typeTextView = (TextView) itemView.findViewById(R.id.itemTypeText);
             itemVarText = (TextView) itemView.findViewById(R.id.itemVarText);
-//            itemImageView = (ImageView) itemView.findViewById(R.id.itemImageView);
+            itemImageView = (ImageView) itemView.findViewById(R.id.itemImageView);
 
 //            itemView.setOnClickListener(this);
             buyWearButton.setOnClickListener(this);
             context = itemView.getContext();
             db = new MyDatabase(context);
 
+//            int id = context.getResources().getIdentifier("com.example.iat359:drawable/" + results[3], null, null);
+//            itemImageView.setImageResource(id);
+
             //changing button text based on the activity the user is in
             if(context instanceof Customization){
                 buyWearButton.setText("Wear");
             }
+        }
+
+        public void setImage(String name) {
+            String file = name.toLowerCase();
+            file = file.replace(" ", "_");
+            int id = context.getResources().getIdentifier(file, "drawable", context.getPackageName());
+            itemImageView.setImageResource(id);
         }
 
         @Override
@@ -94,9 +105,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
                 }else if(context instanceof Shop){
                     db.deleteShopData(nameTextView.getText().toString());
+                    ((Shop)context).recreate();
                 }
-
-//                Toast.makeText(context,"You have clicked " + nameTextView.getText(), Toast.LENGTH_SHORT).show();
             }
         }
     }
