@@ -22,7 +22,9 @@
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:paddingLeft="80dp"
-        android:text="Quests" />
+        android:paddingTop="50dp"
+        android:text="Quests"
+        android:textColor="#000000"/>
 
 <!--    rug-->
     <ImageView

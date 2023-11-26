@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //GPS + weather
     public void getWeather(View v) {
-        url = "http://api.geonames.org/findNearByWeatherJSON?lat=" + lat + "&lng=" + lng + "&username=demo";
+        url = "http://api.geonames.org/findNearByWeatherJSON?lat=" + lat + "&lng=" + lng + "&username=jvillaso";
 
         Thread myThread = new Thread(new GetWeatherThread());
         myThread.start();
