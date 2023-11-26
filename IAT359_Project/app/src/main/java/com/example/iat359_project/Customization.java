@@ -122,5 +122,10 @@ public class Customization extends AppCompatActivity{
         startActivity(i);
     }
 
+    //for quest
+    public void questButton(View view) {
+        Intent i = new Intent(this,Quest.class);
+        startActivity(i);
+    }
 
 }//end of class

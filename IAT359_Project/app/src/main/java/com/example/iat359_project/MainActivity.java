@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         startActivity(i);
     }
 
+    //for quest
     public void questButton(View view) {
         Intent i = new Intent(this,Quest.class);
         startActivity(i);

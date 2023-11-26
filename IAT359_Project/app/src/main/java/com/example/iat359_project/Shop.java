@@ -101,4 +101,10 @@ public class Shop extends AppCompatActivity {
         Intent i = new Intent(this,Customization.class);
         startActivity(i);
     }
+
+    //for quest
+    public void questButton(View view) {
+        Intent i = new Intent(this,Quest.class);
+        startActivity(i);
+    }
 }
