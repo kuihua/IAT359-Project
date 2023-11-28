@@ -159,20 +159,26 @@
     </TableLayout>
 
     <!--    quest button-->
-    <Button
+    <ImageButton
         android:id="@+id/questButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_weight="1"
-        android:text="q"/>
+        android:onClick="questButton"
+        android:scaleType="fitStart"
+        android:src="@drawable/quest_icon"
+        android:background="@null"/>
 
     <!--    custom button-->
-    <Button
+    <ImageButton
         android:id="@+id/customizationButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/questButton"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_weight="1"
-        android:text="c"/>
+        android:layout_below="@+id/questButton"
+        android:src="@drawable/custom_icon"
+        android:scaleType="fitStart"
+        android:onClick="custom"
+        android:background="@null"/>
 
 </RelativeLayout>

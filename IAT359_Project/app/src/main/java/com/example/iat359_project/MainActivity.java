@@ -183,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             JSONObject jsonObject = new JSONObject(result);
             JSONObject weatherObservationItems =
                     new JSONObject(jsonObject.getString("weatherObservation"));
+            Toast.makeText(this, "weather retrieved", Toast.LENGTH_LONG).show();
 
 
         } catch (Exception e) {
