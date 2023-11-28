@@ -8,11 +8,12 @@
 
     <!--    overlay-->
     <ImageView
-        android:id="@+id/shopOverlay"
-        android:layout_width="match_parent"
+        android:id="@+id/questOverlay"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
+        android:scaleX="1.2"
         android:paddingTop="30dp"
+        android:layout_marginStart="60dp"
         android:src="@drawable/quest_overlay_cropped" />
 
 <!--    quest text title-->
@@ -20,9 +21,9 @@
         android:id="@+id/questTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:paddingLeft="80dp"
-        android:paddingTop="50dp"
+        android:textSize="30dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="50dp"
         android:text="Quests"
         android:textColor="#000000"/>
 
@@ -72,7 +73,8 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:text="Shop"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:onClick="gotoShop"/>
 
             <Button
                 android:id="@+id/homeButton"
