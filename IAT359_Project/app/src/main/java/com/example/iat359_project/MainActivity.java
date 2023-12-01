@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     int affection=0;
     int currency=100;
 
-    ImageView toy, food, plate, night, bodyItem, hatItem, neckItem;
+    ImageView toy, food, plate, night, snow, rain, bodyItem, hatItem, neckItem;
     TextView petNameView;
-    String lat, lng, result, url;
+    String lat, lng, result, url, stationName;
     boolean feeding = false;
     boolean playing = false;
 
@@ -76,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         food = (ImageView) findViewById(R.id.foodView);
         plate = (ImageView) findViewById(R.id.plateView);
         night = (ImageView) findViewById(R.id.nightWindow);
+        snow = (ImageView) findViewById(R.id.snowWindow);
+        rain= (ImageView) findViewById(R.id.rainWindow);
 
         bodyItem = (ImageView) findViewById(R.id.creatureBodyImageView);
         hatItem = (ImageView) findViewById(R.id.creatureHatImageView);
@@ -128,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //Sensor
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lightSensor = mySensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+
     }
 
     public int getImage(String name) {
@@ -232,6 +235,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //GPS + weather
     public void getWeather(View v) {
         url = "http://api.geonames.org/findNearByWeatherJSON?lat=" + lat + "&lng=" + lng + "&username=jvillaso";
+        stationName = "http://api.geonames.org/findNearByWeatherJSON?lat=43&lng=-2&username=jvillaso";
+
 
         Thread myThread = new Thread(new GetWeatherThread());
         myThread.start();
@@ -240,13 +245,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             JSONObject jsonObject = new JSONObject(result);
             JSONObject weatherObservationItems =
                     new JSONObject(jsonObject.getString("weatherObservation"));
-            Toast.makeText(this, "weather retrieved", Toast.LENGTH_LONG).show();
 
-
+            rain.setVisibility(Integer.parseInt(weatherObservationItems.getString("weatherObservation")));
         } catch (Exception e) {
             Log.d("ReadWeatherJSONDataTask", e.getLocalizedMessage());
+            Toast.makeText(this, "weather retrieved", Toast.LENGTH_LONG).show();
+                rain.setVisibility(VISIBLE);
+            }
         }
-    }
 
     private class GetWeatherThread implements Runnable
     {
@@ -259,8 +265,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 exception = e;
             }
         }
-    }
+     }
 
+     //check if connection is online
     public void checkConnection(){
         ConnectivityManager connectMgr =
                 (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);

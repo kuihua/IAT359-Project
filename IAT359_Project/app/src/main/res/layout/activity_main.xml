@@ -221,7 +221,6 @@
 
         </TableRow>
 
-
     </TableLayout>
 
 <!--    quest button-->
@@ -259,5 +258,19 @@
         android:textSize="30dp"
         android:textStyle="bold"
         android:textColor="@color/black"/>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/namingTextView"
+        android:layout_marginTop="-20dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:onClick="getWeather"
+        android:text="Current Weather"
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true">
+    </Button>
+
 
 </RelativeLayout>

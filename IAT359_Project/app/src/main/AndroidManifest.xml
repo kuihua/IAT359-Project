@@ -16,12 +16,6 @@
         android:theme="@style/Theme.IAT359_Project"
         tools:targetApi="31">
         <activity
-            android:name=".CurrentWeather"
-            android:exported="false" />
-        <activity
-            android:name=".NetworkOperations"
-            android:exported="false" />
-        <activity
             android:name=".Naming"
             android:exported="true">
             <intent-filter>
