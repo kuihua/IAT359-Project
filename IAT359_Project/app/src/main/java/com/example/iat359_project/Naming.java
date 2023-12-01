@@ -16,7 +16,7 @@ public class Naming extends AppCompatActivity {
     EditText petNameEdit;
     boolean rename=false;
     boolean firstTime=false;
-    private MyDatabase db;
+    MyDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +34,12 @@ public class Naming extends AppCompatActivity {
         //when user is a first time user, add all data to the db shop table
         if(firstTime){
             db = new MyDatabase(this);
-            db.insertShopData("Red Bow Tie", "Neck", "10", "bowtie_red.png");
-            db.insertShopData("Crown Red Jewels", "Head", "10", "crown_red_jewels.png");
-            db.insertShopData("Loose Tie","Neck","10","loose_tie_red.png");
-            db.insertShopData("Red Cloak", "Body", "10", "red_cloak.png");
-            db.insertShopData("Top Hat","Head","10","tophat.png");
-            db.insertShopData("Tuxedo", "Body", "10", "tuxedo.png");
+            db.insertShopData("Bowtie", "Neck", "10", "bowtie_icon.png");
+            db.insertShopData("Crown Red Jewels", "Head", "10", "crown_red_jewels_icon.png");
+            db.insertShopData("Loose Tie","Neck","10","loose_tie_icon.png");
+            db.insertShopData("Red Cloak", "Body", "10", "red_cloak_icon.png");
+            db.insertShopData("Top Hat","Head","10","top_hat_icon.png");
+            db.insertShopData("Tuxedo", "Body", "10", "tuxedo_icon.png");
         }
 
         petNameEdit = (EditText)findViewById(R.id.petNameEdit);

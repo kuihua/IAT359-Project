@@ -2,11 +2,14 @@ package com.example.iat359_project;
 
 //import static com.example.iat359_project.Naming.DEFAULT;
 
+import static android.view.View.VISIBLE;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -34,13 +37,14 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     int affection=0;
     int currency=100;
 
-    ImageView toy, food, plate, night;
+    ImageView toy, food, plate, night, bodyItem, hatItem, neckItem;
     TextView petNameView;
     String lat, lng, result, url;
     boolean feeding = false;
@@ -52,6 +56,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     float[] light_vals = new float[1];
     public static final String DEFAULT = "no name";
 
+    private MyDatabase db;
+    private MyHelper helper;
+    Cursor cursor;
+    int index1=-1;
+    int index2, index3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,15 +71,55 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         String petName = sharedPref.getString("petName", DEFAULT);
         checkConnection();
 
-//        //using the player database to ensure they are wearing clothes from last session
-//        playerdb = new MyPlayerDatabase(this);
-//        playerHelper = new MyPlayerHelper(this);
-
         //Images
         toy = (ImageView) findViewById(R.id.toyView);
         food = (ImageView) findViewById(R.id.foodView);
         plate = (ImageView) findViewById(R.id.plateView);
         night = (ImageView) findViewById(R.id.nightWindow);
+
+        bodyItem = (ImageView) findViewById(R.id.creatureBodyImageView);
+        hatItem = (ImageView) findViewById(R.id.creatureHatImageView);
+        neckItem = (ImageView) findViewById(R.id.creatureNeckImageView);
+
+        //using the player database to ensure they are wearing clothes from last session
+        db = new MyDatabase(this);
+        helper = new MyHelper(this);
+
+        db.getPlayerData();
+//        index1 = cursor.getColumnIndex(Constants.NAME);
+
+        if(index1 != -1) {
+             index1 = cursor.getColumnIndex(Constants.NAME);
+             index2 = cursor.getColumnIndex(Constants.TYPE);
+             index3 = cursor.getColumnIndex(Constants.WEARING);
+
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                String itemName = cursor.getString(index1);
+                String itemType = cursor.getString(index2);
+                String itemWear= cursor.getString(index3);
+//            String itemImage = cursor.getString(index4);
+
+                //display clothes
+                if (itemWear == "True") {
+                    int id = getImage(itemName);
+                    if(itemType=="Head"){
+                        hatItem.setImageResource(id);
+                        hatItem.setVisibility(VISIBLE);
+                    }
+                    if(itemType=="Neck"){
+                        neckItem.setImageResource(id);
+                        neckItem.setVisibility(VISIBLE);
+                    }
+                    if(itemType=="Body"){
+                        bodyItem.setImageResource(id);
+                        bodyItem.setVisibility(VISIBLE);
+                    }
+                }
+                cursor.moveToNext();
+            }
+        }//
+
 
         //Pet name displayed in main
         petNameView = (TextView) findViewById(R.id.namingTextView);
@@ -78,6 +128,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //Sensor
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lightSensor = mySensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+    }
+
+    public int getImage(String name) {
+        String file = name.toLowerCase();
+        file = file.replace("_icon", "");
+        int id = getResources().getIdentifier(file, "drawable", getPackageName());
+        return id;
     }
 
     //for shop button
@@ -102,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void play(View v) {
         if(!playing) {
             //if the pet is not playing, start playing
-            toy.setVisibility(v.VISIBLE);
+            toy.setVisibility(VISIBLE);
             playing=true;
             //if the pet is playing, set food items to gone
             feeding=false;
@@ -119,8 +176,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void feed(View v) {
         if(!feeding) {
             //if the pet is not eating, start feeding
-            plate.setVisibility(v.VISIBLE);
-            food.setVisibility(v.VISIBLE);
+            plate.setVisibility(VISIBLE);
+            food.setVisibility(VISIBLE);
             feeding=true;
             //if the pet is being fed, set all toys to gone
             playing=false;
@@ -162,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             //if there's no light, change window to night time
             if(Sensor.TYPE_LIGHT >= light_vals[0]) {
 //              Toast.makeText(this, "night time", Toast.LENGTH_LONG).show();
-                night.setVisibility(View.VISIBLE);
+                night.setVisibility(VISIBLE);
             } else {
 //              Toast.makeText(this, "good morning", Toast.LENGTH_LONG).show();
                 //if there's light, change the window to day time

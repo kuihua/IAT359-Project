@@ -18,6 +18,15 @@
         android:textSize="10sp"
         />
 
+    <ImageView
+        android:id="@+id/itemImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/red_cloak_icon" />
+
     <TextView
         android:id="@+id/itemTypeText"
         android:layout_width="wrap_content"
@@ -46,20 +55,12 @@
 
     <Button
         android:id="@+id/buyWearButton"
-        android:layout_width="70dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="10sp"
         android:onClick="BuyWear"
         android:text="Buy" />
-
-        <ImageView
-        android:id="@+id/itemImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="100"
-        android:adjustViewBounds="true"
-        android:src="@drawable/red_cloak_icon" />
 
 
 </LinearLayout>
