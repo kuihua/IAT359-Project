@@ -88,6 +88,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         helper = new MyHelper(this);
 
         db.getPlayerData();
+
+        if(cursor.getColumnIndex(Constants.NAME) != 0){
+            
+        }
 //        index1 = cursor.getColumnIndex(Constants.NAME);
 
         if(index1 != -1) {

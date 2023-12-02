@@ -25,11 +25,6 @@ public class Customization extends AppCompatActivity{
         Button filterHead, filterNeck, filterBody;
 
         private CustomAdapter customAdapter;
-//        Button prevButton, nextButton;
-//        Paginator paginator = new Paginator();
-//        private long totalPages = Paginator.totalNumItems / Paginator.ITEMS_PER_PAGE;
-//        private int currentPage = 0;
-
         private MyHelper helper;
         private LinearLayoutManager mLayoutManager;
         Cursor cursor;
@@ -39,12 +34,8 @@ public class Customization extends AppCompatActivity{
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_customization);
             myRecycler = (RecyclerView) findViewById(R.id.recyclerView);
-//            prevButton = (Button) findViewById(R.id.backButton);
-//            nextButton = (Button) findViewById(R.id.nextButton);
-//            //previous button won't work if its on first page
-//            prevButton.setEnabled(false);
-
             myRecycler.setLayoutManager(new LinearLayoutManager(this));
+
             db = new MyDatabase(this);
             helper = new MyHelper(this);
 
@@ -91,7 +82,7 @@ public class Customization extends AppCompatActivity{
             ;
         }//end of onCreate
 
-    //filter buttons
+    //filter buttons for clothing
     public void filterHead(View view){
         Intent i = new Intent(this, Customization.class);
         i.putExtra("Item", "Head");

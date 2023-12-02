@@ -75,7 +75,7 @@
         android:scaleX=".7"
         android:scaleY=".7"
         android:visibility="gone"
-        android:src="@drawable/top_hat" />
+        android:src="@drawable/tophat" />
 
     <!--   neck  creature-->
     <ImageView
@@ -87,7 +87,7 @@
         android:scaleX=".7"
         android:scaleY=".7"
         android:visibility="gone"
-        android:src="@drawable/loose_tie" />
+        android:src="@drawable/tie" />
 
     <!--    body creature-->
     <ImageView

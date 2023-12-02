@@ -35,10 +35,10 @@ public class Naming extends AppCompatActivity {
         if(firstTime){
             db = new MyDatabase(this);
             db.insertShopData("Bowtie", "Neck", "10", "bowtie_icon.png");
-            db.insertShopData("Crown Red Jewels", "Head", "10", "crown_red_jewels_icon.png");
-            db.insertShopData("Loose Tie","Neck","10","loose_tie_icon.png");
-            db.insertShopData("Red Cloak", "Body", "10", "red_cloak_icon.png");
-            db.insertShopData("Top Hat","Head","10","top_hat_icon.png");
+            db.insertShopData("Crown", "Head", "10", "crown_icon.png");
+            db.insertShopData("Tie","Neck","10","tie_icon.png");
+            db.insertShopData("Cloak", "Body", "10", "cloak_icon.png");
+            db.insertShopData("Tophat","Head","10","tophat_icon.png");
             db.insertShopData("Tuxedo", "Body", "10", "tuxedo_icon.png");
         }
 

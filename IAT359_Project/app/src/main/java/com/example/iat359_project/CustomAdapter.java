@@ -38,8 +38,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public void onBindViewHolder(CustomAdapter.MyViewHolder holder, int position) {
         //getting item data
         String[]  results = (list.get(position).split(","));
-        String test = (list.get(position).toString());
-        Log.d("Results Testing: ", results[1]);
 
         itemData = list.get(position).toString();
         holder.nameTextView.setText(results[0]);
@@ -76,7 +74,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             itemVarText = (TextView) itemView.findViewById(R.id.itemVarText);
             itemImageView = (ImageView) itemView.findViewById(R.id.itemImageView);
 
-//            itemView.setOnClickListener(this);
             buyWearButton.setOnClickListener(this);
             context = itemView.getContext();
             db = new MyDatabase(context);
@@ -88,7 +85,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             if(context instanceof Customization){
                 buyWearButton.setText("Wear");
             }
-        }
+        } // end of my view holder view
 
         public void setImage(String name) {
             String file = name.toLowerCase();
@@ -104,7 +101,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
                 if(context instanceof Customization){
                     db.wearItem(nameTextView.getText().toString());
-//                    buyWearButton.setText("Worn");
+                    //change button text depending if item is worn
+                    if(buyWearButton.getText().toString().equals("Wear")){
+                        buyWearButton.setText("Worn");
+                    }else{
+                        buyWearButton.setText("Wear");
+                    }
                     ((Customization)context).recreate();
                 }else if(context instanceof Shop){
                     db.deleteShopData(nameTextView.getText().toString());
@@ -112,7 +114,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 }
             }
         }//end of onClick
-    }
-}
+    } // end of my view holder with the on click listener
+} // end of custom adapter
 
 
