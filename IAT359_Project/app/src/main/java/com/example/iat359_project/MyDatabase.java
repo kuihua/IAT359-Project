@@ -114,6 +114,32 @@ public class MyDatabase {
         }
         contentValues.put(Constants.IMAGE, mArrayList.get(3));
 
+        //broken, add this feature when needed
+//        //taking off previous item if the item user is trying to wear is the same type
+//        ArrayList<String> newArrayList = new ArrayList<String>();
+//        Cursor c = getPlayerQueryData(cursor.getString(index2));
+//        while (!c.isAfterLast()) {
+//            int i1 = c.getColumnIndex(Constants.NAME);
+//            int i2 = c.getColumnIndex(Constants.TYPE);
+//            int i3 = c.getColumnIndex(Constants.WEARING);
+//            int i4 = c.getColumnIndex(Constants.IMAGE);
+//
+//            String itemName = cursor.getString(i1);
+//            String itemType = cursor.getString(i2);
+//            String itemWear= cursor.getString(i3);
+//            String itemImage = cursor.getString(i4);
+//
+//            if (itemWear.equals("True") && !itemName.equals(name)) {
+//                ContentValues cv = new ContentValues();
+//                cv.put(Constants.NAME, newArrayList.get(0));
+//                cv.put(Constants.TYPE, newArrayList.get(1));
+//                cv.put(Constants.WEARING, "False");
+//                cv.put(Constants.IMAGE, newArrayList.get(3));
+//                long id2 = db.update(Constants.PLAYER_TABLE_NAME, contentValues, Constants.NAME+"=?", new String[]{newArrayList.get(0).toString()} );
+//            }
+//            cursor.moveToNext();
+//        } // end of cursor
+
         //updating whether or not item has been worn
         long id = db.update(Constants.PLAYER_TABLE_NAME, contentValues, Constants.NAME+"=?", new String[]{name} );
         return id;
