@@ -82,8 +82,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 //            itemImageView.setImageResource(id);
 
             //changing button text based on the activity the user is in
-            if(context instanceof Customization){
-                buyWearButton.setText("Wear");
+            if(context instanceof Shop){
+                buyWearButton.setText("Buy");
             }
         } // end of my view holder view
 
@@ -101,13 +101,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
                 if(context instanceof Customization){
                     db.wearItem(nameTextView.getText().toString());
-                    //change button text depending if item is worn
-                    if(buyWearButton.getText().toString().equals("Wear")){
-                        buyWearButton.setText("Worn");
-                    }else{
-                        buyWearButton.setText("Wear");
-                    }
-                    ((Customization)context).recreate();
+//                    //change button text depending if item is worn
+//                    if(buyWearButton.getText().toString().equals("Wear")){
+//                        buyWearButton.setText("Worn");
+//                    }else{
+//                        buyWearButton.setText("Wear");
+//                    }
                 }else if(context instanceof Shop){
                     db.deleteShopData(nameTextView.getText().toString());
                     ((Shop)context).recreate();

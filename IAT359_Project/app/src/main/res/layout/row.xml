@@ -60,7 +60,7 @@
         android:layout_weight="1"
         android:textSize="10sp"
         android:onClick="BuyWear"
-        android:text="Buy" />
+        android:text="Wear" />
 
 
 </LinearLayout>

@@ -59,8 +59,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private MyDatabase db;
     private MyHelper helper;
     Cursor cursor;
-    int index1=-1;
-    int index2, index3;
 
 
     @Override
@@ -87,44 +85,39 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         db = new MyDatabase(this);
         helper = new MyHelper(this);
 
-        db.getPlayerData();
+        cursor = db.getPlayerData();
 
-        if(cursor.getColumnIndex(Constants.NAME) != 0){
-            
-        }
-//        index1 = cursor.getColumnIndex(Constants.NAME);
+        int index1 = cursor.getColumnIndex(Constants.NAME);
+        int index2 = cursor.getColumnIndex(Constants.TYPE);
+        int index3 = cursor.getColumnIndex(Constants.WEARING);
+//        int index4 = cursor.getColumnIndex(Constants.IMAGE);
 
-        if(index1 != -1) {
-             index1 = cursor.getColumnIndex(Constants.NAME);
-             index2 = cursor.getColumnIndex(Constants.TYPE);
-             index3 = cursor.getColumnIndex(Constants.WEARING);
-
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                String itemName = cursor.getString(index1);
-                String itemType = cursor.getString(index2);
-                String itemWear= cursor.getString(index3);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            String itemName = cursor.getString(index1);
+            String itemType = cursor.getString(index2);
+            String itemWear= cursor.getString(index3);
 //            String itemImage = cursor.getString(index4);
 
-                //display clothes
-                if (itemWear == "True") {
-                    int id = getImage(itemName);
-                    if(itemType=="Head"){
-                        hatItem.setImageResource(id);
-                        hatItem.setVisibility(VISIBLE);
-                    }
-                    if(itemType=="Neck"){
-                        neckItem.setImageResource(id);
-                        neckItem.setVisibility(VISIBLE);
-                    }
-                    if(itemType=="Body"){
-                        bodyItem.setImageResource(id);
-                        bodyItem.setVisibility(VISIBLE);
-                    }
+            //display clothes
+            if (itemWear.equals("True")) {
+                int id = getImage(itemName);
+                Toast.makeText(this,"cloth", Toast.LENGTH_LONG).show();
+                if(itemType.contains("Head")){
+                    hatItem.setImageResource(id);
+                    hatItem.setVisibility(VISIBLE);
                 }
-                cursor.moveToNext();
+                if(itemType.equals("Neck")){
+                    neckItem.setImageResource(id);
+                    neckItem.setVisibility(VISIBLE);
+                }
+                if(itemType.equals("Body")){
+                    bodyItem.setImageResource(id);
+                    bodyItem.setVisibility(VISIBLE);
+                }
             }
-        }//
+            cursor.moveToNext();
+        } // end of cursor
 
 
         //Pet name displayed in main
@@ -280,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             //fetch data
 
             String networkType = networkInfo.getTypeName().toString();
-            Toast.makeText(this, "connected to " + networkType, Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, "connected to " + networkType, Toast.LENGTH_LONG).show();
         }
         else {
             //display error

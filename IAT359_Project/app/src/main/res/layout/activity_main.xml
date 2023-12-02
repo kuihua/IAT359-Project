@@ -77,18 +77,6 @@
         android:visibility="gone"
         android:src="@drawable/tophat" />
 
-    <!--   neck  creature-->
-    <ImageView
-        android:id="@+id/creatureNeckImageView"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_centerVertical="true"
-        android:adjustViewBounds="true"
-        android:scaleX=".7"
-        android:scaleY=".7"
-        android:visibility="gone"
-        android:src="@drawable/tie" />
-
     <!--    body creature-->
     <ImageView
         android:id="@+id/creatureBodyImageView"
@@ -100,6 +88,18 @@
         android:scaleY=".7"
         android:visibility="gone"
         android:src="@drawable/tuxedo" />
+
+    <!--   neck  creature-->
+    <ImageView
+        android:id="@+id/creatureNeckImageView"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_centerVertical="true"
+        android:adjustViewBounds="true"
+        android:scaleX=".7"
+        android:scaleY=".7"
+        android:visibility="gone"
+        android:src="@drawable/tie" />
 
 <!--    plate-->
 

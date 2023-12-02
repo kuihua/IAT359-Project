@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -100,18 +102,16 @@ public class MyDatabase {
             mArrayList.add(itemImage);
             cursor.moveToNext();
         }
-
         ContentValues contentValues = new ContentValues();
         contentValues.put(Constants.NAME, name);
         contentValues.put(Constants.TYPE, mArrayList.get(1));
 
         //actions depending if the item is being worn
-        if(contentValues.get(Constants.WEARING)=="False"){
+        if(mArrayList.get(2).toString().equals("False")){
             contentValues.put(Constants.WEARING, "True");
         }else{
             contentValues.put(Constants.WEARING, "False");
         }
-
         contentValues.put(Constants.IMAGE, mArrayList.get(3));
 
         //updating whether or not item has been worn
