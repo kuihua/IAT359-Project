@@ -1,7 +1,10 @@
 package com.example.iat359_project;
 
+import static com.example.iat359_project.MainActivity.DEFAULT;
+
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -110,7 +113,16 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 //                        buyWearButton.setText("Wear");
 //                    }
                 }else if(context instanceof Shop){
-                    db.deleteShopData(nameTextView.getText().toString());
+                    SharedPreferences sharedPref = context.getSharedPreferences("MyData", Context.MODE_PRIVATE);
+                    int currency = sharedPref.getInt("coin", 100);
+                    int currentMoney = Integer.parseInt(itemVarText.getText().toString());
+                    if(currency >= currentMoney){
+                        db.deleteShopData(nameTextView.getText().toString());
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putInt("coin", 100);
+                        Toast.makeText(context, "Spent "+ currentMoney, Toast.LENGTH_SHORT).show();
+                        editor.commit();
+                    }
                     ((Shop)context).recreate();
                 }
             }

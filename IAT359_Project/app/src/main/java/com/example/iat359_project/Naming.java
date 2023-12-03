@@ -55,6 +55,8 @@ public class Naming extends AppCompatActivity {
         editor.putString("petName", petNameEdit.getText().toString());
         editor.putBoolean("rename", rename);
         editor.putBoolean("firstTime", firstTime);
+        editor.putInt("coin", 100);
+        editor.putInt("affection", 0);
         Toast.makeText(this, "Welcome home!", Toast.LENGTH_LONG).show();
         editor.commit();
         Intent intent= new Intent(this, MainActivity.class);

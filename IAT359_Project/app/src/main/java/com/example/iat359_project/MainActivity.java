@@ -54,9 +54,6 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
-    int affection=0;
-    int currency=100;
-
     ImageView toy, food, plate, night, snow, rain, bodyItem, hatItem, neckItem;
     TextView petNameView;
     String lat, lng, result, url, stationName;
