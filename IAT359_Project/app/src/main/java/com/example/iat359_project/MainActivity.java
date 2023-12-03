@@ -1,15 +1,20 @@
 package com.example.iat359_project;
 
-//import static com.example.iat359_project.Naming.DEFAULT;
-
 import static android.view.View.VISIBLE;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -20,17 +25,24 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -38,7 +50,7 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -60,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private MyDatabase db;
     private MyHelper helper;
     Cursor cursor;
-
+    ImageButton shareButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +140,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lightSensor = mySensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
+//        //share button
+//        shareButton = (ImageButton) findViewById(R.id.shareButton);
+//        shareButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                shareScreenshot(screenShot(v));
+//            }
+//        });
     }
 
     public int getImage(String name) {
@@ -152,13 +172,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //for quest
     public void questButton(View view) {
         Intent i = new Intent(this,Quest.class);
-        startActivity(i);
-    }
-
-    //to share to social media
-    public void share(View view) {
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse("http://www.instagram.com"));
         startActivity(i);
     }
 
@@ -330,5 +343,112 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         reader.read(buffer);
         return new String(buffer);
     }
+
+    //to share to social media
+    //check oncreate for button cause this give error
+    public void share(View view) {
+//        shareScreenshot(screenShot(view));
+//        Toast.makeText(this, "clicked",Toast.LENGTH_SHORT).show();
+        File file = saveImage();
+        if(file != null){
+            shareImage(file);
+        }
+    }
+
+//    private Bitmap screenShot(View view) {
+//        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(),view.getHeight(), Bitmap.Config.ARGB_8888);
+//        Canvas canvas = new Canvas(bitmap);
+//        view.draw(canvas);
+//        return bitmap;
+//    }
+//
+//    private void shareScreenshot(Bitmap bitmap){
+//        String pathofBmp=
+//                MediaStore.Images.Media.insertImage(getContentResolver(),
+//                        bitmap,"png", null);
+//        Uri uri = Uri.parse(pathofBmp);
+//        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+//        shareIntent.setType("image/*");
+//        shareIntent.putExtra(Intent.EXTRA_TEXT, "This is my Yumi!");
+//        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+//        startActivity(Intent.createChooser(shareIntent, "Share using:"));
+//    }
+
+    private File saveImage(){
+        Exception exception = null;
+        try{
+            String path = Environment.getExternalStorageDirectory().toString() + "/com.example.iat359_project";
+            File filedir = new File(path);
+            if(!filedir.exists()){
+                filedir.mkdir();
+            }
+
+            String mPath = path + "/Screenshot_" + new Date().getTime() + ".png";
+            Bitmap bitmap = screenshot();
+            File file = new File(mPath);
+            Toast.makeText(this, "click", Toast.LENGTH_SHORT).show();
+
+            Log.d("testingInputStream", file.toString());
+            FileOutputStream fOut = new FileOutputStream(file);
+            Toast.makeText(this, "bbbbb", Toast.LENGTH_SHORT).show();
+
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+
+            fOut.flush();
+            fOut.close();
+
+            Toast.makeText(this, "image saved", Toast.LENGTH_SHORT).show();
+
+            return file;
+        }catch(IOException e){
+            exception = e;
+        }
+        return null;
+    }
+
+    private void shareImage(File file){
+        Uri uri;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = FileProvider.getUriForFile(this, getPackageManager()+".provider", file);
+        }else{
+            uri = Uri.fromFile(file);
+        }
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Screenshot");
+        intent.putExtra(Intent.EXTRA_TEXT, "This is my Yumi!");
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+
+        try{
+            startActivity(Intent.createChooser(intent, "Share using"));
+        }catch (ActivityNotFoundException e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+    }//end of shareImage
+
+    private Bitmap screenshot(){
+        View v = findViewById(R.id.mainView);
+        Bitmap bitmap = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        v.draw(canvas);
+        return bitmap;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            saveImage();
+        }else{
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+    }
+
+
 
 } // end of class
