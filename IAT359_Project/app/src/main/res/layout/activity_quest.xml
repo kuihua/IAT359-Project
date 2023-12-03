@@ -13,19 +13,135 @@
         android:layout_height="wrap_content"
         android:scaleX="1.2"
         android:paddingTop="30dp"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="40dp"
         android:src="@drawable/quest_overlay_cropped" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignBottom="@id/questOverlay"
+        android:layout_alignTop="@id/questOverlay"
+        android:paddingTop="20dp"
+        android:paddingLeft="85dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="25dp"
+        >
 <!--    quest text title-->
-    <TextView
-        android:id="@+id/questTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="50dp"
-        android:text="Quests"
-        android:textColor="#000000"/>
+        <TextView
+            android:id="@+id/questTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:textSize="20dp"
+            android:text="Quests"
+            android:textColor="#000000"/>
+
+<!--        quest 1-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/quest1"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/questDesc1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Play with your Yumi" />
+
+            <TextView
+                android:id="@+id/reward1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Reward: 35" />
+
+            <Button
+                android:id="@+id/collectButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:text="In Progress" />
+
+        </LinearLayout>
+
+        <!--        quest 2-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/quest1"
+            android:id="@+id/quest2"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/questDesc2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Feed your Yumi" />
+
+            <TextView
+                android:id="@+id/reward2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Reward: 20" />
+
+            <Button
+                android:id="@+id/collectButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:text="In Progress" />
+
+        </LinearLayout>
+
+        <!--        quest 3-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/quest2"
+            android:id="@+id/quest3"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/questDesc3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Pet your Yumi" />
+
+            <TextView
+                android:id="@+id/reward3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Reward: 15" />
+
+            <Button
+                android:id="@+id/collectButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:text="In Progress" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 <!--    rug-->
     <ImageView
