@@ -188,6 +188,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             //if the pet is not playing, start playing
             toy.setVisibility(VISIBLE);
             playing=true;
+            //increase affection
+            SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+            int currentAffection = sharedPref.getInt("affection", 0);
+            int newAffection = currentAffection+20;
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("affection", newAffection);
+            editor.commit();
+            affectionTextView.setText("Affection: "+newAffection);
             //if the pet is playing, set food items to gone
             feeding=false;
             plate.setVisibility(v.GONE);
@@ -206,6 +214,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             plate.setVisibility(VISIBLE);
             food.setVisibility(VISIBLE);
             feeding=true;
+            //increase affection
+            SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+            int currentAffection = sharedPref.getInt("affection", 0);
+            int newAffection = currentAffection+20;
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("affection", newAffection);
+            editor.commit();
+            affectionTextView.setText("Affection: "+newAffection);
             //if the pet is being fed, set all toys to gone
             playing=false;
             toy.setVisibility(v.GONE);
