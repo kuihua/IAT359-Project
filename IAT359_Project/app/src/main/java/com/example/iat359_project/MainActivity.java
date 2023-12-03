@@ -247,9 +247,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             int newAffection = currentAffection+5;
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putInt("affection", newAffection);
+            editor.putBoolean("pet", true);
             editor.commit();
             affectionTextView.setText("Affection: "+newAffection);
-            editor.putBoolean("pet", true);
             return true;
         }else{
             return false;

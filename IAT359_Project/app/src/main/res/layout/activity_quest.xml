@@ -66,6 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="reward1"
                 android:clickable="false"
                 android:text="In&#10;Progress" />
 <!--            makes it so it creates a new line-->
@@ -103,6 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="false"
+                android:onClick="reward2"
                 android:text="In&#10;Progress" />
 
         </LinearLayout>
@@ -138,6 +140,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="false"
+                android:onClick="reward3"
                 android:text="In&#10;Progress"/>
 
         </LinearLayout>
