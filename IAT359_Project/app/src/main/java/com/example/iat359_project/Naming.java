@@ -52,12 +52,19 @@ public class Naming extends AppCompatActivity {
         //save pet's name to shared preferences, player is not a first time user anymore
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
+        //remembering pet name
         editor.putString("petName", petNameEdit.getText().toString());
         editor.putBoolean("rename", rename);
+        //remembering if its the first time accessing this app
         editor.putBoolean("firstTime", firstTime);
+        // currency, affection
         editor.putInt("coin", 100);
         editor.putInt("affection", 0);
-        Toast.makeText(this, "Welcome home!", Toast.LENGTH_LONG).show();
+        //for quest completion
+        editor.putBoolean("feed", false);
+        editor.putBoolean("play", false);
+        editor.putBoolean("pet", false);
+        Toast.makeText(this, "Welcome home "+petNameEdit.getText().toString()+"!", Toast.LENGTH_LONG).show();
         editor.commit();
         Intent intent= new Intent(this, MainActivity.class);
         startActivity(intent);

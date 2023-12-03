@@ -15,6 +15,8 @@ public class Quest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quest);
 
+
+
     }
 
     public void gotoShop(View view) {
