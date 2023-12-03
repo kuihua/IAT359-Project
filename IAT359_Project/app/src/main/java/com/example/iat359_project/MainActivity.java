@@ -17,6 +17,7 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
@@ -102,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             //display clothes
             if (itemWear.equals("True")) {
                 int id = getImage(itemName);
-                Toast.makeText(this,"cloth", Toast.LENGTH_LONG).show();
                 if(itemType.contains("Head")){
                     hatItem.setImageResource(id);
                     hatItem.setVisibility(VISIBLE);
@@ -152,6 +152,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //for quest
     public void questButton(View view) {
         Intent i = new Intent(this,Quest.class);
+        startActivity(i);
+    }
+
+    //to share to social media
+    public void share(View view) {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse("http://www.instagram.com"));
         startActivity(i);
     }
 

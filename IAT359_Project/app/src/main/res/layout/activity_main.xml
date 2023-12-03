@@ -290,6 +290,17 @@
         android:onClick="custom"
         android:background="@null"/>
 
+    <ImageButton
+        android:id="@+id/shareButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:layout_below="@+id/customizationButton"
+        android:src="@drawable/bowtie_icon"
+        android:scaleType="fitStart"
+        android:onClick="share"
+        android:background="@null"/>
+
 <!--    pet name-->
 
 
