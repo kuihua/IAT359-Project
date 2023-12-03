@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -70,6 +71,13 @@ public class Shop extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         myRecycler.setLayoutManager(mLayoutManager);
 
+    }
+
+    //filter by all
+    public void filterAll(View view){
+        //refresh activity, recreate() doesn't work
+        Intent i = new Intent(this, Shop.class);
+        startActivity(i);
     }
 
     public void filterHead(View view){

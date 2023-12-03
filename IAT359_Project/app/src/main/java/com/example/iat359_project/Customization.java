@@ -39,14 +39,6 @@ public class Customization extends AppCompatActivity{
             db = new MyDatabase(this);
             helper = new MyHelper(this);
 
-            filterHead = (Button) findViewById(R.id.filterHeadButton);
-            filterNeck = (Button) findViewById(R.id.filterNeckButton);
-            filterBody = (Button) findViewById(R.id.filterBodyButton);
-
-//            filterHead.setOnClickListener(this);
-//            filterNeck.setOnClickListener(this);
-//            filterBody.setOnClickListener(this);
-
             Intent intent = getIntent();
             if(intent.hasExtra("Item")){
                 String item = intent.getExtras().getString("Item");
@@ -81,6 +73,13 @@ public class Customization extends AppCompatActivity{
             myRecycler.setLayoutManager(mLayoutManager);
             ;
         }//end of onCreate
+
+    //filter by all
+    public void filterAll(View view){
+        //refresh activity, recreate() doesn't work
+        Intent i = new Intent(this, Customization.class);
+        startActivity(i);
+    }
 
     //filter buttons for clothing
     public void filterHead(View view){
