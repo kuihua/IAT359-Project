@@ -3,6 +3,7 @@ package com.example.iat359_project;
 import static android.view.View.VISIBLE;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
@@ -30,6 +31,8 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -52,9 +55,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+public class MainActivity extends AppCompatActivity implements SensorEventListener, View.OnTouchListener {
 
-    ImageView toy, food, plate, night, snow, rain, bodyItem, hatItem, neckItem;
+    ImageView toy, food, plate, night, snow, rain, bodyItem, hatItem, neckItem, creature;
     TextView petNameView, currencyTextView, affectionTextView;
     String lat, lng, result, url, stationName;
     boolean feeding = false;
@@ -86,10 +89,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         snow = (ImageView) findViewById(R.id.snowWindow);
         rain= (ImageView) findViewById(R.id.rainWindow);
 
-        //creature clothes images
+        //creature images
         bodyItem = (ImageView) findViewById(R.id.creatureBodyImageView);
         hatItem = (ImageView) findViewById(R.id.creatureHatImageView);
         neckItem = (ImageView) findViewById(R.id.creatureNeckImageView);
+        creature = (ImageView) findViewById(R.id.creatureImageView);
 
         //using the player database to ensure they are wearing clothes from last session
         db = new MyDatabase(this);
@@ -145,6 +149,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lightSensor = mySensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
+        //listeners for touch framework
+        //set for all creature items to ensure layered images don't affect the touch
+        bodyItem.setOnTouchListener(this);
+        hatItem.setOnTouchListener(this);
+        neckItem.setOnTouchListener(this);
+        creature.setOnTouchListener(this);
     }
 
     public int getImage(String name) {
@@ -207,6 +217,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+    //touch method
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+            int currentAffection = sharedPref.getInt("affection", 0);
+            int newAffection = currentAffection+5;
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("affection", newAffection);
+            editor.commit();
+            affectionTextView.setText("Affection: "+newAffection);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     //for light sensor
     @Override
     protected void onResume() {
@@ -244,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
 
         }
-    }
+    } // end of sensor changed
 
     //GPS + weather
     public void getWeather(View v) {
