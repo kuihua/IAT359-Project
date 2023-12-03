@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private MyDatabase db;
     private MyHelper helper;
     Cursor cursor;
-    ImageButton shareButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,14 +139,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lightSensor = mySensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
-//        //share button
-//        shareButton = (ImageButton) findViewById(R.id.shareButton);
-//        shareButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                shareScreenshot(screenShot(v));
-//            }
-//        });
     }
 
     public int getImage(String name) {
@@ -345,7 +336,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     //to share to social media
-    //check oncreate for button cause this give error
     public void share(View view) {
 //        shareScreenshot(screenShot(view));
 //        Toast.makeText(this, "clicked",Toast.LENGTH_SHORT).show();
@@ -354,25 +344,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             shareImage(file);
         }
     }
-
-//    private Bitmap screenShot(View view) {
-//        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(),view.getHeight(), Bitmap.Config.ARGB_8888);
-//        Canvas canvas = new Canvas(bitmap);
-//        view.draw(canvas);
-//        return bitmap;
-//    }
-//
-//    private void shareScreenshot(Bitmap bitmap){
-//        String pathofBmp=
-//                MediaStore.Images.Media.insertImage(getContentResolver(),
-//                        bitmap,"png", null);
-//        Uri uri = Uri.parse(pathofBmp);
-//        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-//        shareIntent.setType("image/*");
-//        shareIntent.putExtra(Intent.EXTRA_TEXT, "This is my Yumi!");
-//        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-//        startActivity(Intent.createChooser(shareIntent, "Share using:"));
-//    }
 
     private File saveImage(){
         Exception exception = null;

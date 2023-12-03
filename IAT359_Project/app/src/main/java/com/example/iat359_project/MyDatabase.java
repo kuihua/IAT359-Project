@@ -182,18 +182,6 @@ public class MyDatabase {
         return cursor;
     }
 
-//    public Cursor getPlayerWearData() {
-//        SQLiteDatabase db = helper.getWritableDatabase();
-//        String[] columns = {Constants.NAME, Constants.TYPE, Constants.WEARING, Constants.IMAGE};
-//
-//        String selection = Constants.WEARING + "== True";
-//        Cursor cursor = db.query(Constants.PLAYER_TABLE_NAME, columns, selection, null, null, null, null);
-//        return cursor;
-//    }
-
-
-
-
 }//end of class
 
 
