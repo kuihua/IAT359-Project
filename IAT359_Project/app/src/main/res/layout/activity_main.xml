@@ -101,59 +101,46 @@
         android:visibility="gone"
         android:src="@drawable/tie" />
 
-
-
-    <FrameLayout
+    <ImageView
+        android:id="@+id/currencyIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/coin_icon"
         android:layout_alignParentRight="true"
-        >
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        />
 
-        <ImageView
-            android:id="@+id/currencyIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:layout_gravity="center"
-            android:scaleType="fitXY"
-            android:src="@drawable/coin_icon" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="14sp"
-            tools:text="100" />
-    </FrameLayout>
-
-    <FrameLayout
+    <ImageView
+        android:id="@+id/affectionIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:paddingTop="50dp"
-        >
+        android:src="@drawable/heart_icon"
+        android:layout_alignStart="@id/currencyIcon"
+        android:layout_below="@id/currencyIcon"
+        android:adjustViewBounds="true"
+        />
 
-        <ImageView
-            android:id="@+id/affectionIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:layout_gravity="center"
-            android:scaleType="fitXY"
-            android:src="@drawable/heart_icon" />
+    <TextView
+        android:id="@+id/currency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/currencyIcon"
+        android:layout_alignTop="@id/currencyIcon"
+        android:gravity="center"
+        android:paddingTop = "15dp"
+        android:text="Coins: " />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="14sp"
-            tools:text="100" />
+    <TextView
+        android:id="@+id/affection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/affectionIcon"
+        android:layout_gravity="center"
+        android:layout_alignTop="@id/affectionIcon"
+        android:paddingTop="15dp"
+        android:text="Affection: " />
 
-    </FrameLayout>
 
     <!--    plate-->
     <ImageView
