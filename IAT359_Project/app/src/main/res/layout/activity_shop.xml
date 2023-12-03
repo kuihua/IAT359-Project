@@ -20,33 +20,49 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="60dp"
-        android:paddingTop="100dp"
+        android:paddingLeft="85dp"
+        android:paddingTop="55dp"
         android:orientation="vertical">
 
-        <Button
+        <ImageButton
+            android:id="@+id/filterAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/all_icon"
+            android:background="@null"
+            android:layout_weight="1"
+            android:paddingBottom="20dp"
+            android:onClick="filterAll" />
+
+        <ImageButton
             android:id="@+id/filterHeadButton"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:onClick="filterHead"
-            android:text="Head" />
+            android:src="@drawable/head_icon"
+            android:background="@null"
+            android:layout_weight="1"
+            android:paddingBottom="20dp"
+            android:onClick="filterHead" />
 
-        <Button
+        <ImageButton
             android:id="@+id/filterNeckButton"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
+            android:background="@null"
             android:onClick="filterNeck"
-            android:text="Neck" />
+            android:layout_weight="1"
+            android:paddingBottom="20dp"
+            android:src="@drawable/neck_icon"
+             />
 
-        <Button
+        <ImageButton
             android:id="@+id/filterBodyButton"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
             android:onClick="filterBody"
-            android:text="Body" />
+            android:background="@null"
+            android:layout_weight="1"
+            android:src="@drawable/body_icon" />
     </LinearLayout>
 
     <LinearLayout
