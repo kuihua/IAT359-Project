@@ -114,14 +114,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 //                    }
                 }else if(context instanceof Shop){
                     SharedPreferences sharedPref = context.getSharedPreferences("MyData", Context.MODE_PRIVATE);
-                    int currency = sharedPref.getInt("coin", 100);
-                    int currentMoney = Integer.parseInt(itemVarText.getText().toString());
-                    if(currency >= currentMoney){
+                    int currentMoney = sharedPref.getInt("coin", 100);
+                    int cost = Integer.parseInt(itemVarText.getText().toString());
+                    if(currentMoney >= cost){
                         db.deleteShopData(nameTextView.getText().toString());
                         SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putInt("coin", 100);
-                        Toast.makeText(context, "Spent "+ currentMoney, Toast.LENGTH_SHORT).show();
+                        int spent = currentMoney-cost;
+                        editor.putInt("coin", spent);
+                        Toast.makeText(context, "Spent "+ cost, Toast.LENGTH_SHORT).show();
                         editor.commit();
+                    }else{
+                        Toast.makeText(context, "Not enough coins.", Toast.LENGTH_SHORT).show();
                     }
                     ((Shop)context).recreate();
                 }

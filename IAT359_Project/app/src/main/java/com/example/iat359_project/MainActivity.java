@@ -55,7 +55,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     ImageView toy, food, plate, night, snow, rain, bodyItem, hatItem, neckItem;
-    TextView petNameView;
+    TextView petNameView, currencyTextView, affectionTextView;
     String lat, lng, result, url, stationName;
     boolean feeding = false;
     boolean playing = false;
@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         snow = (ImageView) findViewById(R.id.snowWindow);
         rain= (ImageView) findViewById(R.id.rainWindow);
 
+        //creature clothes images
         bodyItem = (ImageView) findViewById(R.id.creatureBodyImageView);
         hatItem = (ImageView) findViewById(R.id.creatureHatImageView);
         neckItem = (ImageView) findViewById(R.id.creatureNeckImageView);
@@ -131,6 +132,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //Pet name displayed in main
         petNameView = (TextView) findViewById(R.id.namingTextView);
         petNameView.setText(petName);
+
+        //display currency and affection values
+        currencyTextView = (TextView) findViewById(R.id.currency);
+        affectionTextView = (TextView) findViewById(R.id.affection);
+        int coin = sharedPref.getInt("coin", 100);
+        int love = sharedPref.getInt("affection", 0);
+        currencyTextView.setText("Coins: "+coin);
+        affectionTextView.setText("Affection: "+love);
 
         //Sensor
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
