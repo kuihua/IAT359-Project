@@ -248,9 +248,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //GPS + weather
     public void getWeather(View v) {
-        url = "http://api.geonames.org/findNearByWeatherJSON?lat=" + lat + "&lng=" + lng + "&username=jvillaso";
-        stationName = "http://api.geonames.org/findNearByWeatherJSON?lat=43&lng=-2&username=jvillaso";
-
+        url = "http://api.geonames.org/findNearByWeatherJSON?lat=43&lng=-2&username=jvillaso";
+        int temperature = 0;
 
         Thread myThread = new Thread(new GetWeatherThread());
         myThread.start();
@@ -260,13 +259,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             JSONObject weatherObservationItems =
                     new JSONObject(jsonObject.getString("weatherObservation"));
 
-            rain.setVisibility(Integer.parseInt(weatherObservationItems.getString("weatherObservation")));
+            rain.setVisibility(Integer.parseInt(weatherObservationItems.getString("rain")));
+            snow.setVisibility(Integer.parseInt(weatherObservationItems.getString("snow")));
         } catch (Exception e) {
             Log.d("ReadWeatherJSONDataTask", e.getLocalizedMessage());
-            Toast.makeText(this, "weather retrieved", Toast.LENGTH_LONG).show();
-                rain.setVisibility(VISIBLE);
+            //Toast.makeText(this, "weather retrieved", Toast.LENGTH_LONG).show();
+
+            //if temp is less than 5 degrees celsius
+            if (temperature <= 5) {
+                snow.setVisibility(VISIBLE); //change to snow
+            } else {
+                rain.setVisibility(VISIBLE); //change to rain
             }
         }
+    }
 
     private class GetWeatherThread implements Runnable
     {
