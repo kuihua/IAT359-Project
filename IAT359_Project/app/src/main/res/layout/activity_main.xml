@@ -130,7 +130,8 @@
         android:layout_alignTop="@id/currencyIcon"
         android:gravity="center"
         android:paddingTop = "15dp"
-        android:text="Coins: " />
+        android:text="Coins: "
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/affection"
@@ -140,7 +141,8 @@
         android:layout_gravity="center"
         android:layout_alignTop="@id/affectionIcon"
         android:paddingTop="15dp"
-        android:text="Affection: " />
+        android:text="Affection: "
+        android:textColor="@color/black"/>
 
 
     <!--    plate-->
