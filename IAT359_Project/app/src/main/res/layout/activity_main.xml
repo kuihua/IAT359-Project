@@ -183,18 +183,6 @@
 
     <!--    nav buttons -->
 
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/creatureImageView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-50dp"
-        android:layout_weight="1"
-        android:background="@color/white"
-        android:onClick="getWeather"
-        android:text="Change Weather"
-        android:textColor="@color/black"></Button>
-
     <TableLayout
         android:id="@+id/navLayout"
         android:layout_width="match_parent"
@@ -294,12 +282,25 @@
         android:background="@null"/>
 
     <ImageButton
+        android:id="@+id/weatherButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingLeft="5dp"
+        android:layout_below="@+id/customizationButton"
+        android:src="@drawable/weather_icon"
+        android:scaleType="fitStart"
+        android:onClick="getWeather"
+        android:background="@null"/>
+
+    <ImageButton
         android:id="@+id/shareButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:paddingLeft="5dp"
         android:layout_weight="1"
-        android:layout_below="@+id/customizationButton"
-        android:src="@drawable/bowtie_icon"
+        android:layout_below="@+id/weatherButton"
+        android:src="@drawable/share_icon"
         android:scaleType="fitStart"
         android:onClick="share"
         android:background="@null"/>
