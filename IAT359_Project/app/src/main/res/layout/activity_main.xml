@@ -247,6 +247,7 @@
 
     </TableLayout>
 
+    <!--    pet name-->
     <TextView
         android:id="@+id/namingTextView"
         android:layout_width="wrap_content"
@@ -293,6 +294,7 @@
         android:onClick="getWeather"
         android:background="@null"/>
 
+<!--    screenshot-->
     <ImageButton
         android:id="@+id/shareButton"
         android:layout_width="60dp"
@@ -304,8 +306,6 @@
         android:scaleType="fitStart"
         android:onClick="share"
         android:background="@null"/>
-
-<!--    pet name-->
 
 
 </RelativeLayout>

@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     ImageView toy, food, plate, night, snow, rain, bodyItem, hatItem, neckItem, creature;
     TextView petNameView, currencyTextView, affectionTextView;
-    String lat, lng, result, url, stationName;
+    String result, url;
     boolean feeding = false;
     boolean playing = false;
 
@@ -73,6 +75,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private MyHelper helper;
     Cursor cursor;
 
+    //enable permission to access external storage
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] permissionStorage = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,13 +87,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         String petName = sharedPref.getString("petName", DEFAULT);
         checkConnection();
 
+        //check if share permission is granted
+        //verifyStoragePermission(this);
+
         //Images
         toy = (ImageView) findViewById(R.id.toyView);
         food = (ImageView) findViewById(R.id.foodView);
         plate = (ImageView) findViewById(R.id.plateView);
         night = (ImageView) findViewById(R.id.nightWindow);
         snow = (ImageView) findViewById(R.id.snowWindow);
-        rain= (ImageView) findViewById(R.id.rainWindow);
+        rain = (ImageView) findViewById(R.id.rainWindow);
 
         //creature images
         bodyItem = (ImageView) findViewById(R.id.creatureBodyImageView);
@@ -110,28 +119,27 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         while (!cursor.isAfterLast()) {
             String itemName = cursor.getString(index1);
             String itemType = cursor.getString(index2);
-            String itemWear= cursor.getString(index3);
+            String itemWear = cursor.getString(index3);
 //            String itemImage = cursor.getString(index4);
 
             //display clothes
             if (itemWear.equals("True")) {
                 int id = getImage(itemName);
-                if(itemType.contains("Head")){
+                if (itemType.contains("Head")) {
                     hatItem.setImageResource(id);
                     hatItem.setVisibility(VISIBLE);
                 }
-                if(itemType.equals("Neck")){
+                if (itemType.equals("Neck")) {
                     neckItem.setImageResource(id);
                     neckItem.setVisibility(VISIBLE);
                 }
-                if(itemType.equals("Body")){
+                if (itemType.equals("Body")) {
                     bodyItem.setImageResource(id);
                     bodyItem.setVisibility(VISIBLE);
                 }
             }
             cursor.moveToNext();
         } // end of cursor
-
 
         //Pet name displayed in main
         petNameView = (TextView) findViewById(R.id.namingTextView);
@@ -142,8 +150,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         affectionTextView = (TextView) findViewById(R.id.affection);
         int coin = sharedPref.getInt("coin", 100);
         int love = sharedPref.getInt("affection", 0);
-        currencyTextView.setText("Coins: "+coin);
-        affectionTextView.setText("Affection: "+love);
+        currencyTextView.setText("Coins: " + coin);
+        affectionTextView.setText("Affection: " + love);
 
         //Sensor
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -155,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         hatItem.setOnTouchListener(this);
         neckItem.setOnTouchListener(this);
         creature.setOnTouchListener(this);
+
     }
 
     public int getImage(String name) {
@@ -172,69 +181,69 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //for customization button
     public void custom(View view) {
-        Intent i = new Intent(this,Customization.class);
+        Intent i = new Intent(this, Customization.class);
         startActivity(i);
     }
 
     //for quest
     public void questButton(View view) {
-        Intent i = new Intent(this,Quest.class);
+        Intent i = new Intent(this, Quest.class);
         startActivity(i);
     }
 
     //for playing using toys
     public void play(View v) {
-        if(!playing) {
+        if (!playing) {
             //if the pet is not playing, start playing
             toy.setVisibility(VISIBLE);
-            playing=true;
+            playing = true;
             //increase affection
             SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
             int currentAffection = sharedPref.getInt("affection", 0);
-            int newAffection = currentAffection+20;
+            int newAffection = currentAffection + 20;
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putInt("affection", newAffection);
             editor.putBoolean("play", true);
             editor.commit();
-            affectionTextView.setText("Affection: "+newAffection);
+            affectionTextView.setText("Affection: " + newAffection);
             //if the pet is playing, set food items to gone
-            feeding=false;
+            feeding = false;
             plate.setVisibility(v.GONE);
             food.setVisibility(v.GONE);
-        }else{
+        } else {
             //if the pet is playing and the button is clicked, pet stops playing
             toy.setVisibility(v.GONE);
-            playing=false;
+            playing = false;
         }
     }
 
     //feeding the pet
     public void feed(View v) {
-        if(!feeding) {
+        if (!feeding) {
             //if the pet is not eating, start feeding
             plate.setVisibility(VISIBLE);
             food.setVisibility(VISIBLE);
-            feeding=true;
+            feeding = true;
 
             //increase affection
             SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
             int currentAffection = sharedPref.getInt("affection", 0);
-            int newAffection = currentAffection+20;
+            int newAffection = currentAffection + 20;
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putInt("affection", newAffection);
             //saving feed data for feed quest completion
             editor.putBoolean("feed", true);
             editor.commit();
-            affectionTextView.setText("Affection: "+newAffection);
+            affectionTextView.setText("Affection: " + newAffection);
 
             //if the pet is being fed, set all toys to gone
-            playing=false;
+            playing = false;
             toy.setVisibility(v.GONE);
-        }else{
+        } else {
             //if the pet is being fed and the button is clicked, stop feeding
             plate.setVisibility(v.GONE);
             food.setVisibility(v.GONE);
-            feeding=false;
+            feeding = false;
         }
     }
 
@@ -244,14 +253,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
             int currentAffection = sharedPref.getInt("affection", 0);
-            int newAffection = currentAffection+5;
+            int newAffection = currentAffection + 5;
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putInt("affection", newAffection);
             editor.putBoolean("pet", true);
             editor.commit();
-            affectionTextView.setText("Affection: "+newAffection);
+            affectionTextView.setText("Affection: " + newAffection);
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -260,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onResume() {
         super.onResume();
-        mySensorManager.registerListener(this, lightSensor,SensorManager.SENSOR_DELAY_NORMAL);
+        mySensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
@@ -283,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             light_vals = event.values;
 
             //if there's no light, change window to night time
-            if(Sensor.TYPE_LIGHT >= light_vals[0]) {
+            if (Sensor.TYPE_LIGHT >= light_vals[0]) {
 //              Toast.makeText(this, "night time", Toast.LENGTH_LONG).show();
                 night.setVisibility(VISIBLE);
             } else {
@@ -308,8 +317,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             JSONObject weatherObservationItems =
                     new JSONObject(jsonObject.getString("weatherObservation"));
 
-            rain.setVisibility(Integer.parseInt(weatherObservationItems.getString("rain")));
-            snow.setVisibility(Integer.parseInt(weatherObservationItems.getString("snow")));
+            rain.setVisibility(Integer.parseInt(weatherObservationItems.getString("temperature")));
+            snow.setVisibility(Integer.parseInt(weatherObservationItems.getString("temperature")));
         } catch (Exception e) {
             Log.d("ReadWeatherJSONDataTask", e.getLocalizedMessage());
             //Toast.makeText(this, "weather retrieved", Toast.LENGTH_LONG).show();
@@ -323,31 +332,29 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
-    private class GetWeatherThread implements Runnable
-    {
+    private class GetWeatherThread implements Runnable {
         @Override
         public void run() {
             Exception exception = null;
-            try{
+            try {
                 result = readJSONData(url);
-            }catch(IOException e){
+            } catch (IOException e) {
                 exception = e;
             }
         }
-     }
+    }
 
-     //check if connection is online
-    public void checkConnection(){
+    //check if connection is online
+    public void checkConnection() {
         ConnectivityManager connectMgr =
-                (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectMgr.getActiveNetworkInfo();
-        if(networkInfo != null && networkInfo.isConnected()){
+        if (networkInfo != null && networkInfo.isConnected()) {
             //fetch data
 
             String networkType = networkInfo.getTypeName().toString();
 //            Toast.makeText(this, "connected to " + networkType, Toast.LENGTH_LONG).show();
-        }
-        else {
+        } else {
             //display error
             Toast.makeText(this, "no network connection", Toast.LENGTH_LONG).show();
         }
@@ -396,16 +403,65 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         return new String(buffer);
     }
 
-    //to share to social media
-    public void share(View view) {
+    //   to share to social media
+    public void share(View v) {
 //        shareScreenshot(screenShot(view));
 //        Toast.makeText(this, "clicked",Toast.LENGTH_SHORT).show();
+
         File file = saveImage();
         if(file != null){
             shareImage(file);
         }
+
+        //screenshot(getWindow().getDecorView().getRootView(), "result");
     }
 
+    //based on: https://www.geeksforgeeks.org/how-to-take-screenshot-programmatically-in-android/
+//    protected static File screenshot(View view, String filename) {
+//        Date date = new Date();
+//
+//        //formatting img name
+//        CharSequence format = android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", date);
+//        try {
+//            //creating storage directory
+//            String dirpath = Environment.getExternalStorageDirectory() + "";
+//            File file = new File(dirpath);
+//            if (!file.exists()) {
+//               boolean mkdir = file.mkdir();
+//            }
+//
+//            //file name
+//            String path = dirpath + "/" + filename + "-" + format + ".jpeg";
+//            view.setDrawingCacheEnabled(true);
+//            Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+//            view.setDrawingCacheEnabled(false);
+//            File imageurl = new File(path);
+//            FileOutputStream outputStream = new FileOutputStream(imageurl);
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+//            outputStream.flush();
+//            outputStream.close();
+//            return imageurl;
+//
+//        } catch (FileNotFoundException io) {
+//            io.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return null;
+//    }
+//
+//    //verify permission
+//    public static void verifyStoragePermission(Activity a) {
+//        int permissions = ActivityCompat.checkSelfPermission(a, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//
+//        if (permissions != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(a, permissionStorage, REQUEST_EXTERNAL_STORAGE);
+//        }
+//    }
+
+
+ //   save and share screenshot
     private File saveImage(){
         Exception exception = null;
         try{
@@ -480,7 +536,5 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
     }
-
-
 
 } // end of class
