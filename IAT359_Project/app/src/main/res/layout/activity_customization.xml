@@ -6,31 +6,6 @@
     android:background="@drawable/main_bg"
     tools:context=".Customization">
 
-    <!--    rug-->
-    <ImageView
-        android:id="@+id/smallRug"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/small_rug"/>
-
-    <!--    creature-->
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/small_creature" />
-
-    <!--   navbar -->
-    <ImageView
-        android:id="@+id/navBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/navbar" />
-
     <ImageView
         android:id="@+id/shopOverlay"
         android:layout_width="wrap_content"
@@ -122,6 +97,31 @@
             ></androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
+
+    <!--    rug-->
+    <ImageView
+        android:id="@+id/smallRug"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/small_rug"/>
+
+    <!--    creature-->
+    <ImageView
+        android:id="@+id/creature"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/small_creature" />
+
+    <!--   navbar -->
+    <ImageView
+        android:id="@+id/navBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/navbar" />
 
     <!--    nav buttons -->
     <TableLayout

@@ -31,6 +31,7 @@
         layout="@layout/matching_game_images"
         android:layout_width="wrap_content"
         android:layout_height="400dp"
+        android:layout_below="@id/gameTextView"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"/>
 
