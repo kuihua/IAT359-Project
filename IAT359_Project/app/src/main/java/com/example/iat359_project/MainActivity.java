@@ -179,6 +179,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //for playing using toys
     public void play(View v) {
+        Intent i = new Intent(this, MatchingGame.class);
+        startActivity(i);
+
+        //toy ball code
         if (!playing) {
             //if the pet is not playing, start playing
             toy.setVisibility(VISIBLE);
