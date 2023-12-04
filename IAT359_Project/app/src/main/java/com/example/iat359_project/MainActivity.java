@@ -179,11 +179,24 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
+    //method for getting image
     public int getImage(String name) {
         String file = name.toLowerCase();
         file = file.replace("_icon", "");
         int id = getResources().getIdentifier(file, "drawable", getPackageName());
         return id;
+    }
+
+    //rename button
+    public void renameButton(View view){
+        //set rename to true
+        SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("rename", true);
+        editor.commit();
+        //create intent to naming page
+        Intent i = new Intent(this, Naming.class);
+        startActivity(i);
     }
 
     //for shop button

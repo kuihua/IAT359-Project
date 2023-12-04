@@ -258,6 +258,20 @@
         android:textSize="30dp"
         android:textStyle="bold" />
 
+<!--    rename button-->
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/namingTextView"
+        android:src="@drawable/rename_icon"
+        android:onClick="renameButton"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+        android:background="@null"/>
+
 <!--    quest button-->
     <ImageButton
         android:id="@+id/questButton"
