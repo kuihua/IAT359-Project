@@ -65,9 +65,10 @@ public class MatchingGame extends AppCompatActivity {
         tile15.setTag(14);
         tile16.setTag(15);
 
+        //setting the tiles' front images
         tileFrontResources();
 
-        //shuffles the array to randomize the tiles
+        //shuffles the array to randomize the tiles so every play through is different
         Collections.shuffle(Arrays.asList(tileArray));
 
         //setting listeners for all the tiles
@@ -198,8 +199,6 @@ public class MatchingGame extends AppCompatActivity {
             }
         });
 
-//        checkTileStatus();
-
     }//end of onCreate
 
     //images for the front of the tile
@@ -223,6 +222,7 @@ public class MatchingGame extends AppCompatActivity {
         img208 = R.drawable.tile_img208;
     } // front tile resources
 
+    // flips the tile to show the right image and saves the values of the flipped tiles
     public void flipTile(ImageView img, int tile){
         //setting the tile images based on the shuffled array
         if(tileArray[tile] == 101){
@@ -278,6 +278,7 @@ public class MatchingGame extends AppCompatActivity {
             tileNumber=1;
             clickedSecond = tile;
 
+            //after selecting the second tile, disable clicking of all tiles
             tile1.setEnabled(false);
             tile2.setEnabled(false);
             tile3.setEnabled(false);
@@ -295,22 +296,24 @@ public class MatchingGame extends AppCompatActivity {
             tile15.setEnabled(false);
             tile16.setEnabled(false);
 
+            // compares tile values in a thread
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     checkTileStatus();
                 }
-            });
+            }); // end of runOnUiThread
 
             //increase turn count
             turn++;
         } // end of tile selects
-
     } // end of flipTile
 
+    //checks if the selected tiles are the same, if they are, remove them from view
     public void checkTile(){
-        //checks if the tiles are the same, if they are remove them from view
         if(firstTile == secondTile){
+            //using tags to check which tile was selected
+            //if the tile was selected, turn invisible
             if(clickedFirst == 0){
                 tile1.setVisibility(View.INVISIBLE);
             } else if (clickedFirst == 1){
@@ -379,6 +382,7 @@ public class MatchingGame extends AppCompatActivity {
                 tile16.setVisibility(View.INVISIBLE);
             }
         } else{
+            //if tiles are not equal, set them to show the back tile
             tile1.setImageResource(R.drawable.back_tile);
             tile2.setImageResource(R.drawable.back_tile);
             tile3.setImageResource(R.drawable.back_tile);
@@ -397,6 +401,7 @@ public class MatchingGame extends AppCompatActivity {
             tile16.setImageResource(R.drawable.back_tile);
         }// end of if the tiles are equal
 
+        // enable clicking of all tiles
         tile1.setEnabled(true);
         tile2.setEnabled(true);
         tile3.setEnabled(true);
@@ -414,9 +419,11 @@ public class MatchingGame extends AppCompatActivity {
         tile15.setEnabled(true);
         tile16.setEnabled(true);
 
+        // check for win condition
         checkEnd();
     } // end of checkTile
 
+    // checks win condition, if all tiles are gone then raise affection and return the user back to the main activity
     public void checkEnd(){
         if(tile1.getVisibility() == View.INVISIBLE &&
                 tile2.getVisibility() == View.INVISIBLE &&
