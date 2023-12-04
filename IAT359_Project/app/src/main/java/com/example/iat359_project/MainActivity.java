@@ -18,6 +18,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -311,6 +312,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject weatherObservationItems =
                         new JSONObject(jsonObject.getString("weatherObservation"));
+                //as the service does not have weather conditions, we opted to use temperature instead
+                //get temperature from weather service
                 String temp = "" + weatherObservationItems.getString("temperature");
                 temperature = Integer.parseInt(temp);
                 //if temperature is below zero
@@ -421,12 +424,33 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         return new String(buffer);
     }
 
-    //   to share to social media
-    public void share(View v) {
-        saveImage();
-    }
+    //   to share to social media (screenshot)
+//    public void share(View v) {
+//        saveImage();
+//    }
 
-//    temp comment out ------------------------------------------
+    //sharing the ad
+    public void share(View v) {
+        try {
+            Uri imageUri = null;
+            try {
+                //store the png as a bitmap, regular png does not work: sends empty image
+                imageUri = Uri.parse(MediaStore.Images.Media.insertImage(this.getContentResolver(),
+                        BitmapFactory.decodeResource(getResources(), R.drawable.yumi_ad), null, null));
+            }
+            catch (NullPointerException e) {
+            }
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.setType("image/*");
+            intent.putExtra(Intent.EXTRA_STREAM, imageUri);
+            intent.putExtra(Intent.EXTRA_TEXT, "Play Yumi today!");
+            startActivity(Intent.createChooser(intent, "Share using"));
+        } catch (android.content.ActivityNotFoundException ex) {
+        }
+
+    } // end of share
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
