@@ -1,13 +1,18 @@
 package com.example.iat359_project;
 
 import static android.view.View.VISIBLE;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -18,6 +23,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -27,12 +36,15 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -46,13 +58,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener, View.OnTouchListener {
 
-    ImageView toy, food, plate, night, snow, rain, bodyItem, hatItem, neckItem, creature;
+    ImageView food, plate, night, snow, rain, bodyItem, hatItem, neckItem, creature;
     TextView petNameView, currencyTextView, affectionTextView;
-    String result, url;
+    private String result, url, lat, lng;
+    private double latitude, longitude;
     boolean feeding = false;
-    boolean playing = false;
 
     //light sensor values
     private SensorManager mySensorManager = null;
@@ -63,6 +80,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private MyDatabase db;
     private MyHelper helper;
     Cursor cursor;
+
+    private final int FINE_PERMISSON_CODE = 1;
+    Location currentLocation;
+    FusedLocationProviderClient fusedLocationProviderClient;
 
     //enable permission to access external storage
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -76,8 +97,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         String petName = sharedPref.getString("petName", DEFAULT);
         checkConnection();
 
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        getLastLocation();
+
+
         //Images
-        toy = (ImageView) findViewById(R.id.toyView);
         food = (ImageView) findViewById(R.id.foodView);
         plate = (ImageView) findViewById(R.id.plateView);
         night = (ImageView) findViewById(R.id.nightWindow);
@@ -181,31 +205,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void play(View v) {
         Intent i = new Intent(this, MatchingGame.class);
         startActivity(i);
-
-//for playing using toys
-//        //toy ball code
-//        if (!playing) {
-//            //if the pet is not playing, start playing
-//            toy.setVisibility(VISIBLE);
-//            playing = true;
-//            //increase affection
-//            SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-//            int currentAffection = sharedPref.getInt("affection", 0);
-//            int newAffection = currentAffection + 20;
-//            SharedPreferences.Editor editor = sharedPref.edit();
-//            editor.putInt("affection", newAffection);
-//            editor.putBoolean("play", true);
-//            editor.commit();
-//            affectionTextView.setText("Affection: " + newAffection);
-//            //if the pet is playing, set food items to gone
-//            feeding = false;
-//            plate.setVisibility(v.GONE);
-//            food.setVisibility(v.GONE);
-//        } else {
-//            //if the pet is playing and the button is clicked, pet stops playing
-//            toy.setVisibility(v.GONE);
-//            playing = false;
-//        }
     } // end of play
 
     //feeding the pet
@@ -225,9 +224,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             editor.putBoolean("feed", true);
             editor.commit();
             affectionTextView.setText("Affection: " + newAffection);
-            //if the pet is being fed, set all toys to gone
-            playing = false;
-            toy.setVisibility(v.GONE);
         } else {
             //if the pet is being fed and the button is clicked, stop feeding
             plate.setVisibility(v.GONE);
@@ -296,31 +292,63 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //GPS + weather
     public void getWeather(View v) {
-        url = "http://api.geonames.org/findNearByWeatherJSON?lat=43&lng=-2&username=jvillaso";
-        int temperature = 0;
+        if (currentLocation != null) {
+            latitude = currentLocation.getLatitude();
+            longitude = currentLocation.getLongitude();
+            lat = Double.toString(latitude);
+            lng = Double.toString(longitude);
 
-        Thread myThread = new Thread(new GetWeatherThread());
-        myThread.start();
+            url = "http://api.geonames.org/findNearByWeatherJSON?lat=" +
+                    lat + "&lng=" +
+                    lng + "&username=jvillaso";
+//        url = "http://api.geonames.org/findNearByWeatherJSON?lat=43&lng=-2&username=jvillaso";
+            int temperature = 10;
 
-        try {
-            JSONObject jsonObject = new JSONObject(result);
-            JSONObject weatherObservationItems =
-                    new JSONObject(jsonObject.getString("weatherObservation"));
+            Thread myThread = new Thread(new GetWeatherThread());
+            myThread.start();
 
-            rain.setVisibility(Integer.parseInt(weatherObservationItems.getString("temperature")));
-            snow.setVisibility(Integer.parseInt(weatherObservationItems.getString("temperature")));
-        } catch (Exception e) {
-            Log.d("ReadWeatherJSONDataTask", e.getLocalizedMessage());
-            //Toast.makeText(this, "weather retrieved", Toast.LENGTH_LONG).show();
-
-            //if temp is less than 5 degrees celsius
-            if (temperature <= 5) {
-                snow.setVisibility(VISIBLE); //change to snow
-            } else {
-                rain.setVisibility(VISIBLE); //change to rain
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONObject weatherObservationItems =
+                        new JSONObject(jsonObject.getString("weatherObservation"));
+                String temp = "" + weatherObservationItems.getString("temperature");
+                temperature = Integer.parseInt(temp);
+                //if temperature is below zero
+                if (temperature <= 0) {
+                    snow.setVisibility(VISIBLE); //change to snow
+                } else if(temperature >= 15){
+                    // if temperature is above 15, hide snow, rain. shows default which is sun
+                    snow.setVisibility(View.INVISIBLE);
+                    rain.setVisibility(View.INVISIBLE);
+                } else {
+                    rain.setVisibility(VISIBLE); //change to rain
+                }
+            } catch (Exception e) {
+                Log.d("ReadWeatherJSONDataTask", e.getLocalizedMessage());
             }
+        }else{
+            //if no location, show sun
+            snow.setVisibility(View.INVISIBLE);
+            rain.setVisibility(View.INVISIBLE);
+            Toast.makeText(this, "No location", Toast.LENGTH_SHORT).show();
         }
-    }
+    } // end of getWeather
+
+    public void getLastLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FINE_PERMISSON_CODE);
+            return;
+        }
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if(location!=null){
+                    currentLocation = location;
+                }
+            }
+        });
+    } // end of getLastLocation
 
     private class GetWeatherThread implements Runnable {
         @Override
@@ -346,7 +374,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 //            Toast.makeText(this, "connected to " + networkType, Toast.LENGTH_LONG).show();
         } else {
             //display error
-            Toast.makeText(this, "no network connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "No network connection", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -398,6 +426,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         saveImage();
     }
 
+//    temp comment out ------------------------------------------
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
@@ -408,6 +437,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+//        --- location stuff -------
+        if(requestCode == FINE_PERMISSON_CODE){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                getLastLocation();
+            }else{
+                Toast.makeText(this, "Location permissions denied", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void saveImage() {
