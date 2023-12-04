@@ -2,23 +2,27 @@ package com.example.iat359_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.ImageView;
 
 import java.util.Arrays;
 import java.util.Collections;
 
+// tutorial referenced https://www.youtube.com/watch?v=94CWNE9ruMA
 public class MatchingGame extends AppCompatActivity {
 
-    ImageView tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9, tile10, tile11, tile12, tile13, tile14, tile15, tile16;
-    Integer[] tileArray = {101,102,103,104,105,106,107,108,201,202,203,204,205,206,207,208};
-    int firstTile, secondTile, clickedFirst, clickedSecond;
-    int tileNumber = 1;
-    int turn = 1;
-    int img101, img102, img103, img104, img105, img106, img107, img108, img201, img202, img203, img204, img205, img206, img207, img208;
+    private ImageView tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9, tile10, tile11, tile12, tile13, tile14, tile15, tile16;
+    private Integer[] tileArray = {101,102,103,104,105,106,107,108,201,202,203,204,205,206,207,208};
+    private int firstTile, secondTile, clickedFirst, clickedSecond;
+    private int tileNumber = 1;
+    private int turn = 1;
+    private int img101, img102, img103, img104, img105, img106, img107, img108, img201, img202, img203, img204, img205, img206, img207, img208;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,7 @@ public class MatchingGame extends AppCompatActivity {
         tile15 = (ImageView) findViewById(R.id.tile15);
         tile16 = (ImageView) findViewById(R.id.tile16);
 
+        //set tags to reference each tile with
         tile1.setTag(0);
         tile2.setTag(1);
         tile3.setTag(2);
@@ -193,6 +198,8 @@ public class MatchingGame extends AppCompatActivity {
             }
         });
 
+//        checkTileStatus();
+
     }//end of onCreate
 
     //images for the front of the tile
@@ -225,7 +232,7 @@ public class MatchingGame extends AppCompatActivity {
         } else if(tileArray[tile] == 103){
             img.setImageResource(img103);
         } else if(tileArray[tile] == 104){
-            img.setImageResource(img102);
+            img.setImageResource(img104);
         } else if(tileArray[tile] == 105){
             img.setImageResource(img105);
         } else if(tileArray[tile] == 106){
@@ -253,6 +260,7 @@ public class MatchingGame extends AppCompatActivity {
         } // end of if statements
 
         // checks which tiles are selected and the order of the tile flips
+        // saves the tile values to compare them
         if(tileNumber == 1){
             firstTile = tileArray[tile];
             if(firstTile > 200){
@@ -287,14 +295,15 @@ public class MatchingGame extends AppCompatActivity {
             tile15.setEnabled(false);
             tile16.setEnabled(false);
 
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
+            runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    checkTile();
+                    checkTileStatus();
                 }
-            }, 1000);
+            });
 
+            //increase turn count
+            turn++;
         } // end of tile selects
 
     } // end of flipTile
@@ -426,8 +435,26 @@ public class MatchingGame extends AppCompatActivity {
                 tile15.getVisibility() == View.INVISIBLE &&
                 tile16.getVisibility() == View.INVISIBLE){
 
+            //gain affection upon completion
+            SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+            int currentAffection = sharedPref.getInt("affection", 0);
+
+            //affection depending on how many turns it took
+            int turnVar = 100-turn;
+            //base affection upon completion, regardless of turn numbers
+            if(turnVar <=0){
+                turnVar=15;
+            }
+
+            //putting the new affection value into shared preferences
+            int newAffection = currentAffection + turnVar;
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("affection", newAffection);
+            editor.putBoolean("play", true);
+            editor.commit();
+
+            //go back to main activity
             Intent i = new Intent(this, MainActivity.class);
-            //code for rewards
             startActivity(i);
         }
     } // end of checkEnd
@@ -437,5 +464,25 @@ public class MatchingGame extends AppCompatActivity {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
+
+//    implementing a thread to continuously check quest status
+    public void checkTileStatus() {
+        Thread myThread = new Thread(new checkTileThread());
+        myThread.start();
+    }
+
+    private class checkTileThread implements Runnable {
+        @Override
+        public void run() {
+            // once the second tile is flipped, keeps the flipped tiles visible for 1s
+            SystemClock.sleep(1000);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    checkTile();
+                }
+            });
+        }
+    } // end of checkTileThread
 
 }//end of class

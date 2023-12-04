@@ -177,34 +177,35 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         startActivity(i);
     }
 
-    //for playing using toys
+    //go to matching mini game
     public void play(View v) {
         Intent i = new Intent(this, MatchingGame.class);
         startActivity(i);
 
-        //toy ball code
-        if (!playing) {
-            //if the pet is not playing, start playing
-            toy.setVisibility(VISIBLE);
-            playing = true;
-            //increase affection
-            SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-            int currentAffection = sharedPref.getInt("affection", 0);
-            int newAffection = currentAffection + 20;
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("affection", newAffection);
-            editor.putBoolean("play", true);
-            editor.commit();
-            affectionTextView.setText("Affection: " + newAffection);
-            //if the pet is playing, set food items to gone
-            feeding = false;
-            plate.setVisibility(v.GONE);
-            food.setVisibility(v.GONE);
-        } else {
-            //if the pet is playing and the button is clicked, pet stops playing
-            toy.setVisibility(v.GONE);
-            playing = false;
-        }
+//for playing using toys
+//        //toy ball code
+//        if (!playing) {
+//            //if the pet is not playing, start playing
+//            toy.setVisibility(VISIBLE);
+//            playing = true;
+//            //increase affection
+//            SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+//            int currentAffection = sharedPref.getInt("affection", 0);
+//            int newAffection = currentAffection + 20;
+//            SharedPreferences.Editor editor = sharedPref.edit();
+//            editor.putInt("affection", newAffection);
+//            editor.putBoolean("play", true);
+//            editor.commit();
+//            affectionTextView.setText("Affection: " + newAffection);
+//            //if the pet is playing, set food items to gone
+//            feeding = false;
+//            plate.setVisibility(v.GONE);
+//            food.setVisibility(v.GONE);
+//        } else {
+//            //if the pet is playing and the button is clicked, pet stops playing
+//            toy.setVisibility(v.GONE);
+//            playing = false;
+//        }
     } // end of play
 
     //feeding the pet
