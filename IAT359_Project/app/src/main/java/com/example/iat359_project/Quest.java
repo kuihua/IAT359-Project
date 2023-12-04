@@ -111,24 +111,14 @@ public class Quest extends AppCompatActivity {
         myThread.start();
     }
 
-    private class questThread implements Runnable{
+    private class questThread implements Runnable {
         @Override
         public void run() {
             //check every 2s
             SystemClock.sleep(2000);
-            checkQuestRefresh();
-        }
-    }
-
-    //checking quest status, if all quests are completed, refresh them
-    public void checkQuestRefresh(){
-        boolean run=true;
-        while(run) {
-            SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-            String collectedFeed = feedQuest.getText().toString();
-            String collectedPlay = playQuest.getText().toString();
-            String collectedPet = petQuest.getText().toString();
-            if (collectedPet.equals("Collected") && collectedFeed.equals("Collected") && collectedPlay.equals("Collected")) {
+            // if all quests are completed, refresh them
+            if (checkQuestRefresh()) {
+                SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 //sending values to shared prefs
                 editor.putBoolean("play", false);
@@ -140,9 +130,22 @@ public class Quest extends AppCompatActivity {
                 playQuest.setText("In\nProgress");
                 petQuest.setText("In\nProgress");
                 feedQuest.setText("In\nProgress");
-                Toast.makeText(this,"Quests Refreshed",Toast.LENGTH_SHORT).show();
+            } // end of if
+        } // end of run
+    } // end of questThread
+
+    //checking quest status
+    public boolean checkQuestRefresh(){
+        boolean run=true;
+        while(run) {
+            String collectedFeed = feedQuest.getText().toString();
+            String collectedPlay = playQuest.getText().toString();
+            String collectedPet = petQuest.getText().toString();
+            if (collectedPet.equals("Collected") && collectedFeed.equals("Collected") && collectedPlay.equals("Collected")) {
+                return true;
             }
         }
+        return false;
     }
 
     //shop button
