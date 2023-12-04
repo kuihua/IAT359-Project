@@ -118,6 +118,7 @@ public class Quest extends AppCompatActivity {
         int newMoney = currentMoney+rewardAmt;
         editor.putInt("coin", newMoney);
         editor.putBoolean("collected2", true);
+        editor.commit();
         //setting button to collected, disable button
         feedQuest.setText("Collected");
         feedQuest.setClickable(false);
