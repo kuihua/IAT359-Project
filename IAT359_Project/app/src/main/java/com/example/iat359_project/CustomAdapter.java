@@ -81,9 +81,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             context = itemView.getContext();
             db = new MyDatabase(context);
 
-//            int id = context.getResources().getIdentifier("com.example.iat359:drawable/" + results[3], null, null);
-//            itemImageView.setImageResource(id);
-
             //changing button text based on the activity the user is in
             if(context instanceof Shop){
                 buyWearButton.setText("Buy");
@@ -101,17 +98,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         @Override
         public void onClick(View view) {
             if(view.getId() == R.id.buyWearButton) {
-
                 if(context instanceof Customization){
                     db.wearItem(nameTextView.getText().toString());
                     ((Customization)context).recreate();
-//                    not working as intended, add if time
-//                    //change button text depending if item is worn
-//                    if(buyWearButton.getText().toString().equals("Wear")){
-//                        buyWearButton.setText("Worn");
-//                    }else{
-//                        buyWearButton.setText("Wear");
-//                    }
                 }else if(context instanceof Shop){
                     SharedPreferences sharedPref = context.getSharedPreferences("MyData", Context.MODE_PRIVATE);
                     int currentMoney = sharedPref.getInt("coin", 100);
