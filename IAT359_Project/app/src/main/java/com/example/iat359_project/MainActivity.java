@@ -452,6 +452,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             saveImage();
@@ -459,17 +460,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
         }
 
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-//        --- location stuff -------
+//        location permissions
         if(requestCode == FINE_PERMISSON_CODE){
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 getLastLocation();
             }else{
                 Toast.makeText(this, "Location permissions denied", Toast.LENGTH_SHORT).show();
             }
-        }
-    }
+        } // end of checking location permissions
+    } // end of onRequestPermissionsResult
 
     private void saveImage() {
 
@@ -496,7 +495,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    } // end of saveImage
 
     private Bitmap screenShot() {
         View v = findViewById(R.id.mainView);
@@ -513,9 +512,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             return false;
         }
-
         return true;
-    }
+    } // end of checkPermission
 
  //   save and share screenshot
 //    private File saveImage(){
