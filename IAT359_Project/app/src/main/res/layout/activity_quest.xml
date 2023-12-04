@@ -23,9 +23,9 @@
         android:layout_alignBottom="@id/questOverlay"
         android:layout_alignTop="@id/questOverlay"
         android:paddingTop="20dp"
-        android:paddingLeft="85dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="25dp"
+        android:paddingLeft="80dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="20dp"
         >
 <!--    quest text title-->
         <TextView
@@ -39,68 +39,66 @@
 
 <!--        quest 1-->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/quest1"
             android:layout_weight="1"
+            android:weightSum="3"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/questDesc1"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Play with your Yumi" />
 
             <TextView
                 android:id="@+id/reward1"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
                 android:text="Reward: 35" />
 
             <Button
                 android:id="@+id/collectButton1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="reward1"
                 android:clickable="false"
-                android:text="In&#10;Progress" />
+                android:text="In Progress" />
 <!--            makes it so it creates a new line-->
 
         </LinearLayout>
 
         <!--        quest 2-->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/quest1"
             android:id="@+id/quest2"
             android:layout_weight="1"
+            android:weightSum="3"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/questDesc2"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Feed your Yumi" />
 
             <TextView
                 android:id="@+id/reward2"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
                 android:text="Reward: 20" />
 
             <Button
                 android:id="@+id/collectButton2"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="false"
@@ -111,37 +109,36 @@
 
         <!--        quest 3-->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/quest2"
             android:id="@+id/quest3"
             android:layout_weight="1"
+            android:weightSum="3"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/questDesc3"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Pet your Yumi" />
 
             <TextView
                 android:id="@+id/reward3"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
                 android:text="Reward: 15" />
 
             <Button
                 android:id="@+id/collectButton3"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="false"
                 android:onClick="reward3"
-                android:text="In&#10;Progress"/>
+                android:text="In Progress"/>
 
         </LinearLayout>
 
