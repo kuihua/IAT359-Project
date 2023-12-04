@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,65 +13,68 @@
         android:id="@+id/namingTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="30dp"
         android:background="#CEF9F2"
+        android:gravity="center"
         android:padding="8dp"
-        android:gravity="center"
         android:text="Yumi"
+        android:textColor="#000000"
         android:textSize="30dp"
-        android:textColor="#000000"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
-<!--    text and edit view for what the user wants to name their pet-->
-    <TextView
-        android:id="@+id/petNameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="This is a Yumi. What would you like to name them?"
-        android:textColor="#000000"
-        android:textSize="24dp"
-        android:padding="5dp"/>
-
-    <EditText
-        android:id="@+id/petNameEdit"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_below="@id/petNameTextView"
-        android:text="Yumi"
-        android:textSize="20dp"
-        android:textColor="#000000"
-        android:background="#EFC0FF"
+        android:layout_height="match_parent"
         android:padding="10dp"
-        android:textAlignment="center"
-        android:maxLines="1"
-        android:maxLength="20"
-        android:layout_margin="10dp"/>
+        android:orientation="vertical">
+        <!--    text and edit view for what the user wants to name their pet-->
+        <TextView
+            android:id="@+id/petNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="This is a Yumi. What would you like to name them?"
+            android:textColor="#000000"
+            android:textSize="24dp" />
 
-<!--    image of the creature-->
-    <ImageView
-        android:id="@+id/starterCreature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/petNameTextView"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
-        android:scaleX="0.8"
-        android:scaleY="0.8"
-        android:src="@drawable/starter_creature" />
-
-<!--    button to submit name-->
-    <Button
-        android:id="@+id/nameButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_alignParentBottom="true"
-        android:onClick="name"
-        android:padding="10dp"
-        android:text="Continue"
-        android:textColor="#ffffff"
-        android:textSize="20dp" />
-
+        <EditText
+            android:id="@+id/petNameEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/petNameTextView"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="#EFC0FF"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:minLines="1"
+            android:padding="10dp"
+            android:text="Yumi"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="20dp" />
+        <!--    button to submit name-->
+        <Button
+            android:id="@+id/nameButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:onClick="name"
+            android:text="Continue"
+            android:textColor="#ffffff"
+            android:textSize="16dp"
+            app:cornerRadius="0dp" />
+        <!--    image of the creature-->
+        <ImageView
+            android:id="@+id/starterCreature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/petNameTextView"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:src="@drawable/starter_creature" />
+    </LinearLayout>
 </LinearLayout>
