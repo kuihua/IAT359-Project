@@ -429,26 +429,25 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 //        saveImage();
 //    }
 
-    //sharing the ad
+    //share button for sharing the yumi ad
     public void share(View v) {
         try {
             Uri imageUri = null;
             try {
                 //store the png as a bitmap, regular png does not work: sends empty image
-                imageUri = Uri.parse(MediaStore.Images.Media.insertImage(this.getContentResolver(),
-                        BitmapFactory.decodeResource(getResources(), R.drawable.yumi_ad), null, null));
+                imageUri = Uri.parse(MediaStore.Images.Media.insertImage(this.getContentResolver(), BitmapFactory.decodeResource(getResources(), R.drawable.yumi_ad), null, null));
             }
             catch (NullPointerException e) {
             }
+            //creating implicit intent to share the img and text to a platform of user's choosing
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
             intent.setType("image/*");
             intent.putExtra(Intent.EXTRA_STREAM, imageUri);
             intent.putExtra(Intent.EXTRA_TEXT, "Play Yumi today!");
-            startActivity(Intent.createChooser(intent, "Share using"));
-        } catch (android.content.ActivityNotFoundException ex) {
+            startActivity(Intent.createChooser(intent, "Share using: "));
+        } catch (ActivityNotFoundException e) {
         }
-
     } // end of share
 
     @Override
