@@ -1,15 +1,10 @@
 package com.example.iat359_project;
 
 import static android.view.View.VISIBLE;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
-
 import android.Manifest;
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -29,21 +24,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -215,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             toy.setVisibility(v.GONE);
             playing = false;
         }
-    }
+    } // end of play
 
     //feeding the pet
     public void feed(View v) {
@@ -224,7 +212,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             plate.setVisibility(VISIBLE);
             food.setVisibility(VISIBLE);
             feeding = true;
-
             //increase affection
             SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
             int currentAffection = sharedPref.getInt("affection", 0);
@@ -235,7 +222,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             editor.putBoolean("feed", true);
             editor.commit();
             affectionTextView.setText("Affection: " + newAffection);
-
             //if the pet is being fed, set all toys to gone
             playing = false;
             toy.setVisibility(v.GONE);
@@ -245,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             food.setVisibility(v.GONE);
             feeding = false;
         }
-    }
+    } // end of feed
 
     //touch method
     @Override
@@ -284,6 +270,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // TODO Auto-generated method stub
     }
 
+    // light sensor
     @Override
     public void onSensorChanged(SensorEvent event) {
         int type = event.sensor.getType();

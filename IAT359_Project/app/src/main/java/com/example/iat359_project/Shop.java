@@ -38,6 +38,7 @@ public class Shop extends AppCompatActivity {
         db = new MyDatabase(this);
         helper = new MyHelper(this);
 
+        // for filtering the shop based on item type
         Intent intent = getIntent();
         if(intent.hasExtra("Item")){
             String item = intent.getExtras().getString("Item");

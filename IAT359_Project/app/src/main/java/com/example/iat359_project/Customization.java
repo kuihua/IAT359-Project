@@ -22,7 +22,6 @@ public class Customization extends AppCompatActivity{
         private MyDatabase db;
         private TextView itemNameText, itemTypeText, itemWearingText;
         private ImageView itemImageView;
-        Button filterHead, filterNeck, filterBody;
 
         private CustomAdapter customAdapter;
         private MyHelper helper;
@@ -39,6 +38,7 @@ public class Customization extends AppCompatActivity{
             db = new MyDatabase(this);
             helper = new MyHelper(this);
 
+            // for filtering items based on type
             Intent intent = getIntent();
             if(intent.hasExtra("Item")){
                 String item = intent.getExtras().getString("Item");
