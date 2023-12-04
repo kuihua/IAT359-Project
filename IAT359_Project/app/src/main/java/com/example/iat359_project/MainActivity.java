@@ -35,6 +35,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
@@ -100,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
+        counting();
 
 
         //Images
@@ -362,6 +364,27 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             } catch (IOException e) {
                 exception = e;
             }
+        }
+    } // end of GetWeatherThread
+
+    private class GetTimeThread implements Runnable {
+        @Override
+        public void run() {
+            //check every 2s
+            SystemClock.sleep(2000);
+            countdown();
+        }
+    } // end of time thread
+    public void counting(){
+        Thread myThread = new Thread(new GetTimeThread());
+        myThread.start();
+    }
+
+    public void countdown(){
+        boolean run=true;
+        while(run) {
+            long time1 = new Date().getTime();
+            Log.d("testing time beep", Double.toString(time1));
         }
     }
 
