@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import java.util.Arrays;
@@ -200,6 +201,12 @@ public class MatchingGame extends AppCompatActivity {
         });
 
     }//end of onCreate
+
+    //back button to main activity
+    public void backButton(View view){
+        Intent intent= new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
     //images for the front of the tile
     public void tileFrontResources(){
@@ -466,11 +473,6 @@ public class MatchingGame extends AppCompatActivity {
         }
     } // end of checkEnd
 
-    //back button to main activity
-    public void backButton(){
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
-    }
 
 //    implementing a thread to continuously check quest status
     public void checkTileStatus() {
