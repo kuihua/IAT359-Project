@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/matchingGame"
+    android:padding="10dp"
+    android:background="@drawable/main_bg"
     tools:context=".MatchingGame">
 
     <ImageButton
@@ -11,14 +13,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="backButton"
-        android:src="@android:drawable/btn_star_big_off" />
+        android:background="@null"
+        android:padding="10dp"
+        android:src="@drawable/matching_game_back_button" />
 
     <TextView
         android:id="@+id/gameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/backButton"
-        android:text="Oh no! Their clothes got mixed up! Help them clean up."
+        android:text="Play with them! Help them match their items!"
         android:padding="10dp"
         android:paddingBottom="50dp"
         android:textSize="24sp"/>
