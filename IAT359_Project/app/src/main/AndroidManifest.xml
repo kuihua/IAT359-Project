@@ -27,11 +27,6 @@
             android:name=".MatchingGame"
             android:exported="false" />
 
-        <service
-            android:name=".TimerService"
-            android:enabled="true"
-            android:exported="true" />
-
         <activity
             android:name=".Naming"
             android:exported="true"
