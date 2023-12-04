@@ -43,23 +43,41 @@ public class Quest extends AppCompatActivity {
         boolean feed = sharedPref.getBoolean("feed", false);
         boolean play = sharedPref.getBoolean("play", false);
 
-        //if user has fulfilled quest and has not already collected the reward
-        String collectedFeed = feedQuest.getText().toString();
-        String collectedPlay = playQuest.getText().toString();
-        String collectedPet = petQuest.getText().toString();
+        boolean collected1 = sharedPref.getBoolean("collected1", false);
+        boolean collected2 = sharedPref.getBoolean("collected2", false);
+        boolean collected3 = sharedPref.getBoolean("collected3", false);
 
-        if(pet && !collectedPet.equals("Collect") && !collectedPet.equals("Collected")) {
-            petQuest.setClickable(true);
-            petQuest.setText("Collect");
-        }
-
-        if(feed && !collectedFeed.equals("Collect") && !collectedFeed.equals("Collected")){
-            feedQuest.setClickable(true);
-            feedQuest.setText("Collect");
-        }
-        if(play && !collectedPlay.equals("Collect") && !collectedPlay.equals("Collected")){
+        if(play && !collected1){
             playQuest.setClickable(true);
             playQuest.setText("Collect");
+        }else if(play && collected1){
+            playQuest.setText("Collected");
+            playQuest.setClickable(false);
+        }else{
+            playQuest.setText("In Progress");
+            playQuest.setClickable(false);
+        }
+
+        if(feed && !collected2){
+            feedQuest.setClickable(true);
+            feedQuest.setText("Collect");
+        }else if(feed && collected2){
+            feedQuest.setText("Collected");
+            feedQuest.setClickable(false);
+        }else{
+            feedQuest.setText("In Progress");
+            feedQuest.setClickable(false);
+        }
+
+        if(pet && !collected3) {
+            petQuest.setClickable(true);
+            petQuest.setText("Collect");
+        }else if(pet && collected3){
+            petQuest.setText("Collected");
+            petQuest.setClickable(false);
+        }else{
+            petQuest.setText("In Progress");
+            petQuest.setClickable(false);
         }
 
     } // end of onCreate
@@ -73,6 +91,7 @@ public class Quest extends AppCompatActivity {
         int currentMoney = sharedPref.getInt("coin", 100);
         int newMoney = currentMoney+rewardAmt;
         editor.putInt("coin", newMoney);
+        editor.putBoolean("collected1", true);
         editor.commit();
         playQuest.setText("Collected");
         playQuest.setClickable(false);
@@ -86,6 +105,7 @@ public class Quest extends AppCompatActivity {
         int currentMoney = sharedPref.getInt("coin", 100);
         int newMoney = currentMoney+rewardAmt;
         editor.putInt("coin", newMoney);
+        editor.putBoolean("collected2", true);
         editor.commit();
         feedQuest.setText("Collected");
         feedQuest.setClickable(false);
@@ -99,6 +119,7 @@ public class Quest extends AppCompatActivity {
         int currentMoney = sharedPref.getInt("coin", 100);
         int newMoney = currentMoney+rewardAmt;
         editor.putInt("coin", newMoney);
+        editor.putBoolean("collected3", true);
         editor.commit();
         petQuest.setText("Collected");
         petQuest.setClickable(false);
@@ -124,12 +145,20 @@ public class Quest extends AppCompatActivity {
                 editor.putBoolean("play", false);
                 editor.putBoolean("pet", false);
                 editor.putBoolean("feed", false);
+                editor.putBoolean("collected1", false);
+                editor.putBoolean("collected2", false);
+                editor.putBoolean("collected3", false);
                 editor.commit();
 
-                //setting button text
-                playQuest.setText("In\nProgress");
-                petQuest.setText("In\nProgress");
-                feedQuest.setText("In\nProgress");
+                runOnUiThread(new Runnable(){
+                    @Override
+                    public void run() {
+                        //setting button text
+                        playQuest.setText("In\nProgress");
+                        petQuest.setText("In\nProgress");
+                        feedQuest.setText("In\nProgress");
+                    }
+                }); // end of ui thread
             } // end of if
         } // end of run
     } // end of questThread
@@ -143,6 +172,8 @@ public class Quest extends AppCompatActivity {
             String collectedPet = petQuest.getText().toString();
             if (collectedPet.equals("Collected") && collectedFeed.equals("Collected") && collectedPlay.equals("Collected")) {
                 return true;
+            } else {
+                return false;
             }
         }
         return false;
