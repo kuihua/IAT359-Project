@@ -3,6 +3,7 @@ package com.example.iat359_project;
 import static android.view.View.VISIBLE;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import android.Manifest;
 import android.content.ActivityNotFoundException;
@@ -74,9 +75,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         String petName = sharedPref.getString("petName", DEFAULT);
         checkConnection();
-
-        //check if share permission is granted
-        //verifyStoragePermission(this);
 
         //Images
         toy = (ImageView) findViewById(R.id.toyView);
@@ -392,120 +390,49 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //   to share to social media
     public void share(View v) {
-//        shareScreenshot(screenShot(view));
-//        Toast.makeText(this, "clicked",Toast.LENGTH_SHORT).show();
-
-        File file = saveImage();
-        if(file != null){
-            shareImage(file);
-        }
-
-        //screenshot(getWindow().getDecorView().getRootView(), "result");
+        saveImage();
     }
 
-    //based on: https://www.geeksforgeeks.org/how-to-take-screenshot-programmatically-in-android/
-//    protected static File screenshot(View view, String filename) {
-//        Date date = new Date();
-//
-//        //formatting img name
-//        CharSequence format = android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", date);
-//        try {
-//            //creating storage directory
-//            String dirpath = Environment.getExternalStorageDirectory() + "";
-//            File file = new File(dirpath);
-//            if (!file.exists()) {
-//               boolean mkdir = file.mkdir();
-//            }
-//
-//            //file name
-//            String path = dirpath + "/" + filename + "-" + format + ".jpeg";
-//            view.setDrawingCacheEnabled(true);
-//            Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
-//            view.setDrawingCacheEnabled(false);
-//            File imageurl = new File(path);
-//            FileOutputStream outputStream = new FileOutputStream(imageurl);
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
-//            outputStream.flush();
-//            outputStream.close();
-//            return imageurl;
-//
-//        } catch (FileNotFoundException io) {
-//            io.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return null;
-//    }
-//
-//    //verify permission
-//    public static void verifyStoragePermission(Activity a) {
-//        int permissions = ActivityCompat.checkSelfPermission(a, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//
-//        if (permissions != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(a, permissionStorage, REQUEST_EXTERNAL_STORAGE);
-//        }
-//    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
+        if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            saveImage();
+        } else {
+            Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+        }
 
- //   save and share screenshot
-    private File saveImage(){
-        Exception exception = null;
-        try{
-            String path = Environment.getExternalStorageDirectory().toString() + "/com.example.iat359_project";
-            File filedir = new File(path);
-            if(!filedir.exists()){
-                filedir.mkdir();
-            }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
-            String mPath = path + "/Screenshot_" + new Date().getTime() + ".png";
-            Bitmap bitmap = screenshot();
+    private void saveImage() {
+
+        if(!checkPermission())
+            return;
+
+        try {
+            String path = Environment.getExternalStorageDirectory().toString() + "/AppName";
+            File fileDir = new File(path);
+            if (fileDir.exists())
+                fileDir.mkdir();
+
+            String mPath = path + "/ScreenShot" + new Date().getTime() + ".png";
+
+            Bitmap bitmap = screenShot();
             File file = new File(mPath);
-            Toast.makeText(this, "click", Toast.LENGTH_SHORT).show();
-
-            Log.d("testingInputStream", file.toString());
             FileOutputStream fOut = new FileOutputStream(file);
-            Toast.makeText(this, "bbbbb", Toast.LENGTH_SHORT).show();
-
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-
             fOut.flush();
             fOut.close();
 
-            Toast.makeText(this, "image saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Image Saved", Toast.LENGTH_LONG).show();
 
-            return file;
-        }catch(IOException e){
-            exception = e;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return null;
     }
 
-    private void shareImage(File file){
-        Uri uri;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(this, getPackageManager()+".provider", file);
-        }else{
-            uri = Uri.fromFile(file);
-        }
-
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Screenshot");
-        intent.putExtra(Intent.EXTRA_TEXT, "This is my Yumi!");
-        intent.putExtra(Intent.EXTRA_STREAM, uri);
-
-        try{
-            startActivity(Intent.createChooser(intent, "Share using"));
-        }catch (ActivityNotFoundException e){
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-
-    }//end of shareImage
-
-    private Bitmap screenshot(){
+    private Bitmap screenShot() {
         View v = findViewById(R.id.mainView);
         Bitmap bitmap = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
@@ -513,15 +440,72 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         return bitmap;
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            saveImage();
-        }else{
-            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    private boolean checkPermission() {
+        int permission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
+        if(permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+            return false;
+        }
+
+        return true;
     }
+
+ //   save and share screenshot
+//    private File saveImage(){
+//        Exception exception = null;
+//        try{
+//            String path = Environment.getExternalStorageDirectory().toString() + "/com.example.iat359_project";
+//            File filedir = new File(path);
+//            if(!filedir.exists()){
+//                filedir.mkdir();
+//            }
+//
+//            String mPath = path + "/Screenshot_" + new Date().getTime() + ".png";
+//            Bitmap bitmap = screenshot();
+//            File file = new File(mPath);
+//            Toast.makeText(this, "click", Toast.LENGTH_SHORT).show();
+//
+//            Log.d("testingInputStream", file.toString());
+//            FileOutputStream fOut = new FileOutputStream(file);
+//            Toast.makeText(this, "bbbbb", Toast.LENGTH_SHORT).show();
+//
+//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+//
+//            fOut.flush();
+//            fOut.close();
+//
+//            Toast.makeText(this, "image saved", Toast.LENGTH_SHORT).show();
+//
+//            return file;
+//        }catch(IOException e){
+//            exception = e;
+//        }
+//        return null;
+//    }
+//
+//    private void shareImage(File file){
+//        Uri uri;
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            uri = FileProvider.getUriForFile(this, getPackageManager()+".provider", file);
+//        }else{
+//            uri = Uri.fromFile(file);
+//        }
+//
+//        Intent intent = new Intent();
+//        intent.setAction(Intent.ACTION_SEND);
+//        intent.setType("image/*");
+//        intent.putExtra(Intent.EXTRA_SUBJECT, "Screenshot");
+//        intent.putExtra(Intent.EXTRA_TEXT, "This is my Yumi!");
+//        intent.putExtra(Intent.EXTRA_STREAM, uri);
+//
+//        try{
+//            startActivity(Intent.createChooser(intent, "Share using"));
+//        }catch (ActivityNotFoundException e){
+//            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+//        }
+//
+//    }//end of shareImage
 
 } // end of class
