@@ -104,15 +104,32 @@ public class MyDatabase {
             contentValues.put(Constants.WEARING, "False");
         }
 
-        //updating whether or not item has been worn
+        //updating whether or not the desired item has been worn or taken off
         long id = db.update(Constants.PLAYER_TABLE_NAME, contentValues, Constants.NAME+"=?", new String[]{name} );
         return id;
     } // end of wearItem
 
-    //method to take off items sharing the same type the user is trying to put on
+    //method to take off all items sharing the same type the user is trying to put on
     //this is so it prevents clothes from overlapping when trying to swap outfits (of the same type)
-    public long changeItem(String type){
+    public long changeItem(String type, String name){
         db = helper.getWritableDatabase();
+
+        //to ensure the selected item is not affected
+        String selection = Constants.NAME + "='" + name + "'";
+        String[] columns = {Constants.NAME, Constants.TYPE, Constants.WEARING, Constants.IMAGE};
+        Cursor cursor = db.query(Constants.PLAYER_TABLE_NAME, columns, selection, null, null, null, null);
+
+        //we only need to access the WEARING column
+        int index = cursor.getColumnIndex(Constants.WEARING);
+
+        ArrayList<String> mArrayList = new ArrayList<String>();
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            String itemWear= cursor.getString(index);
+            mArrayList.add(itemWear);
+            cursor.moveToNext();
+        }
 
         //we are only replacing the Constants.WEARING value
         ContentValues contentValues = new ContentValues();
@@ -120,6 +137,16 @@ public class MyDatabase {
 
         //updating any items with the same item type as the user is about to wear to false to prevent image overlap
         long id = db.update(Constants.PLAYER_TABLE_NAME, contentValues, Constants.TYPE+"=?", new String[]{type} );
+
+        //after the item strip happens, revert the selected item back
+        ContentValues cv = new ContentValues();
+        if(mArrayList.get(0).toString().equals("False")){
+            cv.put(Constants.WEARING, "False");
+        }else {
+            cv.put(Constants.WEARING, "True");
+        }
+        long id2 = db.update(Constants.PLAYER_TABLE_NAME, cv, Constants.NAME+"=?", new String[]{name} );
+
         return id;
     } // end of changeItem
 
