@@ -538,7 +538,7 @@ public class MatchingGame extends AppCompatActivity {
             startService(new Intent(this, MainMusicService.class));
             SharedPreferences.Editor editor = sharedPrefs.edit();
             isPlaying = true;
-            editor.putBoolean("mainBGM", isPlaying);
+            editor.putBoolean("miniBGM", isPlaying);
             editor.commit();
         }
     } // end of onResume
