@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -16,12 +17,16 @@ public class Quest extends AppCompatActivity {
 
     Button playQuest, feedQuest, petQuest;
     TextView playDesc, feedDesc, petDesc, playReward, feedReward, petReward;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quest);
         checkQuestStatus();
+
+        //sfx for tap
+        mp = MediaPlayer.create(this, R.raw.tap);
 
         //setting collect reward buttons
         playQuest = (Button) findViewById(R.id.collectButton1);
@@ -93,6 +98,8 @@ public class Quest extends AppCompatActivity {
 
     //reward collection buttons
     public void reward1(View v){
+        //sfx for tap
+        mp.start();
         int rewardAmt = Integer.parseInt(playReward.getText().toString().replace("Reward: ", ""));
         Log.d("rewardAmt", ""+rewardAmt);
         SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
@@ -110,6 +117,8 @@ public class Quest extends AppCompatActivity {
     }
 
     public void reward2(View v){
+        //sfx for tap
+        mp.start();
         int rewardAmt = Integer.parseInt(feedReward.getText().toString().replace("Reward: ", ""));
         SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -126,6 +135,8 @@ public class Quest extends AppCompatActivity {
     }
 
     public void reward3(View v){
+        //sfx for tap
+        mp.start();
         int rewardAmt = Integer.parseInt(petReward.getText().toString().replace("Reward: ", ""));
         SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -197,18 +208,24 @@ public class Quest extends AppCompatActivity {
 
     //shop button
     public void gotoShop(View view) {
+        //sfx for tap
+        mp.start();
         Intent i = new Intent(this, Shop.class);
         startActivity(i);
     }
 
     //for customization button
     public void custom(View view) {
+        //sfx for tap
+        mp.start();
         Intent i = new Intent(this,Customization.class);
         startActivity(i);
     }
 
     //for home
     public void goHome(View view) {
+        //sfx for tap
+        mp.start();
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }

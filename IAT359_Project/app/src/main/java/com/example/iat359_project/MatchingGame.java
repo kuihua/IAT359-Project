@@ -506,6 +506,10 @@ public class MatchingGame extends AppCompatActivity {
             editor.putBoolean("play", true);
             editor.commit();
 
+            //sfx for game win
+            mp = MediaPlayer.create(this, R.raw.success);
+            mp.start();
+
             //stop mini game bgm
             stopService(new Intent(this, MinigameMusicService.class));
             //go back to main activity

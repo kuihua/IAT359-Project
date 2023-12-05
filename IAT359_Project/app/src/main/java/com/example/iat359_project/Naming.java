@@ -18,6 +18,7 @@ public class Naming extends AppCompatActivity {
     boolean rename;
     boolean firstTime;
     MyDatabase db;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,9 @@ public class Naming extends AppCompatActivity {
     }//end of onCreate
 
     public void name (View view){
+        //sfx for tap
+        mp = MediaPlayer.create(this, R.raw.tap);
+        mp.start();
         //save pet's name to shared preferences, player is not a first time user anymore
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();

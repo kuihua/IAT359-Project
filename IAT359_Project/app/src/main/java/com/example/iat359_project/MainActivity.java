@@ -206,18 +206,27 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //for shop button
     public void gotoShop(View view) {
+        //sfx for tap
+        mp = MediaPlayer.create(this, R.raw.tap);
+        mp.start();
         Intent i = new Intent(this, Shop.class);
         startActivity(i);
     }
 
     //for customization button
     public void custom(View view) {
+        //sfx for tap
+        mp = MediaPlayer.create(this, R.raw.tap);
+        mp.start();
         Intent i = new Intent(this, Customization.class);
         startActivity(i);
     }
 
     //for quest
     public void questButton(View view) {
+        //sfx for tap
+        mp = MediaPlayer.create(this, R.raw.tap);
+        mp.start();
         Intent i = new Intent(this, Quest.class);
         startActivity(i);
     }
@@ -225,12 +234,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //go to matching mini game
     public void play(View v) {
         //go the mini game activity
+        //sfx for tap
+        mp = MediaPlayer.create(this, R.raw.tap);
+        mp.start();
         Intent i = new Intent(this, MatchingGame.class);
         startActivity(i);
     } // end of play
 
     //feeding the pet
     public void feed(View v) {
+        //sfx for tap
+        mp = MediaPlayer.create(this, R.raw.tap);
+        mp.start();
         if (!feeding) {
             //if the pet is not eating, start feeding
             plate.setVisibility(VISIBLE);
@@ -335,6 +350,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //GPS + weather
     public void getWeather(View v) {
+        //sfx for tap
+        mp = MediaPlayer.create(this, R.raw.tap);
+        mp.start();
         getLastLocation();
         if (currentLocation != null) {
 //            Toast.makeText(this, "Has location", Toast.LENGTH_SHORT).show();

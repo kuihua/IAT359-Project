@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +27,7 @@ public class Shop extends AppCompatActivity {
     private ImageView itemImageView;
     private LinearLayoutManager mLayoutManager;
     Cursor cursor;
-
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,9 @@ public class Shop extends AppCompatActivity {
         setContentView(R.layout.activity_shop);
         myRecycler = (RecyclerView) findViewById(R.id.recyclerView);
         myRecycler.setLayoutManager(new LinearLayoutManager(this));
+
+        //sfx for tap
+        mp = MediaPlayer.create(this, R.raw.tap);
 
         db = new MyDatabase(this);
         helper = new MyHelper(this);
@@ -76,24 +80,32 @@ public class Shop extends AppCompatActivity {
 
     //filter by all
     public void filterAll(View view){
+        //sfx for tap
+        mp.start();
         //refresh activity, recreate() doesn't work
         Intent i = new Intent(this, Shop.class);
         startActivity(i);
     }
 
     public void filterHead(View view){
+        //sfx for tap
+        mp.start();
         Intent i = new Intent(this, Shop.class);
         i.putExtra("Item", "Head");
         startActivity(i);
     }
 
     public void filterNeck(View view){
+        //sfx for tap
+        mp.start();
         Intent i = new Intent(this, Shop.class);
         i.putExtra("Item", "Neck");
         startActivity(i);
     }
 
     public void filterBody(View view){
+        //sfx for tap
+        mp.start();
         Intent i = new Intent(this, Shop.class);
         i.putExtra("Item", "Body");
         startActivity(i);
@@ -101,18 +113,24 @@ public class Shop extends AppCompatActivity {
 
     //for home button
     public void goHome(View view) {
+        //sfx for tap
+        mp.start();
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
 
     //for custom button
     public void custom(View view) {
+        //sfx for tap
+        mp.start();
         Intent i = new Intent(this,Customization.class);
         startActivity(i);
     }
 
     //for quest
     public void questButton(View view) {
+        //sfx for tap
+        mp.start();
         Intent i = new Intent(this,Quest.class);
         startActivity(i);
     }
