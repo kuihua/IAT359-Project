@@ -30,6 +30,17 @@ public class MatchingGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matching_game);
 
+        SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        boolean isPlaying = sharedPref.getBoolean("miniBGM", false);
+        //starts playing the mini game bgm
+        if(!isPlaying){
+            startService(new Intent(this, MinigameMusicService.class));
+            isPlaying = true;
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("miniBGM", true);
+            editor.commit();
+        }
+
         //getting tile image views
         tile1 = (ImageView) findViewById(R.id.tile1);
         tile2 = (ImageView) findViewById(R.id.tile2);
@@ -204,9 +215,11 @@ public class MatchingGame extends AppCompatActivity {
 
     //back button to main activity
     public void backButton(View view){
+        //stops the mini game music
+        stopService(new Intent(this, MinigameMusicService.class));
         Intent intent= new Intent(this, MainActivity.class);
         startActivity(intent);
-    }
+    } // end of back button
 
     //images for the front of the tile
     public void tileFrontResources(){
@@ -467,6 +480,8 @@ public class MatchingGame extends AppCompatActivity {
             editor.putBoolean("play", true);
             editor.commit();
 
+            //stop mini game bgm
+            stopService(new Intent(this, MinigameMusicService.class));
             //go back to main activity
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
@@ -494,5 +509,32 @@ public class MatchingGame extends AppCompatActivity {
             });
         }
     } // end of checkTileThread
+
+    //if app is closed, stop service
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putBoolean("miniBGM", false);
+        editor.commit();
+        stopService(new Intent(this, MinigameMusicService.class));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        boolean isPlaying = sharedPrefs.getBoolean("miniBGM", false);
+
+        //starts playing the main bgm
+        if (!isPlaying) {
+            startService(new Intent(this, MinigameMusicService.class));
+            isPlaying = true;
+            SharedPreferences.Editor editor = sharedPrefs.edit();
+            editor.putBoolean("miniBGM", isPlaying);
+            editor.commit();
+        }
+    } // end of onResume
 
 }//end of class

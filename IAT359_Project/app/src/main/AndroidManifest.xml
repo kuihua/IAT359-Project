@@ -71,6 +71,8 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <service android:name=".MainMusicService" android:stopWithTask="true"/>
+        <service android:name=".MinigameMusicService" android:stopWithTask="true"/>
     </application>
 
 </manifest>
