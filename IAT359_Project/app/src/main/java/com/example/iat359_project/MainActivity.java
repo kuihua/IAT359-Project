@@ -309,7 +309,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //GPS + weather
     public void getWeather(View v) {
+        getLastLocation();
         if (currentLocation != null) {
+            Toast.makeText(this, "Has location", Toast.LENGTH_SHORT).show();
             latitude = currentLocation.getLatitude();
             longitude = currentLocation.getLongitude();
             lat = Double.toString(latitude);
@@ -318,19 +320,28 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             url = "http://api.geonames.org/findNearByWeatherJSON?lat=" +
                     lat + "&lng=" +
                     lng + "&username=jvillaso";
-            int temperature = 10;
+            float temperature = 10;
 
             Thread myThread = new Thread(new GetWeatherThread());
             myThread.start();
 
             try {
+                Toast.makeText(this, "location"+lat+lng+"", Toast.LENGTH_SHORT).show();
+
+                Log.d("location testing", "res"+result);
+
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject weatherObservationItems =
                         new JSONObject(jsonObject.getString("weatherObservation"));
+
                 //as the service does not have weather conditions, we opted to use temperature instead
                 //get temperature from weather service
-                String temp = "" + weatherObservationItems.getString("temperature");
-                temperature = Integer.parseInt(temp);
+                String temp = weatherObservationItems.getString("temperature");
+                Log.d("location testing testing", ""+temp);
+                temp = temp.replaceAll("[^\\d.]", "");
+                temp.trim();
+                temperature = Float.parseFloat(temp);
+                Toast.makeText(this, "location"+temperature+"", Toast.LENGTH_SHORT).show();
                 //if temperature is below zero
                 if (temperature <= 0) {
                     snow.setVisibility(VISIBLE); //change to snow
@@ -350,6 +361,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             rain.setVisibility(View.INVISIBLE);
             Toast.makeText(this, "No location", Toast.LENGTH_SHORT).show();
         }
+        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
     } // end of getWeather
 
     // getting the user's location
@@ -407,13 +419,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
         try {
-            conn.setReadTimeout(10000);
-            conn.setConnectTimeout(15000);
+            conn.setReadTimeout(10000 /* milliseconds */);
+            conn.setConnectTimeout(15000 /* milliseconds */);
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
             // Starts the query
             conn.connect();
             int response = conn.getResponseCode();
+            Log.d("tag", "The response is: " + response);
             is = conn.getInputStream();
 
             // Convert the InputStream into a string
@@ -471,16 +484,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            saveImage();
-        } else {
-            Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-        }
+//        if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//            saveImage();
+//        } else {
+//            Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+//        }
 
 //        location permissions
         if(requestCode == FINE_PERMISSON_CODE){
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 getLastLocation();
+                Toast.makeText(this, "Location permissions allowed.", Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(this, "Location permissions denied.", Toast.LENGTH_SHORT).show();
             }
