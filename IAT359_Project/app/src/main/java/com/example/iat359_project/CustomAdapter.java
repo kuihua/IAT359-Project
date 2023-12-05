@@ -25,7 +25,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     private List<String> list;
     private String itemData;
-    private String itemType;
 
     public CustomAdapter(List<String> list) {
         this.list = list;
@@ -45,8 +44,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         itemData = list.get(position).toString();
         holder.nameTextView.setText(results[0]);
-        holder.typeTextView.setText("");
-        itemType = results[1];
+        holder.typeTextView.setText(results[1]);
         holder.itemVarText.setText(results[2]);
 
         //for item icon
@@ -101,7 +99,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         public void onClick(View view) {
             if(view.getId() == R.id.buyWearButton) {
                 if(context instanceof Customization){
-                    db.changeItem(itemType, nameTextView.getText().toString());
+                    db.changeItem(typeTextView.getText().toString(), nameTextView.getText().toString());
                     db.wearItem(nameTextView.getText().toString());
                     ((Customization)context).recreate();
                 }else if(context instanceof Shop){

@@ -16,7 +16,7 @@ public class Naming extends AppCompatActivity {
 
     EditText petNameEdit;
     boolean rename;
-    boolean firstTime;
+    boolean firstTime, isPlaying;
     MyDatabase db;
     MediaPlayer mp;
 
