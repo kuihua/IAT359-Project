@@ -146,7 +146,11 @@ public class MyDatabase {
         ContentValues contentValues = new ContentValues();
         contentValues.put(Constants.NAME, mArrayList.get(0));
         contentValues.put(Constants.TYPE, mArrayList.get(1));
-        contentValues.put(Constants.WEARING, "False");
+        if(mArrayList.get(2).toString().equals("False")){
+            contentValues.put(Constants.WEARING, "True");
+        }else {
+            contentValues.put(Constants.WEARING, "False");
+        }
         contentValues.put(Constants.IMAGE, mArrayList.get(3));
 
         //updating whether or not item has been worn
