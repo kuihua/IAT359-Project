@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -25,6 +26,7 @@ public class MatchingGame extends AppCompatActivity {
     private int turn = 1;
     private int img101, img102, img103, img104, img105, img106, img107, img108, img201, img202, img203, img204, img205, img206, img207, img208;
     boolean isPlaying;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,9 @@ public class MatchingGame extends AppCompatActivity {
             editor.putBoolean("miniBGM", true);
             editor.commit();
         }
+
+        //sfx for tile flip
+        mp = MediaPlayer.create(this, R.raw.card_flip);
 
         //getting tile image views
         tile1 = (ImageView) findViewById(R.id.tile1);
@@ -89,6 +94,7 @@ public class MatchingGame extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int tile = Integer.parseInt(v.getTag().toString());
+                mp.start();
                 flipTile(tile1, tile);
             }
         });
@@ -98,6 +104,7 @@ public class MatchingGame extends AppCompatActivity {
             public void onClick(View v) {
                 int tile = Integer.parseInt(v.getTag().toString());
                 flipTile(tile2, tile);
+                mp.start();
             }
         });
 
@@ -106,6 +113,7 @@ public class MatchingGame extends AppCompatActivity {
             public void onClick(View v) {
                 int tile = Integer.parseInt(v.getTag().toString());
                 flipTile(tile3, tile);
+                mp.start();
             }
         });
 
@@ -114,6 +122,7 @@ public class MatchingGame extends AppCompatActivity {
             public void onClick(View v) {
                 int tile = Integer.parseInt(v.getTag().toString());
                 flipTile(tile4, tile);
+                mp.start();
             }
         });
 
@@ -122,6 +131,7 @@ public class MatchingGame extends AppCompatActivity {
             public void onClick(View v) {
                 int tile = Integer.parseInt(v.getTag().toString());
                 flipTile(tile5, tile);
+                mp.start();
             }
         });
 
@@ -130,6 +140,7 @@ public class MatchingGame extends AppCompatActivity {
             public void onClick(View v) {
                 int tile = Integer.parseInt(v.getTag().toString());
                 flipTile(tile6, tile);
+                mp.start();
             }
         });
 
@@ -138,6 +149,7 @@ public class MatchingGame extends AppCompatActivity {
             public void onClick(View v) {
                 int tile = Integer.parseInt(v.getTag().toString());
                 flipTile(tile7, tile);
+                mp.start();
             }
         });
 
@@ -146,6 +158,7 @@ public class MatchingGame extends AppCompatActivity {
             public void onClick(View v) {
                 int tile = Integer.parseInt(v.getTag().toString());
                 flipTile(tile8, tile);
+                mp.start();
             }
         });
 
@@ -154,6 +167,7 @@ public class MatchingGame extends AppCompatActivity {
             public void onClick(View v) {
                 int tile = Integer.parseInt(v.getTag().toString());
                 flipTile(tile9, tile);
+                mp.start();
             }
         });
 
@@ -162,6 +176,7 @@ public class MatchingGame extends AppCompatActivity {
             public void onClick(View v) {
                 int tile = Integer.parseInt(v.getTag().toString());
                 flipTile(tile10, tile);
+                mp.start();
             }
         });
 
@@ -170,6 +185,7 @@ public class MatchingGame extends AppCompatActivity {
             public void onClick(View v) {
                 int tile = Integer.parseInt(v.getTag().toString());
                 flipTile(tile11, tile);
+                mp.start();
             }
         });
 
@@ -178,6 +194,7 @@ public class MatchingGame extends AppCompatActivity {
             public void onClick(View v) {
                 int tile = Integer.parseInt(v.getTag().toString());
                 flipTile(tile12, tile);
+                mp.start();
             }
         });
 
@@ -186,6 +203,7 @@ public class MatchingGame extends AppCompatActivity {
             public void onClick(View v) {
                 int tile = Integer.parseInt(v.getTag().toString());
                 flipTile(tile13, tile);
+                mp.start();
             }
         });
         tile14.setOnClickListener(new View.OnClickListener() {
@@ -193,6 +211,7 @@ public class MatchingGame extends AppCompatActivity {
             public void onClick(View v) {
                 int tile = Integer.parseInt(v.getTag().toString());
                 flipTile(tile14, tile);
+                mp.start();
             }
         });
 
@@ -201,6 +220,7 @@ public class MatchingGame extends AppCompatActivity {
             public void onClick(View v) {
                 int tile = Integer.parseInt(v.getTag().toString());
                 flipTile(tile15, tile);
+                mp.start();
             }
         });
 
@@ -209,6 +229,7 @@ public class MatchingGame extends AppCompatActivity {
             public void onClick(View v) {
                 int tile = Integer.parseInt(v.getTag().toString());
                 flipTile(tile16, tile);
+                mp.start();
             }
         });
 
