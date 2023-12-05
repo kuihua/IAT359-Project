@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //enable permission to access external storage
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] permissionStorage = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
-    boolean isPlaying;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,16 +98,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //getting pet's name from shared preferences
         SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         String petName = sharedPref.getString("petName", DEFAULT);
-        isPlaying = sharedPref.getBoolean("mainBGM", false);
-
-        //starts playing the main bgm
-        if(!isPlaying){
-            startService(new Intent(this, MainMusicService.class));
-            SharedPreferences.Editor editor = sharedPref.edit();
-            isPlaying = true;
-            editor.putBoolean("firstTime", isPlaying);
-            editor.commit();
-        }
 
         //checking network connection
         checkConnection();
@@ -232,13 +221,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //go to matching mini game
     public void play(View v) {
-        //bgm off
-        stopService(new Intent(this, MainMusicService.class));
-        isPlaying = false;
-        SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPrefs.edit();
-        editor.putBoolean("mainBGM", false);
-        editor.commit();
         //go the mini game activity
         Intent i = new Intent(this, MatchingGame.class);
         startActivity(i);
@@ -292,29 +274,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onResume() {
         super.onResume();
         mySensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
-        //play bgm if not
-        SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-        isPlaying = sharedPrefs.getBoolean("mainBGM", false);
-        if(!isPlaying){
-            startService(new Intent(this, MainMusicService.class));
-            SharedPreferences.Editor editor = sharedPrefs.edit();
-            isPlaying = true;
-            editor.putBoolean("mainBGM", isPlaying);
-            editor.commit();
-        }
     } // end of onResume
-
-    @Override
-    public void onStop(){
-        super.onStop();
-        //when closed, bgm off
-        SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPrefs.edit();
-        isPlaying = false;
-        editor.putBoolean("mainBGM", false);
-        editor.commit();
-        stopService(new Intent(this, MainMusicService.class));
-    } // end of onStop
 
     @Override
     protected void onPause() {

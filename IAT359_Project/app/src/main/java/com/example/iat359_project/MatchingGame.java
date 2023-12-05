@@ -31,8 +31,6 @@ public class MatchingGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matching_game);
 
-        stopService(new Intent(this, MainMusicService.class));
-
         SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         isPlaying = sharedPref.getBoolean("miniBGM", false);
         //starts playing the mini game bgm
@@ -43,13 +41,6 @@ public class MatchingGame extends AppCompatActivity {
             editor.putBoolean("miniBGM", true);
             editor.commit();
         }
-
-        //stop main bgm
-        stopService(new Intent(this, MainMusicService.class));
-        SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPrefs.edit();
-        editor.putBoolean("mainBGM", false);
-        editor.commit();
 
         //getting tile image views
         tile1 = (ImageView) findViewById(R.id.tile1);
