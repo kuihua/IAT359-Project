@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,14 +104,20 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         public void onClick(View view) {
             if(view.getId() == R.id.buyWearButton) {
                 if(context instanceof Customization){
+                    MediaPlayer mp = MediaPlayer.create(context, R.raw.cloth);
+                    mp.start();
                     db.changeItem(typeTextView.getText().toString(), nameTextView.getText().toString());
                     db.wearItem(nameTextView.getText().toString());
                     ((Customization)context).recreate();
                 }else if(context instanceof Shop){
+                    MediaPlayer mp = MediaPlayer.create(context, R.raw.tap);
+                    mp.start();
                     SharedPreferences sharedPref = context.getSharedPreferences("MyData", Context.MODE_PRIVATE);
                     int currentMoney = sharedPref.getInt("coin", 100);
                     int cost = Integer.parseInt(itemVarText.getText().toString());
                     if(currentMoney >= cost){
+                        mp = MediaPlayer.create(context, R.raw.coin_drop);
+                        mp.start();
                         db.deleteShopData(nameTextView.getText().toString());
                         SharedPreferences.Editor editor = sharedPref.edit();
                         int spent = currentMoney-cost;

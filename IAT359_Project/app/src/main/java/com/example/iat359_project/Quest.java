@@ -25,9 +25,6 @@ public class Quest extends AppCompatActivity {
         setContentView(R.layout.activity_quest);
         checkQuestStatus();
 
-        //sfx for tap
-        mp = MediaPlayer.create(this, R.raw.tap);
-
         //setting collect reward buttons
         playQuest = (Button) findViewById(R.id.collectButton1);
         feedQuest = (Button) findViewById(R.id.collectButton2);
@@ -99,6 +96,7 @@ public class Quest extends AppCompatActivity {
     //reward collection buttons
     public void reward1(View v){
         //sfx for tap
+        mp = MediaPlayer.create(this, R.raw.tap);
         mp.start();
         int rewardAmt = Integer.parseInt(playReward.getText().toString().replace("Reward: ", ""));
         Log.d("rewardAmt", ""+rewardAmt);
@@ -110,6 +108,11 @@ public class Quest extends AppCompatActivity {
         editor.putInt("coin", newMoney);
         editor.putBoolean("collected1", true);
         editor.commit();
+
+        //sfx for collecting coins
+        mp = MediaPlayer.create(this, R.raw.coin_drop);
+        mp.start();
+
         //setting button to collected, disable button
         playQuest.setText("Collected");
         playQuest.setClickable(false);
@@ -118,6 +121,7 @@ public class Quest extends AppCompatActivity {
 
     public void reward2(View v){
         //sfx for tap
+        mp = MediaPlayer.create(this, R.raw.tap);
         mp.start();
         int rewardAmt = Integer.parseInt(feedReward.getText().toString().replace("Reward: ", ""));
         SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
@@ -128,6 +132,11 @@ public class Quest extends AppCompatActivity {
         editor.putInt("coin", newMoney);
         editor.putBoolean("collected2", true);
         editor.commit();
+
+        //sfx for collecting coins
+        mp = MediaPlayer.create(this, R.raw.coin_drop);
+        mp.start();
+
         //setting button to collected, disable button
         feedQuest.setText("Collected");
         feedQuest.setClickable(false);
@@ -136,6 +145,7 @@ public class Quest extends AppCompatActivity {
 
     public void reward3(View v){
         //sfx for tap
+        mp = MediaPlayer.create(this, R.raw.tap);
         mp.start();
         int rewardAmt = Integer.parseInt(petReward.getText().toString().replace("Reward: ", ""));
         SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
@@ -146,6 +156,11 @@ public class Quest extends AppCompatActivity {
         editor.putInt("coin", newMoney);
         editor.putBoolean("collected3", true);
         editor.commit();
+
+        //sfx for collecting coins
+        mp = MediaPlayer.create(this, R.raw.coin_drop);
+        mp.start();
+
         //setting button to collected, disable button
         petQuest.setText("Collected");
         petQuest.setClickable(false);
@@ -198,6 +213,11 @@ public class Quest extends AppCompatActivity {
             String collectedPlay = playQuest.getText().toString();
             String collectedPet = petQuest.getText().toString();
             if (collectedPet.equals("Collected") && collectedFeed.equals("Collected") && collectedPlay.equals("Collected")) {
+                //sfx for completing all the quests
+                mp = MediaPlayer.create(this, R.raw.success);
+                mp.start();
+                //set back to tap sfx
+                mp = MediaPlayer.create(this, R.raw.tap);
                 return true;
             } else {
                 return false;
@@ -209,6 +229,7 @@ public class Quest extends AppCompatActivity {
     //shop button
     public void gotoShop(View view) {
         //sfx for tap
+        mp = MediaPlayer.create(this, R.raw.tap);
         mp.start();
         Intent i = new Intent(this, Shop.class);
         startActivity(i);
@@ -217,6 +238,7 @@ public class Quest extends AppCompatActivity {
     //for customization button
     public void custom(View view) {
         //sfx for tap
+        mp = MediaPlayer.create(this, R.raw.tap);
         mp.start();
         Intent i = new Intent(this,Customization.class);
         startActivity(i);
@@ -225,6 +247,7 @@ public class Quest extends AppCompatActivity {
     //for home
     public void goHome(View view) {
         //sfx for tap
+        mp = MediaPlayer.create(this, R.raw.tap);
         mp.start();
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
