@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager mySensorManager = null;
     private Sensor lightSensor = null;
     float[] light_vals = new float[1];
-    public static final String DEFAULT = "no name";
+    public static final String DEFAULT = "Yumi";
 
     private MyDatabase db;
     private MyHelper helper;
@@ -95,14 +95,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //getting pet's name from shared preferences
         SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         String petName = sharedPref.getString("petName", DEFAULT);
+        //checking network connection
         checkConnection();
 
+        //getting the user's location
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
-        counting();
-
 
         //Images
         food = (ImageView) findViewById(R.id.foodView);
@@ -264,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         } else {
             return false;
         }
-    }
+    } // end of onTouch
 
     //for light sensor
     @Override
@@ -294,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             light_vals = event.values;
 
             //if there's no light, change window to night time
-            if (Sensor.TYPE_LIGHT >= light_vals[0]) {
+            if (Sensor.TYPE_LIGHT >= light_vals[10]) {
 //              Toast.makeText(this, "night time", Toast.LENGTH_LONG).show();
                 night.setVisibility(VISIBLE);
             } else {
@@ -317,7 +318,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             url = "http://api.geonames.org/findNearByWeatherJSON?lat=" +
                     lat + "&lng=" +
                     lng + "&username=jvillaso";
-//        url = "http://api.geonames.org/findNearByWeatherJSON?lat=43&lng=-2&username=jvillaso";
             int temperature = 10;
 
             Thread myThread = new Thread(new GetWeatherThread());
@@ -352,6 +352,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     } // end of getWeather
 
+    // getting the user's location
     public void getLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FINE_PERMISSON_CODE);
@@ -380,27 +381,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     } // end of GetWeatherThread
 
-    private class GetTimeThread implements Runnable {
-        @Override
-        public void run() {
-            //check every 2s
-            SystemClock.sleep(2000);
-            countdown();
-        }
-    } // end of time thread
-    public void counting(){
-        Thread myThread = new Thread(new GetTimeThread());
-        myThread.start();
-    }
-
-    public void countdown(){
-        boolean run=true;
-        while(run) {
-            long time1 = new Date().getTime();
-            Log.d("testing time beep", Double.toString(time1));
-        }
-    }
-
     //check if connection is online
     public void checkConnection() {
         ConnectivityManager connectMgr =
@@ -415,7 +395,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             //display error
             Toast.makeText(this, "No network connection", Toast.LENGTH_LONG).show();
         }
-    }
+    } // end of checkConnection
 
     private String readJSONData(String myurl) throws IOException {
         InputStream is = null;
@@ -427,29 +407,27 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
         try {
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
+            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(15000);
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
             // Starts the query
             conn.connect();
             int response = conn.getResponseCode();
-            Log.d("tag", "The response is: " + response);
             is = conn.getInputStream();
 
             // Convert the InputStream into a string
             String contentAsString = readIt(is, len);
             return contentAsString;
 
-            // Makes sure that the InputStream is closed after the app is
-            // finished using it.
+            // close input stream
         } finally {
             if (is != null) {
                 is.close();
                 conn.disconnect();
             }
         }
-    }
+    } // end of readJSONData
 
     // Reads an InputStream and converts it to a String.
     public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
@@ -458,7 +436,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         char[] buffer = new char[len];
         reader.read(buffer);
         return new String(buffer);
-    }
+    } // end of readIt
 
     //   to share to social media (screenshot)
 //    public void share(View v) {
@@ -479,13 +457,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
             intent.setType("image/*");
+            //putting the imageUri and text into the intent
             intent.putExtra(Intent.EXTRA_STREAM, imageUri);
             intent.putExtra(Intent.EXTRA_TEXT, "Play Yumi today!");
+            //let's the user where to share to
             startActivity(Intent.createChooser(intent, "Share using: "));
         } catch (ActivityNotFoundException e) {
         }
     } // end of share
 
+    // checking permissions
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -501,11 +482,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 getLastLocation();
             }else{
-                Toast.makeText(this, "Location permissions denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Location permissions denied.", Toast.LENGTH_SHORT).show();
             }
         } // end of checking location permissions
     } // end of onRequestPermissionsResult
 
+    // take a screenshot of the activity and save it to the device
     private void saveImage() {
 
         if(!checkPermission())
@@ -533,6 +515,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     } // end of saveImage
 
+    //screenshot the screen method
     private Bitmap screenShot() {
         View v = findViewById(R.id.mainView);
         Bitmap bitmap = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_8888);
@@ -541,6 +524,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         return bitmap;
     }
 
+    //check permission for saving to device's storage
     private boolean checkPermission() {
         int permission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
