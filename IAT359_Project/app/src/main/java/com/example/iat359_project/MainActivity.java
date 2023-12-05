@@ -313,7 +313,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void getWeather(View v) {
         getLastLocation();
         if (currentLocation != null) {
-            Toast.makeText(this, "Has location", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Has location", Toast.LENGTH_SHORT).show();
             latitude = currentLocation.getLatitude();
             longitude = currentLocation.getLongitude();
             lat = Double.toString(latitude);
@@ -328,9 +328,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             myThread.start();
 
             try {
-                Toast.makeText(this, "location"+lat+lng+"", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "You location: "+lat+" "+lng, Toast.LENGTH_SHORT).show();
 
-                Log.d("location testing", "res"+result);
+//                Log.d("location testing", "res"+result);
 
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject weatherObservationItems =
@@ -343,7 +343,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 temp = temp.replaceAll("[^\\d.]", "");
                 temp.trim();
                 temperature = Float.parseFloat(temp);
-                Toast.makeText(this, "location"+temperature+"", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "location"+temperature+"", Toast.LENGTH_SHORT).show();
                 //if temperature is below zero
                 if (temperature <= 0) {
                     snow.setVisibility(VISIBLE); //change to snow
@@ -363,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             rain.setVisibility(View.INVISIBLE);
             Toast.makeText(this, "No location", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
     } // end of getWeather
 
     // getting the user's location
