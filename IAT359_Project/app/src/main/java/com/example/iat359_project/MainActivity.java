@@ -1,5 +1,6 @@
 package com.example.iat359_project;
 
+import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private String result, url, lat, lng;
     private double latitude, longitude;
     boolean feeding = false;
+    MediaPlayer mp;
 
     //light sensor values
     private SensorManager mySensorManager = null;
@@ -233,16 +236,34 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             plate.setVisibility(VISIBLE);
             food.setVisibility(VISIBLE);
             feeding = true;
-            //increase affection
-            SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-            int currentAffection = sharedPref.getInt("affection", 0);
-            int newAffection = currentAffection + 20;
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("affection", newAffection);
-            //saving feed data for feed quest completion
-            editor.putBoolean("feed", true);
-            editor.commit();
-            affectionTextView.setText("Affection: " + newAffection);
+            //sfx for eating
+            mp = MediaPlayer.create(this, R.raw.eating);
+            mp.setLooping(true);
+            mp.start();
+
+
+            //after 3 seconds execute code in run()
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    //remove food from plate
+                    food.setVisibility(v.GONE);
+
+                    //increase affection
+                    SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+                    int currentAffection = sharedPref.getInt("affection", 0);
+                    int newAffection = currentAffection + 20;
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt("affection", newAffection);
+                    //saving feed data for feed quest completion
+                    editor.putBoolean("feed", true);
+                    editor.commit();
+                    affectionTextView.setText("Affection: " + newAffection);
+                    mp.setLooping(false);
+                    mp.stop();
+                }
+            }, 3000);
+
         } else {
             //if the pet is being fed and the button is clicked, stop feeding
             plate.setVisibility(v.GONE);
@@ -255,6 +276,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            //sfx for happy yumi
+            mp = MediaPlayer.create(this, R.raw.pet_happy);
+            mp.start();
             SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
             int currentAffection = sharedPref.getInt("affection", 0);
             int newAffection = currentAffection + 5;
@@ -349,8 +373,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     snow.setVisibility(VISIBLE); //change to snow
                 } else if(temperature >= 15){
                     // if temperature is above 15, hide snow, rain. shows default which is sun
-                    snow.setVisibility(View.INVISIBLE);
-                    rain.setVisibility(View.INVISIBLE);
+                    snow.setVisibility(INVISIBLE);
+                    rain.setVisibility(INVISIBLE);
                 } else {
                     rain.setVisibility(VISIBLE); //change to rain
                 }
@@ -359,8 +383,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         }else{
             //if no location, show sun
-            snow.setVisibility(View.INVISIBLE);
-            rain.setVisibility(View.INVISIBLE);
+            snow.setVisibility(INVISIBLE);
+            rain.setVisibility(INVISIBLE);
             Toast.makeText(this, "No location", Toast.LENGTH_SHORT).show();
         }
 //        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
