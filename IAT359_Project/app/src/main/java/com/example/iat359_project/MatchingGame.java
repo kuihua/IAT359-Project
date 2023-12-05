@@ -522,7 +522,7 @@ public class MatchingGame extends AppCompatActivity {
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         isPlaying = false;
-        editor.putBoolean("mainBGM", false);
+        editor.putBoolean("miniBGM", false);
         editor.commit();
         stopService(new Intent(this, MainMusicService.class));
     } // end of onStop
@@ -532,7 +532,7 @@ public class MatchingGame extends AppCompatActivity {
         super.onResume();
         //play bgm if not
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-        isPlaying = sharedPrefs.getBoolean("mainBGM", false);
+        isPlaying = sharedPrefs.getBoolean("miniBGM", false);
         //starts playing the main bgm
         if(!isPlaying){
             startService(new Intent(this, MainMusicService.class));
