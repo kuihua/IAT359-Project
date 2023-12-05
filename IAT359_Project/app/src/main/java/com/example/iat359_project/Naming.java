@@ -36,18 +36,19 @@ public class Naming extends AppCompatActivity {
         //when user is a first time user, add all data to the db shop table
         if(firstTime){
             db = new MyDatabase(this);
-            db.insertShopData("Bowtie", "Neck", "10", "bowtie_icon.png");
-            db.insertShopData("Crown", "Head", "10", "crown_icon.png");
-            db.insertShopData("Tie","Neck","10","tie_icon.png");
-            db.insertShopData("Cloak", "Body", "10", "cloak_icon.png");
-            db.insertShopData("Tophat","Head","10","tophat_icon.png");
-            db.insertShopData("Tuxedo", "Body", "10", "tuxedo_icon.png");
+            db.insertShopData("Bowtie", "Neck", "35", "bowtie_icon.png");
+            db.insertShopData("Crown", "Head", "50", "crown_icon.png");
+            db.insertShopData("Tie","Neck","15","tie_icon.png");
+            db.insertShopData("Cloak", "Body", "25", "cloak_icon.png");
+            db.insertShopData("Tophat","Head","15","tophat_icon.png");
+            db.insertShopData("Tuxedo", "Body", "30", "tuxedo_icon.png");
 
+            //giving the user base affection, starter money
             SharedPreferences.Editor editor = sharedPrefs.edit();
             // currency, affection
-            editor.putInt("coin", 100);
+            editor.putInt("coin", 10);
             editor.putInt("affection", 0);
-            //for quest completion
+            //for quest completion, not completed
             editor.putBoolean("feed", false);
             editor.putBoolean("play", false);
             editor.putBoolean("pet", false);
@@ -68,9 +69,10 @@ public class Naming extends AppCompatActivity {
         editor.putBoolean("rename", false);
         //remembering if its the first time accessing this app
         editor.putBoolean("firstTime", false);
-
+        //save data to shared prefs
         editor.commit();
 
+        //go to main activity
         Toast.makeText(this, "Welcome home "+petNameEdit.getText().toString()+"!", Toast.LENGTH_LONG).show();
         Intent intent= new Intent(this, MainActivity.class);
         startActivity(intent);
