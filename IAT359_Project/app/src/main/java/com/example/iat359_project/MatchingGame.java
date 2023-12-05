@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import java.util.Arrays;
 import java.util.Collections;
 
-// tutorial referenced https://www.youtube.com/watch?v=94CWNE9ruMA
 public class MatchingGame extends AppCompatActivity {
 
     private ImageView tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9, tile10, tile11, tile12, tile13, tile14, tile15, tile16;
