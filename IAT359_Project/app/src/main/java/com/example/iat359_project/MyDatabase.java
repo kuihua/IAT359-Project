@@ -137,28 +137,9 @@ public class MyDatabase {
             cursor.moveToNext();
         }
 
-//        //to ensure the selected item is not affected
-//        String selection2 = Constants.TYPE + "='" + type + "'";
-//        String[] columns2 = {Constants.NAME, Constants.TYPE, Constants.WEARING, Constants.IMAGE};
-//        Cursor c = db.query(Constants.PLAYER_TABLE_NAME, columns2, selection2, null, null, null, null);
-//
-//        //we only need to access the WEARING column
-//        int i = c.getColumnIndex(Constants.WEARING);
-//
-//        ArrayList<String> mArrayList2 = new ArrayList<String>();
-//
-//        cursor.moveToFirst();
-//        while (!c.isAfterLast()) {
-//            String itemWear= c.getString(i);
-//            mArrayList2.add(itemWear);
-//            c.moveToNext();
-//        }
-//
+        //changing items of same type to false
         ContentValues contentValues = new ContentValues();
-//        if(mArrayList2.get(0).toString().equals(type)) {
-//            //we are only replacing the Constants.WEARING value
-            contentValues.put(Constants.WEARING, "False");
-//        }
+        contentValues.put(Constants.WEARING, "False");
 
         //updating any items with the same item type as the user is about to wear to false to prevent image overlap
         long id = db.update(Constants.PLAYER_TABLE_NAME, contentValues, Constants.TYPE+"=?", new String[]{type} );
