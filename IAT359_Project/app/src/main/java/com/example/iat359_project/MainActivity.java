@@ -256,11 +256,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             feeding = true;
             //sfx for eating
             mp = MediaPlayer.create(this, R.raw.eating);
-            mp.setLooping(true);
             mp.start();
 
-
-            //after 3 seconds execute code in run()
+            //after 2 seconds execute code in run()
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
@@ -277,17 +275,28 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     editor.putBoolean("feed", true);
                     editor.commit();
                     affectionTextView.setText("Affection: " + newAffection);
-                    mp.setLooping(false);
-                    mp.stop();
+                }
+            }, 2000);
+
+            handler.postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    plate.setVisibility(v.GONE);
+                    food.setVisibility(v.GONE);
+                    feeding = false;
                 }
             }, 3000);
+        } // end of if
 
-        } else {
-            //if the pet is being fed and the button is clicked, stop feeding
-            plate.setVisibility(v.GONE);
-            food.setVisibility(v.GONE);
-            feeding = false;
-        }
+//        else {
+//            //if the pet is being fed and the button is clicked, stop feeding
+//            mp.setLooping(false);
+//            mp.stop();
+//            plate.setVisibility(v.GONE);
+//            food.setVisibility(v.GONE);
+//            feeding = false;
+//        }
     } // end of feed
 
     //touch method
