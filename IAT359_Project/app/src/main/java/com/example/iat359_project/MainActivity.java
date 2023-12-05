@@ -194,6 +194,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //rename button
     public void renameButton(View view){
+        //sfx for tap
+        mp = MediaPlayer.create(this, R.raw.tap);
+        mp.start();
         //set rename to true
         SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -370,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             myThread.start();
 
             try {
-                Toast.makeText(this, "You location: "+lat+" "+lng, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Your location: "+lat+" "+lng, Toast.LENGTH_SHORT).show();
 
 //                Log.d("location testing", "res"+result);
 

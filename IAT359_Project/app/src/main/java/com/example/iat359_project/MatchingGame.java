@@ -510,6 +510,8 @@ public class MatchingGame extends AppCompatActivity {
             mp = MediaPlayer.create(this, R.raw.success);
             mp.start();
 
+            //wait 1s
+            SystemClock.sleep(1000);
             //stop mini game bgm
             stopService(new Intent(this, MinigameMusicService.class));
             //go back to main activity
