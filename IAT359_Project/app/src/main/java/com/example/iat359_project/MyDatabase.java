@@ -73,6 +73,7 @@ public class MyDatabase {
         return id;
     }
 
+    //wear the item
     public long wearItem (String name) {
         db = helper.getWritableDatabase();
 
@@ -102,57 +103,54 @@ public class MyDatabase {
             cursor.moveToNext();
         }
 
-//        // taking off previous item if the item user is trying to wear is the same type
-//        // before putting on the desired item
-//        ArrayList<String> newArrayList = new ArrayList<String>();
-//        //query items of the same type as the item the user is trying to wear
-//        String selection2 = Constants.TYPE + "='" + type + "'";
-//        Cursor c = db.query(Constants.PLAYER_TABLE_NAME, columns, "Type=?", new String[]{type}, null, null, null);
-//        c.moveToFirst();
-//        while (!c.isAfterLast()) {
-//            int i1 = c.getColumnIndex(Constants.NAME);
-//            int i2 = c.getColumnIndex(Constants.TYPE);
-//            int i3 = c.getColumnIndex(Constants.WEARING);
-//            int i4 = c.getColumnIndex(Constants.IMAGE);
-//
-//            String itemName = c.getString(i1);
-//            String itemType = c.getString(i2);
-//            String itemWear= c.getString(i3);
-//            String itemImage = c.getString(i4);
-//
-//            // if the creature was wearing anything of the same type, take it off (false)
-//            if (itemWear.equals("True")) {
-//                newArrayList.add(itemName);
-//                newArrayList.add(itemType);
-//                newArrayList.add(itemWear);
-//                newArrayList.add(itemImage);
-//                ContentValues cv = new ContentValues();
-//                cv.put(Constants.NAME, newArrayList.get(0));
-//                cv.put(Constants.TYPE, newArrayList.get(1));
-//                cv.put(Constants.WEARING, "False");
-//                cv.put(Constants.IMAGE, newArrayList.get(3));
-//                long id2 = db.update(Constants.PLAYER_TABLE_NAME, cv, Constants.NAME+"=?", new String[]{newArrayList.get(0).toString()} );
-//                //after modifying one item, clear the array to make room for the next item
-//                newArrayList.clear();
-//            }
-//            cursor.moveToNext();
-//        } // end of cursor
-
-
         ContentValues contentValues = new ContentValues();
         contentValues.put(Constants.NAME, name);
         contentValues.put(Constants.TYPE, mArrayList.get(1));
-
-        //actions depending if the item is being worn
-        if(mArrayList.get(2).toString().equals("False")){
-            contentValues.put(Constants.WEARING, "True");
-        }else{
-            contentValues.put(Constants.WEARING, "False");
-        }
+        contentValues.put(Constants.WEARING, "True");
         contentValues.put(Constants.IMAGE, mArrayList.get(3));
 
         //updating whether or not item has been worn
         long id = db.update(Constants.PLAYER_TABLE_NAME, contentValues, Constants.NAME+"=?", new String[]{name} );
+        return id;
+    } // end of wearItem
+
+    //method to take off items sharing the same type the user is trying to put on
+    //this is so it prevents clothes from overlapping when trying to swap outfits (of the same type)
+    public long changeItem(String type){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String[] columns = {Constants.NAME, Constants.TYPE, Constants.WEARING, Constants.IMAGE};
+
+        String selection = Constants.TYPE + "='" +type+ "'";  //Constants.TYPE = 'type'
+        Cursor cursor = db.query(Constants.PLAYER_TABLE_NAME, columns, selection, null, null, null, null);
+
+        int index1 = cursor.getColumnIndex(Constants.NAME);
+        int index2 = cursor.getColumnIndex(Constants.TYPE);
+        int index3 = cursor.getColumnIndex(Constants.WEARING);
+        int index4 = cursor.getColumnIndex(Constants.IMAGE);
+
+        ArrayList<String> mArrayList = new ArrayList<String>();
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            String itemName = cursor.getString(index1);
+            String itemType = cursor.getString(index2);
+            String itemWear= cursor.getString(index3);
+            String itemImage = cursor.getString(index4);
+            mArrayList.add(itemName);
+            mArrayList.add(itemType);
+            mArrayList.add(itemWear);
+            mArrayList.add(itemImage);
+            cursor.moveToNext();
+        }
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Constants.NAME, mArrayList.get(0));
+        contentValues.put(Constants.TYPE, mArrayList.get(1));
+        contentValues.put(Constants.WEARING, "False");
+        contentValues.put(Constants.IMAGE, mArrayList.get(3));
+
+        //updating whether or not item has been worn
+        long id = db.update(Constants.PLAYER_TABLE_NAME, contentValues, Constants.TYPE+"=?", new String[]{type} );
         return id;
     }
 

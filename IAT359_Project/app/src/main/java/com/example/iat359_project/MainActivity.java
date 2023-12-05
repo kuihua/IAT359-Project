@@ -295,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             light_vals = event.values;
 
             //if there's no light, change window to night time
-            if (Sensor.TYPE_LIGHT >= light_vals[10]) {
+            if (Sensor.TYPE_LIGHT >= light_vals[0]) {
 //              Toast.makeText(this, "night time", Toast.LENGTH_LONG).show();
                 night.setVisibility(VISIBLE);
             } else {

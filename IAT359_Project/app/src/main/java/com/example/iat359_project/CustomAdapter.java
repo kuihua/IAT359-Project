@@ -93,12 +93,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             file = file + "_icon";
             int id = context.getResources().getIdentifier(file, "drawable", context.getPackageName());
             itemImageView.setImageResource(id);
-        }
+        } // end of setImage
 
         @Override
         public void onClick(View view) {
             if(view.getId() == R.id.buyWearButton) {
                 if(context instanceof Customization){
+//                    db.changeItem(typeTextView.getText().toString());
                     db.wearItem(nameTextView.getText().toString());
                     ((Customization)context).recreate();
                 }else if(context instanceof Shop){
