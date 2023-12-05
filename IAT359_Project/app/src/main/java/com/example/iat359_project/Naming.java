@@ -46,7 +46,7 @@ public class Naming extends AppCompatActivity {
             //giving the user base affection, starter money
             SharedPreferences.Editor editor = sharedPrefs.edit();
             // currency, affection
-            editor.putInt("coin", 10);
+            editor.putInt("coin", 50);
             editor.putInt("affection", 0);
             //for quest completion, not completed
             editor.putBoolean("feed", false);
