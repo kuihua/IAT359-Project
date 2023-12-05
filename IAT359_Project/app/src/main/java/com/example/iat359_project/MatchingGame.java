@@ -72,7 +72,7 @@ public class MatchingGame extends AppCompatActivity {
         //shuffles the array to randomize the tiles so every play through is different
         Collections.shuffle(Arrays.asList(tileArray));
 
-        //setting listeners for all the tiles
+        //setting listeners for all the tiles to be able to flip them
         tile1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -231,7 +231,7 @@ public class MatchingGame extends AppCompatActivity {
 
     // flips the tile to show the right image and saves the values of the flipped tiles
     public void flipTile(ImageView img, int tile){
-        //setting the tile images based on the shuffled array
+        //flip the tiles, setting the tile images based on the shuffled array
         if(tileArray[tile] == 101){
             img.setImageResource(img101);
         } else if(tileArray[tile] == 102){
@@ -389,7 +389,7 @@ public class MatchingGame extends AppCompatActivity {
                 tile16.setVisibility(View.INVISIBLE);
             }
         } else{
-            //if tiles are not equal, set them to show the back tile
+            //if tiles are not equal, set them to show the back of tile
             tile1.setImageResource(R.drawable.back_tile);
             tile2.setImageResource(R.drawable.back_tile);
             tile3.setImageResource(R.drawable.back_tile);
@@ -474,12 +474,13 @@ public class MatchingGame extends AppCompatActivity {
     } // end of checkEnd
 
 
-//    implementing a thread to continuously check quest status
+//    implementing a thread to continuously check tile status
     public void checkTileStatus() {
         Thread myThread = new Thread(new checkTileThread());
         myThread.start();
     }
 
+    // for thread
     private class checkTileThread implements Runnable {
         @Override
         public void run() {
