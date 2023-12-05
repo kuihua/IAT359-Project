@@ -71,7 +71,7 @@ public class Customization extends AppCompatActivity{
             // use a linear layout manager
             mLayoutManager = new LinearLayoutManager(this);
             myRecycler.setLayoutManager(mLayoutManager);
-            ;
+
         }//end of onCreate
 
     //filter by all

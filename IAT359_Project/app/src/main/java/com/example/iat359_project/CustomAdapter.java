@@ -85,6 +85,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             if(context instanceof Shop){
                 buyWearButton.setText("Buy");
             }
+            if (context instanceof Customization) {
+                //hide this column
+                itemVarText.setVisibility(View.GONE);
+            }
         } // end of my view holder view
 
         public void setImage(String name) {
