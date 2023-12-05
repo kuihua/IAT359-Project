@@ -25,7 +25,8 @@
         android:text="Play with them! Help them match their items!"
         android:padding="10dp"
         android:paddingBottom="50dp"
-        android:textSize="24sp"/>
+        android:textSize="24sp"
+        android:textColor="@color/black"/>
 
     <include
         layout="@layout/matching_game_images"

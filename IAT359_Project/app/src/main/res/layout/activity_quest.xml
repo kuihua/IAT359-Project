@@ -51,14 +51,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Play with your Yumi" />
+                android:text="Play with your Yumi"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/reward1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Reward: 50" />
+                android:text="Reward: 50"
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/collectButton1"
@@ -87,14 +89,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Feed your Yumi" />
+                android:text="Feed your Yumi"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/reward2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Reward: 20" />
+                android:text="Reward: 20"
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/collectButton2"
@@ -122,14 +126,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Pet your Yumi" />
+                android:text="Pet your Yumi"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/reward3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Reward: 15" />
+                android:text="Reward: 15"
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/collectButton3"
