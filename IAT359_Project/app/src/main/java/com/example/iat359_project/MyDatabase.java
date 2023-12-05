@@ -83,36 +83,26 @@ public class MyDatabase {
 
         Cursor cursor = db.query(Constants.PLAYER_TABLE_NAME, columns, selection, null, null, null, null);
 
-        int index1 = cursor.getColumnIndex(Constants.NAME);
-        int index2 = cursor.getColumnIndex(Constants.TYPE);
-        int index3 = cursor.getColumnIndex(Constants.WEARING);
-        int index4 = cursor.getColumnIndex(Constants.IMAGE);
+        //we only need to access the WEARING column
+        int index = cursor.getColumnIndex(Constants.WEARING);
 
         ArrayList<String> mArrayList = new ArrayList<String>();
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            String itemName = cursor.getString(index1);
-            String itemType = cursor.getString(index2);
-            String itemWear= cursor.getString(index3);
-            String itemImage = cursor.getString(index4);
-            mArrayList.add(itemName);
-            mArrayList.add(itemType);
+            String itemWear= cursor.getString(index);
             mArrayList.add(itemWear);
-            mArrayList.add(itemImage);
             cursor.moveToNext();
         }
 
+        //we are only replacing the Constants.Wearing value
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Constants.NAME, name);
-        contentValues.put(Constants.TYPE, mArrayList.get(1));
         //actions depending if the item is being worn
-        if(mArrayList.get(2).toString().equals("False")){
+        if(mArrayList.get(0).toString().equals("False")){
             contentValues.put(Constants.WEARING, "True");
         }else {
             contentValues.put(Constants.WEARING, "False");
         }
-        contentValues.put(Constants.IMAGE, mArrayList.get(3));
 
         //updating whether or not item has been worn
         long id = db.update(Constants.PLAYER_TABLE_NAME, contentValues, Constants.NAME+"=?", new String[]{name} );
@@ -122,39 +112,13 @@ public class MyDatabase {
     //method to take off items sharing the same type the user is trying to put on
     //this is so it prevents clothes from overlapping when trying to swap outfits (of the same type)
     public long changeItem(String type){
-        SQLiteDatabase db = helper.getWritableDatabase();
-        String[] columns = {Constants.NAME, Constants.TYPE, Constants.WEARING, Constants.IMAGE};
+        db = helper.getWritableDatabase();
 
-        String selection = Constants.TYPE + "='" +type+ "'";  //Constants.TYPE = 'type'
-        Cursor cursor = db.query(Constants.PLAYER_TABLE_NAME, columns, selection, null, null, null, null);
-
-        int index1 = cursor.getColumnIndex(Constants.NAME);
-        int index2 = cursor.getColumnIndex(Constants.TYPE);
-        int index3 = cursor.getColumnIndex(Constants.WEARING);
-        int index4 = cursor.getColumnIndex(Constants.IMAGE);
-
-        ArrayList<String> mArrayList = new ArrayList<String>();
-
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            String itemName = cursor.getString(index1);
-            String itemType = cursor.getString(index2);
-            String itemWear= cursor.getString(index3);
-            String itemImage = cursor.getString(index4);
-            mArrayList.add(itemName);
-            mArrayList.add(itemType);
-            mArrayList.add(itemWear);
-            mArrayList.add(itemImage);
-            cursor.moveToNext();
-        }
-
+        //we are only replacing the Constants.WEARING value
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Constants.NAME, mArrayList.get(0));
-        contentValues.put(Constants.TYPE, mArrayList.get(1));
         contentValues.put(Constants.WEARING, "False");
-        contentValues.put(Constants.IMAGE, mArrayList.get(3));
 
-        //updating whether or not item has been worn
+        //updating any items with the same item type as the user is about to wear to false to prevent image overlap
         long id = db.update(Constants.PLAYER_TABLE_NAME, contentValues, Constants.TYPE+"=?", new String[]{type} );
         return id;
     } // end of changeItem
