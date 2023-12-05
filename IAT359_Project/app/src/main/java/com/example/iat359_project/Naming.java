@@ -1,6 +1,8 @@
 package com.example.iat359_project;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.ActivityManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.content.Context;
@@ -62,9 +64,6 @@ public class Naming extends AppCompatActivity {
             editor.putBoolean("feed", false);
             editor.putBoolean("play", false);
             editor.putBoolean("pet", false);
-            //for if the main bgm is playing
-            editor.putBoolean("mainBGM", true);
-            editor.commit();
         }
 
         petNameEdit = (EditText)findViewById(R.id.petNameEdit);
@@ -81,42 +80,44 @@ public class Naming extends AppCompatActivity {
         editor.putBoolean("rename", false);
         //remembering if its the first time accessing this app
         editor.putBoolean("firstTime", false);
+        editor.putBoolean("mainBGM", false);
         //save data to shared prefs
         editor.commit();
 
+        stopService(new Intent(this, MainMusicService.class));
         //go to main activity
         Toast.makeText(this, "Welcome home "+petNameEdit.getText().toString()+"!", Toast.LENGTH_LONG).show();
         Intent intent= new Intent(this, MainActivity.class);
         startActivity(intent);
     }//end of naming the pet
 
-    //if app is closed, stop service
+
     @Override
-    protected void onStop() {
+    public void onStop(){
         super.onStop();
+        //when closed, bgm off
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
+        isPlaying = false;
         editor.putBoolean("mainBGM", false);
         editor.commit();
         stopService(new Intent(this, MainMusicService.class));
-    }
+    } // end of onStop
 
     @Override
-    protected void onResume() {
+    public void onResume(){
         super.onResume();
+        //play bgm if not
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         isPlaying = sharedPrefs.getBoolean("mainBGM", false);
-
         //starts playing the main bgm
-        if (!isPlaying) {
+        if(!isPlaying){
             startService(new Intent(this, MainMusicService.class));
-            isPlaying = true;
             SharedPreferences.Editor editor = sharedPrefs.edit();
+            isPlaying = true;
             editor.putBoolean("mainBGM", isPlaying);
             editor.commit();
         }
     } // end of onResume
-
-
 
 }//end of activity

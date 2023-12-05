@@ -29,6 +29,7 @@ public class MainMusicService extends Service {
     @Override
     public boolean stopService(Intent intent){
         mp.setLooping(false);
+        mp.stop();
         return super.stopService(intent);
     }
 
