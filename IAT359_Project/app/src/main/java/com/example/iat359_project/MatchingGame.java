@@ -524,7 +524,7 @@ public class MatchingGame extends AppCompatActivity {
         isPlaying = false;
         editor.putBoolean("miniBGM", false);
         editor.commit();
-        stopService(new Intent(this, MainMusicService.class));
+        stopService(new Intent(this, MinigameMusicService.class));
     } // end of onStop
 
     @Override
@@ -535,7 +535,7 @@ public class MatchingGame extends AppCompatActivity {
         isPlaying = sharedPrefs.getBoolean("miniBGM", false);
         //starts playing the main bgm
         if(!isPlaying){
-            startService(new Intent(this, MainMusicService.class));
+            startService(new Intent(this, MinigameMusicService.class));
             SharedPreferences.Editor editor = sharedPrefs.edit();
             isPlaying = true;
             editor.putBoolean("miniBGM", isPlaying);
