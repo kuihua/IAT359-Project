@@ -3,7 +3,6 @@ package com.example.iat359_project;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.MediaPlayer;
@@ -14,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 
 public class Shop extends AppCompatActivity {
@@ -23,8 +21,6 @@ public class Shop extends AppCompatActivity {
     private MyDatabase db;
     private MyHelper helper;
     private CustomAdapter customAdapter;
-    private TextView itemNameText, itemTypeText, itemVarText;
-    private ImageView itemImageView;
     private LinearLayoutManager mLayoutManager;
     Cursor cursor;
     MediaPlayer mp;
@@ -69,6 +65,7 @@ public class Shop extends AppCompatActivity {
             cursor.moveToNext();
         }
 
+        // setting recycler view contents
         customAdapter = new CustomAdapter(mArrayList);
         myRecycler.setAdapter(customAdapter);
 
@@ -76,40 +73,43 @@ public class Shop extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         myRecycler.setLayoutManager(mLayoutManager);
 
-    }
+    } // end of onCreate
 
-    //filter by all
+    //filter by all, show all items
     public void filterAll(View view){
         //sfx for tap
         mp.start();
         //refresh activity, recreate() doesn't work
         Intent i = new Intent(this, Shop.class);
         startActivity(i);
-    }
+    } // end of filterAll
 
+    // filter by head type items
     public void filterHead(View view){
         //sfx for tap
         mp.start();
         Intent i = new Intent(this, Shop.class);
         i.putExtra("Item", "Head");
         startActivity(i);
-    }
+    } // end of method
 
+    // filter by neck type item
     public void filterNeck(View view){
         //sfx for tap
         mp.start();
         Intent i = new Intent(this, Shop.class);
         i.putExtra("Item", "Neck");
         startActivity(i);
-    }
+    } // end of method
 
+    // filter by body type item
     public void filterBody(View view){
         //sfx for tap
         mp.start();
         Intent i = new Intent(this, Shop.class);
         i.putExtra("Item", "Body");
         startActivity(i);
-    }
+    } // end of filter button
 
     //for home button
     public void goHome(View view) {
@@ -117,7 +117,7 @@ public class Shop extends AppCompatActivity {
         mp.start();
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
-    }
+    } // go to home
 
     //for custom button
     public void custom(View view) {
@@ -125,7 +125,7 @@ public class Shop extends AppCompatActivity {
         mp.start();
         Intent i = new Intent(this,Customization.class);
         startActivity(i);
-    }
+    } // go to customization button
 
     //for quest
     public void questButton(View view) {
@@ -133,5 +133,5 @@ public class Shop extends AppCompatActivity {
         mp.start();
         Intent i = new Intent(this,Quest.class);
         startActivity(i);
-    }
-}
+    } // go to quest button
+} // end of shop activity
