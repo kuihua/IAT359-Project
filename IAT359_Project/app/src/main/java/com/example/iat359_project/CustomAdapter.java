@@ -48,9 +48,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         holder.typeTextView.setText(results[1]);
         holder.itemVarText.setText(results[2]);
 
-        //for item icon
-//        int id = this.getResources().getIdentifier("com.example.iat359:drawable/" + results[3], null, null);
-//        holder.itemImageView.setImageResource(id);
         holder.setImage(results[0]);
     }
 
@@ -92,6 +89,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             }
         } // end of my view holder view
 
+        // to set the images in the recycler view
         public void setImage(String name) {
             String file = name.toLowerCase();
             file = file.replace(" ", "_");
@@ -100,24 +98,30 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             itemImageView.setImageResource(id);
         } // end of setImage
 
+        // button function for the recycler view
         @Override
         public void onClick(View view) {
             if(view.getId() == R.id.buyWearButton) {
                 if(context instanceof Customization){
+                    // clothing sfx
                     MediaPlayer mp = MediaPlayer.create(context, R.raw.cloth);
                     mp.start();
+                    // wear item
                     db.changeItem(typeTextView.getText().toString(), nameTextView.getText().toString());
                     db.wearItem(nameTextView.getText().toString());
                     ((Customization)context).recreate();
                 }else if(context instanceof Shop){
+                    // tap sfx
                     MediaPlayer mp = MediaPlayer.create(context, R.raw.tap);
                     mp.start();
+                    // checks if user has enough money, then buy the item
                     SharedPreferences sharedPref = context.getSharedPreferences("MyData", Context.MODE_PRIVATE);
                     int currentMoney = sharedPref.getInt("coin", 100);
                     int cost = Integer.parseInt(itemVarText.getText().toString());
                     if(currentMoney >= cost){
                         mp = MediaPlayer.create(context, R.raw.coin_drop);
                         mp.start();
+                        // removes bought item from the shop table
                         db.deleteShopData(nameTextView.getText().toString());
                         SharedPreferences.Editor editor = sharedPref.edit();
                         int spent = currentMoney-cost;
