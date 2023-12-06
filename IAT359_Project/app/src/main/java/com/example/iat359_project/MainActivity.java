@@ -458,8 +458,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            String networkType = networkInfo.getTypeName().toString();
-            Toast.makeText(this, "Connected to " + networkType, Toast.LENGTH_SHORT).show();
+            //nothing
         } else {
             Toast.makeText(this, "No network connection", Toast.LENGTH_SHORT).show();
         }

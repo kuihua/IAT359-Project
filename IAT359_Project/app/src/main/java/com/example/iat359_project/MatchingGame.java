@@ -480,6 +480,10 @@ public class MatchingGame extends AppCompatActivity {
                 tile15.getVisibility() == View.INVISIBLE &&
                 tile16.getVisibility() == View.INVISIBLE){
 
+            //sfx for game win
+            mp = MediaPlayer.create(this, R.raw.success);
+            mp.start();
+
             //gain affection upon completion
             SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
             int currentAffection = sharedPref.getInt("affection", 0);
@@ -497,10 +501,6 @@ public class MatchingGame extends AppCompatActivity {
             editor.putInt("affection", newAffection);
             editor.putBoolean("play", true);
             editor.commit();
-
-            //sfx for game win
-            mp = MediaPlayer.create(this, R.raw.success);
-            mp.start();
 
             //wait 1s
             SystemClock.sleep(1000);
