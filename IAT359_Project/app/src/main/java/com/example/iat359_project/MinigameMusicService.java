@@ -7,6 +7,7 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
+// service to be used to have a bgm
 public class MinigameMusicService extends Service {
     MediaPlayer mp;
     @Nullable
@@ -39,4 +40,5 @@ public class MinigameMusicService extends Service {
         mp.release();
         mp = null;
     }
+
 } // end of class

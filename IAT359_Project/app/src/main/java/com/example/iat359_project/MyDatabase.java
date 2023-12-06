@@ -183,7 +183,7 @@ public class MyDatabase {
         String selection = Constants.TYPE + "='" +type+ "'";  //Constants.TYPE = 'type'
         Cursor cursor = db.query(Constants.SHOP_TABLE_NAME, columns, selection, null, null, null, null);
         return cursor;
-    } 
+    }
 
     public Cursor getPlayerQueryData(String type) {
         SQLiteDatabase db = helper.getWritableDatabase();
