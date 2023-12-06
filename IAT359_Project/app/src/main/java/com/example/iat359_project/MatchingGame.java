@@ -259,7 +259,7 @@ public class MatchingGame extends AppCompatActivity {
         Intent intent= new Intent(this, MainActivity.class);
         startActivity(intent);
     } // end of back button
-    
+
     // flips the tile to show the right image and saves the values of the flipped tiles
     public void flipTile(ImageView img, int tile){
         //flip the tiles, setting the tile images based on the shuffled array

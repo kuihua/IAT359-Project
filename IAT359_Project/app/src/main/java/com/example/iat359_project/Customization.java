@@ -3,16 +3,10 @@ package com.example.iat359_project;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -20,9 +14,6 @@ public class Customization extends AppCompatActivity{
 
         private RecyclerView myRecycler;
         private MyDatabase db;
-        private TextView itemNameText, itemTypeText, itemWearingText;
-        private ImageView itemImageView;
-
         private CustomAdapter customAdapter;
         private MyHelper helper;
         private LinearLayoutManager mLayoutManager;
@@ -65,6 +56,7 @@ public class Customization extends AppCompatActivity{
                 cursor.moveToNext();
             }
 
+            // set recycler view contents
             customAdapter = new CustomAdapter(mArrayList);
             myRecycler.setAdapter(customAdapter);
 
@@ -81,7 +73,7 @@ public class Customization extends AppCompatActivity{
         startActivity(i);
     }
 
-    //filter buttons for clothing
+    //filter buttons for clothing based on their type
     public void filterHead(View view){
         Intent i = new Intent(this, Customization.class);
         i.putExtra("Item", "Head");
@@ -100,19 +92,19 @@ public class Customization extends AppCompatActivity{
         startActivity(i);
     }
 
-    //for shop button
+    // go to shop button
     public void gotoShop(View view) {
         Intent i = new Intent(this, Shop.class);
         startActivity(i);
     }
 
-    //for home button
+    // go to home button
     public void goHome(View view) {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
 
-    //for quest
+    // go to quest button
     public void questButton(View view) {
         Intent i = new Intent(this,Quest.class);
         startActivity(i);

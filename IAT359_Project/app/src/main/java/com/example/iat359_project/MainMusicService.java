@@ -7,6 +7,7 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
+// bgm
 public class MainMusicService extends Service {
 
     MediaPlayer mp;
