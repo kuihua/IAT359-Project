@@ -93,8 +93,7 @@ public class Quest extends AppCompatActivity {
 
     } // end of onCreate
 
-    // reward collection buttons
-    // first quest reward button
+    //reward collection buttons
     public void reward1(View v){
         //sfx for tap
         mp = MediaPlayer.create(this, R.raw.tap);
@@ -118,9 +117,8 @@ public class Quest extends AppCompatActivity {
         playQuest.setText("Collected");
         playQuest.setClickable(false);
         Toast.makeText(this, "Gained "+ rewardAmt, Toast.LENGTH_SHORT).show();
-    } // end of first quest button
+    }
 
-    // button for the second quest
     public void reward2(View v){
         //sfx for tap
         mp = MediaPlayer.create(this, R.raw.tap);
@@ -128,7 +126,7 @@ public class Quest extends AppCompatActivity {
         int rewardAmt = Integer.parseInt(feedReward.getText().toString().replace("Reward: ", ""));
         SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        // giving the user money for completion, updating coin value
+        //giving the user money for completion, updating coin value
         int currentMoney = sharedPref.getInt("coin", 100);
         int newMoney = currentMoney+rewardAmt;
         editor.putInt("coin", newMoney);
@@ -143,9 +141,8 @@ public class Quest extends AppCompatActivity {
         feedQuest.setText("Collected");
         feedQuest.setClickable(false);
         Toast.makeText(this, "Gained "+ rewardAmt, Toast.LENGTH_SHORT).show();
-    } // end of second quest reward button
+    }
 
-    // button for the third quest
     public void reward3(View v){
         //sfx for tap
         mp = MediaPlayer.create(this, R.raw.tap);
@@ -168,15 +165,14 @@ public class Quest extends AppCompatActivity {
         petQuest.setText("Collected");
         petQuest.setClickable(false);
         Toast.makeText(this, "Gained "+ rewardAmt, Toast.LENGTH_SHORT).show();
-    } // end of third quest reward button
+    }
 
     //implementing a thread to continuously check quest status
     public void checkQuestStatus() {
         Thread myThread = new Thread(new questThread());
         myThread.start();
-    } // end of method
+    }
 
-    // thread to check quest status, if they are all fulfilled, set booleans appropriately
     private class questThread implements Runnable {
         @Override
         public void run() {
@@ -209,10 +205,9 @@ public class Quest extends AppCompatActivity {
         } // end of run
     } // end of questThread
 
-    // checking quest status
+    //checking quest status
     public boolean checkQuestRefresh(){
         boolean run=true;
-        // have this function continuously run
         while(run) {
             String collectedFeed = feedQuest.getText().toString();
             String collectedPlay = playQuest.getText().toString();
@@ -231,31 +226,31 @@ public class Quest extends AppCompatActivity {
         return false;
     } // end of checkQuestRefresh
 
-    // go to shop button
+    //shop button
     public void gotoShop(View view) {
         //sfx for tap
         mp = MediaPlayer.create(this, R.raw.tap);
         mp.start();
         Intent i = new Intent(this, Shop.class);
         startActivity(i);
-    } // end of shop button
+    }
 
-    // go to customization button
+    //for customization button
     public void custom(View view) {
         //sfx for tap
         mp = MediaPlayer.create(this, R.raw.tap);
         mp.start();
         Intent i = new Intent(this,Customization.class);
         startActivity(i);
-    } // go to customization
+    }
 
-    //go to home button
+    //for home
     public void goHome(View view) {
         //sfx for tap
         mp = MediaPlayer.create(this, R.raw.tap);
         mp.start();
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
-    } // go to home
+    }
 
 } // end of class
