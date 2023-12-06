@@ -1,7 +1,6 @@
 package com.example.iat359_project;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,7 +11,6 @@ import android.os.SystemClock;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -34,7 +32,7 @@ public class MatchingGame extends AppCompatActivity {
 
         SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         isPlaying = sharedPref.getBoolean("miniBGM", false);
-        //starts playing the mini game bgm
+        //starts playing the mini game bgm if it hasn't started already
         if(!isPlaying){
             startService(new Intent(this, MinigameMusicService.class));
             isPlaying = true;
@@ -83,7 +81,23 @@ public class MatchingGame extends AppCompatActivity {
         tile16.setTag(15);
 
         //setting the tiles' front images
-        tileFrontResources();
+        img101 = R.drawable.tile_img101;
+        img102 = R.drawable.tile_img102;
+        img103 = R.drawable.tile_img103;
+        img104 = R.drawable.tile_img104;
+        img105 = R.drawable.tile_img105;
+        img106 = R.drawable.tile_img106;
+        img107 = R.drawable.tile_img107;
+        img108 = R.drawable.tile_img108;
+
+        img201 = R.drawable.tile_img201;
+        img202 = R.drawable.tile_img202;
+        img203 = R.drawable.tile_img203;
+        img204 = R.drawable.tile_img204;
+        img205 = R.drawable.tile_img205;
+        img206 = R.drawable.tile_img206;
+        img207 = R.drawable.tile_img207;
+        img208 = R.drawable.tile_img208;
 
         //shuffles the array to randomize the tiles so every play through is different
         Collections.shuffle(Arrays.asList(tileArray));
@@ -245,28 +259,7 @@ public class MatchingGame extends AppCompatActivity {
         Intent intent= new Intent(this, MainActivity.class);
         startActivity(intent);
     } // end of back button
-
-    //images for the front of the tile
-    public void tileFrontResources(){
-        img101 = R.drawable.tile_img101;
-        img102 = R.drawable.tile_img102;
-        img103 = R.drawable.tile_img103;
-        img104 = R.drawable.tile_img104;
-        img105 = R.drawable.tile_img105;
-        img106 = R.drawable.tile_img106;
-        img107 = R.drawable.tile_img107;
-        img108 = R.drawable.tile_img108;
-
-        img201 = R.drawable.tile_img201;
-        img202 = R.drawable.tile_img202;
-        img203 = R.drawable.tile_img203;
-        img204 = R.drawable.tile_img204;
-        img205 = R.drawable.tile_img205;
-        img206 = R.drawable.tile_img206;
-        img207 = R.drawable.tile_img207;
-        img208 = R.drawable.tile_img208;
-    } // front tile resources
-
+    
     // flips the tile to show the right image and saves the values of the flipped tiles
     public void flipTile(ImageView img, int tile){
         //flip the tiles, setting the tile images based on the shuffled array
