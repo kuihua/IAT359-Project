@@ -29,15 +29,17 @@ public class MyDatabase {
         contentValues.put(Constants.IMAGE, image);
         long id = db.insert(Constants.SHOP_TABLE_NAME, null, contentValues);
         return id;
-    }
+    } // end of insert shop data
 
+    // remove shop data, insert into player table
     public long deleteShopData(String name) {
-        // remove an item from the database table
+        // remove an item from the database shop table
         db = helper.getWritableDatabase();
         String selection = Constants.NAME + "='" + name + "'";
 
         String[] columns = {Constants.NAME, Constants.TYPE, Constants.PRICE, Constants.IMAGE};
 
+        // querying the item with the name
         Cursor cursor = db.query(Constants.SHOP_TABLE_NAME, columns, selection, null, null, null, null);
 
         int index1 = cursor.getColumnIndex(Constants.NAME);
@@ -71,7 +73,7 @@ public class MyDatabase {
         long id2 = db.delete(Constants.SHOP_TABLE_NAME, selection, null);
 
         return id;
-    }
+    } // end of of delete shop data
 
     //wear the item
     public long wearItem (String name) {
@@ -81,6 +83,7 @@ public class MyDatabase {
 
         String[] columns = {Constants.NAME, Constants.TYPE, Constants.WEARING, Constants.IMAGE};
 
+        // querying for the item with the name
         Cursor cursor = db.query(Constants.PLAYER_TABLE_NAME, columns, selection, null, null, null, null);
 
         //we only need to access the WEARING column
@@ -157,22 +160,20 @@ public class MyDatabase {
     } // end of changeItem
 
     //methods for accessing the shop table and player table
-    public Cursor getShopData()
-    {
+    public Cursor getShopData() {
         SQLiteDatabase db = helper.getWritableDatabase();
         String[] columns = {Constants.NAME, Constants.TYPE, Constants.PRICE, Constants.IMAGE};
         Cursor cursor = db.query(Constants.SHOP_TABLE_NAME, columns, null, null, null, null, null);
         return cursor;
-    }
+    } // end of get shop data
 
-    public Cursor getPlayerData()
-    {
+    public Cursor getPlayerData() {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         String[] columns = {Constants.NAME, Constants.TYPE, Constants.WEARING, Constants.IMAGE};
         Cursor cursor = db.query(Constants.PLAYER_TABLE_NAME, columns, null, null, null, null, null);
         return cursor;
-    }
+    } // end of get player data
 
     //methods for filtering either the shop table or the player table
     public Cursor getShopQueryData(String type) {
@@ -182,7 +183,7 @@ public class MyDatabase {
         String selection = Constants.TYPE + "='" +type+ "'";  //Constants.TYPE = 'type'
         Cursor cursor = db.query(Constants.SHOP_TABLE_NAME, columns, selection, null, null, null, null);
         return cursor;
-    }
+    } 
 
     public Cursor getPlayerQueryData(String type) {
         SQLiteDatabase db = helper.getWritableDatabase();
