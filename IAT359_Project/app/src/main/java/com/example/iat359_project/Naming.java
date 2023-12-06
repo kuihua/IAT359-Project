@@ -86,5 +86,5 @@ public class Naming extends AppCompatActivity {
         Intent intent= new Intent(this, MainActivity.class);
         startActivity(intent);
     }//end of naming the pet button
-    
+
 }//end of activity

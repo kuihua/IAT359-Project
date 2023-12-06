@@ -67,6 +67,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+// main activity the user will interact with
 public class MainActivity extends AppCompatActivity implements SensorEventListener, View.OnTouchListener {
 
     ImageView food, plate, night, snow, rain, bodyItem, hatItem, neckItem, creature;
@@ -105,11 +106,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //checking network connection
         checkConnection();
 
-        //getting the user's location
+        // getting the user's location
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
 
-        //Images
+        // window images
         food = (ImageView) findViewById(R.id.foodView);
         plate = (ImageView) findViewById(R.id.plateView);
         night = (ImageView) findViewById(R.id.nightWindow);
@@ -122,10 +123,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         neckItem = (ImageView) findViewById(R.id.creatureNeckImageView);
         creature = (ImageView) findViewById(R.id.creatureImageView);
 
-        //using the player database to ensure they are wearing clothes from last session
         db = new MyDatabase(this);
         helper = new MyHelper(this);
 
+        // using the player database to ensure they are wearing clothes from last session
         cursor = db.getPlayerData();
 
         int index1 = cursor.getColumnIndex(Constants.NAME);
@@ -134,11 +135,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 //        int index4 = cursor.getColumnIndex(Constants.IMAGE);
 
         cursor.moveToFirst();
+        // we only need to access these 3 columns
         while (!cursor.isAfterLast()) {
             String itemName = cursor.getString(index1);
             String itemType = cursor.getString(index2);
             String itemWear = cursor.getString(index3);
-//            String itemImage = cursor.getString(index4);
 
             //display clothes
             if (itemWear.equals("True")) {
@@ -155,15 +156,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     bodyItem.setImageResource(id);
                     bodyItem.setVisibility(VISIBLE);
                 }
-            }
+            } // end of if statements
             cursor.moveToNext();
         } // end of cursor
 
-        //Pet name displayed in main
+        // pet name displayed in main, taken from shared preferences
         petNameView = (TextView) findViewById(R.id.namingTextView);
         petNameView.setText(petName);
 
-        //display currency and affection values
+        // display currency and affection values, taken from shared preferences
         currencyTextView = (TextView) findViewById(R.id.currency);
         affectionTextView = (TextView) findViewById(R.id.affection);
         int coin = sharedPref.getInt("coin", 100);
@@ -171,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         currencyTextView.setText("Coins: " + coin);
         affectionTextView.setText("Affection: " + love);
 
-        //Sensor
+        // Sensor, getting the light sensor
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lightSensor = mySensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
@@ -182,78 +183,87 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         neckItem.setOnTouchListener(this);
         creature.setOnTouchListener(this);
 
-    }
+    } // end of onCreate
 
     //method for getting image
     public int getImage(String name) {
         String file = name.toLowerCase();
+        // we want to access the clothing images,
         file = file.replace("_icon", "");
         int id = getResources().getIdentifier(file, "drawable", getPackageName());
         return id;
-    }
+    } // end of getImage
 
-    //rename button
+    // rename button
     public void renameButton(View view){
-        //sfx for tap
+        // sfx for tap
         mp = MediaPlayer.create(this, R.raw.tap);
         mp.start();
-        //set rename to true
+        // set rename to true so the naming activity won't bring the user back to main
         SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("rename", true);
         editor.commit();
-        //create intent to naming page
+        //create intent to naming activity
         Intent i = new Intent(this, Naming.class);
         startActivity(i);
-    }
+    } // end of rename button
 
-    //for shop button
+    // go to shop button
     public void gotoShop(View view) {
-        //sfx for tap
+        // sfx for tap
         mp = MediaPlayer.create(this, R.raw.tap);
         mp.start();
+        // explicit intent to go to the shop activity
         Intent i = new Intent(this, Shop.class);
         startActivity(i);
-    }
+    } // end of shop button
 
-    //for customization button
+    // go to customization button
     public void custom(View view) {
-        //sfx for tap
+        // sfx for tap
         mp = MediaPlayer.create(this, R.raw.tap);
         mp.start();
+        // intent to go to customization activity
         Intent i = new Intent(this, Customization.class);
         startActivity(i);
-    }
+    } // end of customization button
 
-    //for quest
+    // go to quest button
     public void questButton(View view) {
         //sfx for tap
         mp = MediaPlayer.create(this, R.raw.tap);
         mp.start();
+        // intent to go to quest activity
         Intent i = new Intent(this, Quest.class);
         startActivity(i);
-    }
+    } // end of quest button
 
-    //go to matching mini game
+    // go to matching mini game play button
     public void play(View v) {
         //go the mini game activity
         //sfx for tap
         mp = MediaPlayer.create(this, R.raw.tap);
         mp.start();
+        // intent to go to the matching game
         Intent i = new Intent(this, MatchingGame.class);
         startActivity(i);
-    } // end of play
+    } // end of play button
 
-    //feeding the pet
+    // button for feeding the pet
     public void feed(View v) {
         //sfx for tap
         mp = MediaPlayer.create(this, R.raw.tap);
         mp.start();
+        // checks if the pet is in the middle of eating
+        // only allow if the pet is not eating or has already finished eating
         if (!feeding) {
-            //if the pet is not eating, start feeding
+            // if the pet is not eating, start feeding
+            // show the plate with the food and set feeding to true
             plate.setVisibility(VISIBLE);
             food.setVisibility(VISIBLE);
             feeding = true;
+
             //sfx for eating
             mp = MediaPlayer.create(this, R.raw.eating);
             mp.start();
@@ -277,7 +287,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     affectionTextView.setText("Affection: " + newAffection);
                 }
             }, 2000);
+            // end of handler
 
+            // second handler to execute code after 3 seconds
+            // makes the plate and food (in case) disappear
+            // sets feeding to false to let the user feed it again
             handler.postDelayed(new Runnable() {
 
                 @Override
@@ -287,25 +301,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     feeding = false;
                 }
             }, 3000);
-        } // end of if
+            // end of handler
+        } // end of if(!feeding)
+    } // end of feed button
 
-//        else {
-//            //if the pet is being fed and the button is clicked, stop feeding
-//            mp.setLooping(false);
-//            mp.stop();
-//            plate.setVisibility(v.GONE);
-//            food.setVisibility(v.GONE);
-//            feeding = false;
-//        }
-    } // end of feed
-
-    //touch method
+    // touch method for petting
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             //sfx for happy yumi
             mp = MediaPlayer.create(this, R.raw.pet_happy);
             mp.start();
+            // increase affection
             SharedPreferences sharedPref = getSharedPreferences("MyData", Context.MODE_PRIVATE);
             int currentAffection = sharedPref.getInt("affection", 0);
             int newAffection = currentAffection + 5;
@@ -339,24 +346,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // TODO Auto-generated method stub
     }
 
-    // light sensor
+    // light sensor to change window
     @Override
     public void onSensorChanged(SensorEvent event) {
         int type = event.sensor.getType();
 
         if (type == Sensor.TYPE_LIGHT) {
             light_vals = event.values;
-
             //if there's no light, change window to night time
             if (Sensor.TYPE_LIGHT >= light_vals[0]) {
-//              Toast.makeText(this, "night time", Toast.LENGTH_LONG).show();
                 night.setVisibility(VISIBLE);
             } else {
-//              Toast.makeText(this, "good morning", Toast.LENGTH_LONG).show();
                 //if there's light, change the window to day time
                 night.setVisibility(View.GONE);
             }
-
         }
     } // end of sensor changed
 
@@ -367,7 +370,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mp.start();
         getLastLocation();
         if (currentLocation != null) {
-//            Toast.makeText(this, "Has location", Toast.LENGTH_SHORT).show();
             latitude = currentLocation.getLatitude();
             longitude = currentLocation.getLongitude();
             lat = Double.toString(latitude);
@@ -378,27 +380,26 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     lng + "&username=jvillaso";
             float temperature = 10;
 
+            // start weather thread
             Thread myThread = new Thread(new GetWeatherThread());
             myThread.start();
 
             try {
                 Toast.makeText(this, "Your location: "+lat+" "+lng, Toast.LENGTH_SHORT).show();
 
-//                Log.d("location testing", "res"+result);
-
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject weatherObservationItems =
                         new JSONObject(jsonObject.getString("weatherObservation"));
 
-                //as the service does not have weather conditions, we opted to use temperature instead
-                //get temperature from weather service
+                // as the service does not have weather conditions, we opted to use temperature instead
+                // get temperature from weather service
                 String temp = weatherObservationItems.getString("temperature");
                 Log.d("location testing testing", ""+temp);
+                // ensuring it is numeric only
                 temp = temp.replaceAll("[^\\d.]", "");
                 temp.trim();
                 temperature = Float.parseFloat(temp);
-//                Toast.makeText(this, "location"+temperature+"", Toast.LENGTH_SHORT).show();
-                //if temperature is below zero
+                // change window based on temperature
                 if (temperature <= 0) {
                     snow.setVisibility(VISIBLE); //change to snow
                 } else if(temperature >= 15){
@@ -412,20 +413,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 Log.d("ReadWeatherJSONDataTask", e.getLocalizedMessage());
             }
         }else{
-            //if no location, show sun
+            // if no location, show sun
             snow.setVisibility(INVISIBLE);
             rain.setVisibility(INVISIBLE);
-            Toast.makeText(this, "No location", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No location.", Toast.LENGTH_SHORT).show();
         }
-//        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
     } // end of getWeather
 
     // getting the user's location
     public void getLastLocation() {
+        // checking permissions
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FINE_PERMISSON_CODE);
             return;
         }
+        // getting user location
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
@@ -437,6 +439,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         });
     } // end of getLastLocation
 
+    // getting json data from the web service
     private class GetWeatherThread implements Runnable {
         @Override
         public void run() {
@@ -455,16 +458,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            //fetch data
-
             String networkType = networkInfo.getTypeName().toString();
-//            Toast.makeText(this, "connected to " + networkType, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Connected to " + networkType, Toast.LENGTH_SHORT).show();
         } else {
-            //display error
-            Toast.makeText(this, "No network connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "No network connection", Toast.LENGTH_SHORT).show();
         }
     } // end of checkConnection
 
+    // reading json data
     private String readJSONData(String myurl) throws IOException {
         InputStream is = null;
         // Only display the first 500 characters of the retrieved
@@ -481,8 +482,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             conn.setDoInput(true);
             // Starts the query
             conn.connect();
-            int response = conn.getResponseCode();
-            Log.d("tag", "The response is: " + response);
+
             is = conn.getInputStream();
 
             // Convert the InputStream into a string
@@ -507,11 +507,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         return new String(buffer);
     } // end of readIt
 
-    //   to share to social media (screenshot)
-//    public void share(View v) {
-//        saveImage();
-//    }
-
     //share button for sharing the yumi ad
     public void share(View v) {
         try {
@@ -529,7 +524,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             //putting the imageUri and text into the intent
             intent.putExtra(Intent.EXTRA_STREAM, imageUri);
             intent.putExtra(Intent.EXTRA_TEXT, "Play Yumi today!");
-            //let's the user where to share to
+            // let's the user share where they want to
             startActivity(Intent.createChooser(intent, "Share using: "));
         } catch (ActivityNotFoundException e) {
         }
@@ -539,13 +534,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-//        if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//            saveImage();
-//        } else {
-//            Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-//        }
-
 //        location permissions
         if(requestCode == FINE_PERMISSON_CODE){
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
@@ -557,109 +545,4 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         } // end of checking location permissions
     } // end of onRequestPermissionsResult
 
-    // take a screenshot of the activity and save it to the device
-    private void saveImage() {
-
-        if(!checkPermission())
-            return;
-
-        try {
-            String path = Environment.getExternalStorageDirectory().toString() + "/AppName";
-            File fileDir = new File(path);
-            if (fileDir.exists())
-                fileDir.mkdir();
-
-            String mPath = path + "/ScreenShot" + new Date().getTime() + ".png";
-
-            Bitmap bitmap = screenShot();
-            File file = new File(mPath);
-            FileOutputStream fOut = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-            fOut.flush();
-            fOut.close();
-
-            Toast.makeText(this, "Image Saved", Toast.LENGTH_LONG).show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    } // end of saveImage
-
-    //screenshot the screen method
-    private Bitmap screenShot() {
-        View v = findViewById(R.id.mainView);
-        Bitmap bitmap = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        v.draw(canvas);
-        return bitmap;
-    }
-
-    //check permission for saving to device's storage
-    private boolean checkPermission() {
-        int permission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if(permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-            return false;
-        }
-        return true;
-    } // end of checkPermission
-
- //   save and share screenshot
-//    private File saveImage(){
-//        Exception exception = null;
-//        try{
-//            String path = Environment.getExternalStorageDirectory().toString() + "/com.example.iat359_project";
-//            File filedir = new File(path);
-//            if(!filedir.exists()){
-//                filedir.mkdir();
-//            }
-//
-//            String mPath = path + "/Screenshot_" + new Date().getTime() + ".png";
-//            Bitmap bitmap = screenshot();
-//            File file = new File(mPath);
-//            Toast.makeText(this, "click", Toast.LENGTH_SHORT).show();
-//
-//            Log.d("testingInputStream", file.toString());
-//            FileOutputStream fOut = new FileOutputStream(file);
-//            Toast.makeText(this, "bbbbb", Toast.LENGTH_SHORT).show();
-//
-//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-//
-//            fOut.flush();
-//            fOut.close();
-//
-//            Toast.makeText(this, "image saved", Toast.LENGTH_SHORT).show();
-//
-//            return file;
-//        }catch(IOException e){
-//            exception = e;
-//        }
-//        return null;
-//    }
-//
-//    private void shareImage(File file){
-//        Uri uri;
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            uri = FileProvider.getUriForFile(this, getPackageManager()+".provider", file);
-//        }else{
-//            uri = Uri.fromFile(file);
-//        }
-//
-//        Intent intent = new Intent();
-//        intent.setAction(Intent.ACTION_SEND);
-//        intent.setType("image/*");
-//        intent.putExtra(Intent.EXTRA_SUBJECT, "Screenshot");
-//        intent.putExtra(Intent.EXTRA_TEXT, "This is my Yumi!");
-//        intent.putExtra(Intent.EXTRA_STREAM, uri);
-//
-//        try{
-//            startActivity(Intent.createChooser(intent, "Share using"));
-//        }catch (ActivityNotFoundException e){
-//            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-//        }
-//
-//    }//end of shareImage
-
-} // end of class
+} // end of main activity class
