@@ -39,13 +39,12 @@ public class MyHelper extends SQLiteOpenHelper {
         this.context = context;
     }
 
-    //executing sql
+    // executing sql
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
             db.execSQL(CREATE_SHOP_TABLE);
             db.execSQL(CREATE_PLAYER_TABLE);
-//            Toast.makeText(context, "onCreate() called", Toast.LENGTH_LONG).show();
         } catch (SQLException e) {
             Toast.makeText(context, "exception onCreate() db", Toast.LENGTH_LONG).show();
         }
@@ -57,11 +56,10 @@ public class MyHelper extends SQLiteOpenHelper {
             db.execSQL(DROP_SHOP_TABLE);
             db.execSQL(DROP_PLAYER_TABLE);
             onCreate(db);
-//            Toast.makeText(context, "onUpgrade called", Toast.LENGTH_LONG).show();
         } catch (SQLException e) {
             Toast.makeText(context, "exception onUpgrade() db", Toast.LENGTH_LONG).show();
         }
     }
-}
+} // end of class
 
 
